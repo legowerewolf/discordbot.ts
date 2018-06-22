@@ -1,12 +1,6 @@
 const fs = require('fs');
 const discord = require('discord.js');
 
-var prefixLength = 0;
-function log(name, message) {
-    var prefix = "[" + name + "]";
-    prefix += " ".repeat(prefixLength - prefix.length)
-    console.log(prefix + message)
-}
 
 fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
@@ -21,7 +15,7 @@ fs.readFile("./config/defaults.json", function (err, defaultData) {
 
         customConfig.instances.forEach(element => {
             var config = Object.assign(defaultConfig, element);
-            if (config.shortname.length + 3 > prefixLength) { prefixLength = config.shortname.length + 3; }
+            if (config.shortname.length + 3 > prefixer.maxLength) { prefixer.maxLength = config.shortname.length + 3; }
             startBotInstance(config);
         });
 
@@ -38,8 +32,17 @@ async function startBotInstance(config) {
     });
 
     client.on('ready', () => {
-        log(config.shortname, `Logged in as ${client.user.tag}! ID: ${client.user.id}`);
+        prefixer.log(config.shortname, `Logged in as ${client.user.tag}! ID: ${client.user.id}`);
     });
 
     client.login(config.APIKeys.discord);
 }
+
+var prefixer = {
+    maxLength: 0,
+    log: function(name, message) {
+        var prefix = "[" + name + "]";
+        prefix += " ".repeat(this.maxLength - prefix.length);
+        console.log(prefix + message);
+    }
+};
