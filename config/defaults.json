@@ -1,6 +1,45 @@
 {
-    "shortname":null,
+    "shortname": null,
     "APIKeys": {
         "discord": null
-    }
+    },
+    "intents": [
+        {
+            "name": "greeting",
+            "models": [
+                "hello",
+                "hi",
+                "greetings",
+                "welcome"
+            ],
+            "responses": [
+                "Hello!",
+                "Hi!",
+                "Greetings.",
+                "Aloha."
+            ]
+        },
+        {
+            "name": "capability-query",
+            "models": [
+                "what can you do?",
+                "help",
+                "what can I say?"
+            ],
+            "responses": [
+                "You can say \"make a temporary channel\", and I'll create a voice channel that only exists as long as someone's in it. You can also say \"Join me\" and I'll join you in whatever voice channel you're in. If you do, you can dismiss me from the channel by saying \"Dismissed\". I don't do much yet, though. My developer's working on it."
+            ]
+        },
+        {
+            "name": "declaration-of-love",
+            "models": [
+                "I love you",
+                "ily"
+            ],
+            "responses": [
+                "Aww, I love you too!",
+                "\\*blushes\\*"
+            ]
+        }
+    ]
 }
