@@ -27,7 +27,7 @@ async function startBotInstance(config) {
     config.intents.forEach((intent) => {
         brain.teach(intent.models, intent.name);
     });
-    brain.process();
+    brain.train();
 
     var client = new Discord.Client();
 

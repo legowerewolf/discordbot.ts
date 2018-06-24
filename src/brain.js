@@ -16,7 +16,7 @@ Brain.prototype.teach = function (samples, label) {
     return this;
 };
 
-Brain.prototype.process = function () {
+Brain.prototype.train = function () {
     this.classifier.train();
     return this;
 };
