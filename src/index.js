@@ -37,7 +37,8 @@ async function startBotInstance(config) {
             handleInput({
                 text: msg.cleanContent, 
                 responseCallback: (response) => { msg.reply(response) },
-                author: msg.author
+                author: msg.author,
+                client: client
             });
         }
     });

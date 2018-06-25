@@ -56,6 +56,21 @@
                 "where am I?",
                 "what is my IP address"
             ]
+        },
+        {
+            "name": "bot-shutdown",
+            "models": [
+                "shut down",
+                "shutdown",
+                "go offline"
+            ],
+            "data":{
+                "responses":[
+                    "Ok. Goodbye!",
+                    "I'll be back."
+                ],
+                "shutdownDelay": 10000
+            }
         }
     ]
 }
