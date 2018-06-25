@@ -15,7 +15,7 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
 
         customConfig.instances.forEach(element => {
             var config = Object.assign({}, defaultConfig, element);
-            config.intents = defaultConfig.intents.concat(element.intents);
+            config.intents = element.intents ? defaultConfig.intents.concat(element.intents) : defaultConfig.intents;
             prefixer.prepare(config.shortname);
             startBotInstance(config);
         });
