@@ -34,7 +34,11 @@ async function startBotInstance(config) {
 
     client.on('message', msg => {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
-            handleInput(msg.cleanContent, (response) => { msg.reply(response) });
+            handleInput({
+                text: msg.cleanContent, 
+                responseCallback: (response) => { msg.reply(response) },
+                author: msg.author
+            });
         }
     });
 
@@ -44,12 +48,13 @@ async function startBotInstance(config) {
 
     client.login(config.APIKeys.discord);
 
-    function handleInput(text, responseCallback) {
-        var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(text).label)];
-        if (intent.hasSpecialHandler) {
-            require("./intentHandlers/" + intent.name).handler(responseCallback);
+    function handleInput(eventData) {
+        var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
+        eventData.config = intent.data;
+        if (intent.handler) {
+            require("./intentHandlers/" + intent.handler).handler(eventData);
         } else {
-            responseCallback(getRandomText(intent.responses));
+            require("./intentHandlers/" + intent.name).handler(eventData);
         }
     }
 }
