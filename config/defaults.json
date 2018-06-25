@@ -40,6 +40,14 @@
                 "Aww, I love you too!",
                 "\\*blushes\\*"
             ]
+        },
+        {
+            "name": "ip-finder",
+            "models": [
+                "where am I?",
+                "what is my IP address"
+            ],
+            "hasSpecialHandler": true
         }
     ]
 }

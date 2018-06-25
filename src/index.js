@@ -4,18 +4,19 @@ const Brain = require('./brain');
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
-    Fs.readFile("./config/config.json", function (err, data) {
+    Fs.readFile("./config/config.json", function (err, customData) {
         if (err) throw err;
         var defaultConfig = JSON.parse(defaultData);
-        var customConfig = JSON.parse(data);
+        var customConfig = JSON.parse(customData);
 
         if (!customConfig.instances) {
             customConfig = { instances: [customConfig] };
         }
 
         customConfig.instances.forEach(element => {
-            var config = Object.assign(defaultConfig, element);
-            prefixer.configure(config.shortname);
+            var config = Object.assign({}, defaultConfig, element);
+            config.intents = defaultConfig.intents.concat(element.intents);
+            prefixer.prepare(config.shortname);
             startBotInstance(config);
         });
 
@@ -33,9 +34,7 @@ async function startBotInstance(config) {
 
     client.on('message', msg => {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
-            var intent = brain.interpret(msg.cleanContent).label;
-            var responses = config.intents[config.intents.map(i => i.name).indexOf(intent)].responses;
-            msg.reply(getRandomText(responses));
+            handleInput(msg.cleanContent, (response) => { msg.reply(response) });
         }
     });
 
@@ -44,6 +43,15 @@ async function startBotInstance(config) {
     });
 
     client.login(config.APIKeys.discord);
+
+    function handleInput(text, responseCallback) {
+        var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(text).label)];
+        if (intent.hasSpecialHandler) {
+            require("./intentHandlers/" + intent.name).handler(responseCallback);
+        } else {
+            responseCallback(getRandomText(intent.responses));
+        }
+    }
 }
 
 var prefixer = {
@@ -53,7 +61,7 @@ var prefixer = {
         prefix += " ".repeat(this.maxLength - prefix.length);
         console.log(prefix + message);
     },
-    configure: function (name) {
+    prepare: function (name) {
         if (name.length + 3 > this.maxLength) {
             this.maxLength = name.length + 3;
         }
