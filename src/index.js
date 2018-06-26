@@ -38,6 +38,7 @@ async function startBotInstance(config) {
                 text: msg.cleanContent,
                 responseCallback: (response) => { msg.reply(response) },
                 author: msg.author.id,
+                guild: msg.guild,
                 client: client
             });
         }

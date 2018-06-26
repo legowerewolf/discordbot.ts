@@ -73,6 +73,31 @@
                 ],
                 "shutdownDelay": 3000
             }
+        },
+        {
+            "name": "temporary-voice-channel",
+            "models": [
+                "make a temporary voice channel",
+                "create a channel",
+                "make a vc",
+                "make a temporary channel"
+            ],
+            "data": {
+                "responses": [
+                    "welcome to your new channel:"
+                ],
+                "channelNames": [
+                    "Death Metal",
+                    "Rainbows",
+                    "Unicorns",
+                    "Not Murder",
+                    "The End Times",
+                    "How 'Bout That Lotus, Eh?",
+                    "Johnathan"
+                ],
+                "interval": 5000,
+                "bitrate": 16
+            }
         }
     ]
 }
