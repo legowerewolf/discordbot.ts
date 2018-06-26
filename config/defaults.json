@@ -64,12 +64,12 @@
                 "shutdown",
                 "go offline"
             ],
-            "data":{
-                "responses":[
+            "data": {
+                "responses": [
                     "Ok. Goodbye!",
                     "I'll be back."
                 ],
-                "shutdownDelay": 10000
+                "shutdownDelay": 3000
             }
         }
     ]
