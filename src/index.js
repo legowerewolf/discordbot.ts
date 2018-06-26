@@ -37,7 +37,7 @@ async function startBotInstance(config) {
             handleInput({
                 text: msg.cleanContent,
                 responseCallback: (response) => { msg.reply(response) },
-                author: msg.author,
+                author: msg.author.id,
                 client: client
             });
         }
@@ -52,10 +52,14 @@ async function startBotInstance(config) {
     function handleInput(eventData) {
         var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
         eventData.config = intent.data;
-        if (intent.handler) {
-            require("./intentHandlers/" + intent.handler).handler(eventData);
+        if (!intent.permissionLevel || config.users[eventData.author].permissionLevel >= intent.permissionLevel) {
+            if (intent.handler) {
+                require("./intentHandlers/" + intent.handler).handler(eventData);
+            } else {
+                require("./intentHandlers/" + intent.name).handler(eventData);
+            }
         } else {
-            require("./intentHandlers/" + intent.name).handler(eventData);
+            eventData.responseCallback("You don't have permission to ask that.");
         }
     }
 }

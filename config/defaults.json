@@ -52,6 +52,7 @@
         },
         {
             "name": "ip-finder",
+            "permissionLevel": 5,
             "models": [
                 "where am I?",
                 "what is my IP address"
@@ -59,6 +60,7 @@
         },
         {
             "name": "bot-shutdown",
+            "permissionLevel": 5,
             "models": [
                 "shut down",
                 "shutdown",
