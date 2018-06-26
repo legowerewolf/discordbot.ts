@@ -35,7 +35,7 @@ async function startBotInstance(config) {
     client.on('message', msg => {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
             handleInput({
-                text: msg.cleanContent, 
+                text: msg.cleanContent,
                 responseCallback: (response) => { msg.reply(response) },
                 author: msg.author,
                 client: client
@@ -73,7 +73,3 @@ var prefixer = {
         }
     }
 };
-
-function getRandomText(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
