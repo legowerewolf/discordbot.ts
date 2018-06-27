@@ -37,9 +37,12 @@ async function startBotInstance(config) {
             handleInput({
                 text: msg.cleanContent,
                 responseCallback: (response) => { msg.reply(response) },
-                author: msg.author.id,
+                author: msg.author,
                 guild: msg.guild,
-                client: client
+                client: client,
+                source: "text",
+                // Text message only data
+                messageObject: msg
             });
         }
     });
@@ -53,7 +56,7 @@ async function startBotInstance(config) {
     function handleInput(eventData) {
         var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
         eventData.config = intent.data;
-        if (!intent.permissionLevel || config.users[eventData.author].permissionLevel >= intent.permissionLevel) {
+        if (!intent.permissionLevel || config.users[eventData.author.id].permissionLevel >= intent.permissionLevel) {
             if (intent.handler) {
                 require("./intentHandlers/" + intent.handler).handler(eventData);
             } else {

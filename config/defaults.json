@@ -84,7 +84,7 @@
             ],
             "data": {
                 "responses": [
-                    "welcome to your new channel:"
+                    "welcome to your new channel: "
                 ],
                 "channelNames": [
                     "Death Metal",
@@ -95,7 +95,9 @@
                     "How 'Bout That Lotus, Eh?",
                     "Johnathan"
                 ],
-                "interval": 5000,
+                "checkForMembersInterval": 5000,
+                "checkForResponseInterval": 500,
+                "checkForResponseDuration": 10000,
                 "bitrate": 16
             }
         }
