@@ -31,6 +31,7 @@ async function startBotInstance(config) {
     brain.train();
 
     var client = new Discord.Client();
+    var chatbase = config.APIKeys.chatbase ? require('@google/chatbase').setApiKey(config.APIKeys.chatbase).setPlatform("Discord") : undefined;
 
     client.on('message', msg => {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
@@ -55,7 +56,20 @@ async function startBotInstance(config) {
 
     function handleInput(eventData) {
         var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
+
         eventData.config = intent.data;
+        if (chatbase) {
+            chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(eventData.text).setIntent(intent.name).send().then(msg => console.log(msg.getCreateResponse()));
+
+            eventData.responseCallbackOrig = eventData.responseCallback;
+            eventData.responseCallback = (response) => {
+                chatbase.newMessage().setAsTypeAgent().setUserId(eventData.author.id).setMessage(response).send().then(msg => console.log(msg.getCreateResponse()));
+                eventData.responseCallbackOrig(response);
+            };
+            eventData.chatbaseRelay = (message) => { chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(message).send().then(msg => console.log(msg.getCreateResponse())); };
+
+        }
+
         if (!intent.permissionLevel || config.users[eventData.author.id].permissionLevel >= intent.permissionLevel) {
             if (intent.handler) {
                 require("./intentHandlers/" + intent.handler).handler(eventData);

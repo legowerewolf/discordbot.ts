@@ -10,6 +10,7 @@
   "author": "legowerewolf",
   "license": "ISC",
   "dependencies": {
+    "@google/chatbase": "^1.1.2",
     "discord.js": "^11.3.2",
     "natural": "^0.6.1",
     "node-fetch": "^2.1.2"
