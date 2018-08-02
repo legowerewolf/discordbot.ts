@@ -1,13 +1,13 @@
-const Fs = require('fs');
-const Discord = require('discord.js');
+import * as Fs from 'fs';
+import * as Discord from 'discord.js';
 const Brain = require('./brain');
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
     Fs.readFile("./config/config.json", function (err, customData) {
         if (err) throw err;
-        var defaultConfig = JSON.parse(defaultData);
-        var customConfig = JSON.parse(customData);
+        var defaultConfig = JSON.parse(defaultData.toString());
+        var customConfig = JSON.parse(customData.toString());
 
         if (!customConfig.instances) {
             customConfig = { instances: [customConfig] };
@@ -24,7 +24,7 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
 });
 
 async function startBotInstance(config) {
-    brain = new Brain();
+    var brain = new Brain();
     config.intents.forEach((intent) => {
         brain.teach(intent.models, intent.name);
     });
