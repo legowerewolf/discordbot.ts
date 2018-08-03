@@ -37,3 +37,9 @@ interface ResponseCallback {
     (response: string): void;
 }
 
+export interface QuestionData {
+    question: string;
+    questionAnswered: string;
+    questionTimeout: string;
+    callback: ResponseCallback;
+}
