@@ -1,19 +1,21 @@
 import * as Fs from 'fs';
 import * as Discord from 'discord.js';
 const Brain = require('./brain');
+import { ConfigElement, CommunicationEvent } from './types';
+import { ChatbaseMessageStatus, handleMessageResponse } from './chatbasehelpers'
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
     Fs.readFile("./config/config.json", function (err, customData) {
         if (err) throw err;
-        var defaultConfig = JSON.parse(defaultData.toString());
+        var defaultConfig: ConfigElement = JSON.parse(defaultData.toString());
         var customConfig = JSON.parse(customData.toString());
 
         if (!customConfig.instances) {
             customConfig = { instances: [customConfig] };
         }
 
-        customConfig.instances.forEach(element => {
+        customConfig.instances.forEach((element: ConfigElement) => {
             var config = Object.assign({}, defaultConfig, element);
             config.intents = element.intents ? defaultConfig.intents.concat(element.intents) : defaultConfig.intents;
             prefixer.prepare(config.shortname);
@@ -23,7 +25,7 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
     });
 });
 
-async function startBotInstance(config) {
+async function startBotInstance(config: ConfigElement) {
     var brain = new Brain();
     config.intents.forEach((intent) => {
         brain.teach(intent.models, intent.name);
@@ -37,7 +39,7 @@ async function startBotInstance(config) {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
             handleInput({
                 text: msg.cleanContent,
-                responseCallback: (response) => { msg.reply(response) },
+                responseCallback: (response: string) => { msg.reply(response) },
                 author: msg.author,
                 guild: msg.guild,
                 client: client,
@@ -54,26 +56,26 @@ async function startBotInstance(config) {
 
     client.login(config.APIKeys.discord);
 
-    function handleInput(eventData) {
+    function handleInput(eventData: CommunicationEvent) {
         var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
 
         eventData.config = intent.data;
         if (chatbase) {
-            chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(eventData.text).setIntent(intent.name).send().then(msg => console.log(msg.getCreateResponse()));
+            chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(eventData.text).setIntent(intent.name).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg));
 
             eventData.responseCallbackOrig = eventData.responseCallback;
-            eventData.responseCallback = (response) => {
-                chatbase.newMessage().setAsTypeAgent().setUserId(eventData.author.id).setMessage(response).send().then(msg => console.log(msg.getCreateResponse()));
+            eventData.responseCallback = (response: string) => {
+                chatbase.newMessage().setAsTypeAgent().setUserId(eventData.author.id).setMessage(response).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg));
                 eventData.responseCallbackOrig(response);
             };
-            eventData.chatbaseRelay = (message) => { chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(message).send().then(msg => console.log(msg.getCreateResponse())); };
+            eventData.chatbaseRelay = (message: string) => { chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(message).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg)); };
 
         }
 
         if (!intent.permissionLevel || config.users[eventData.author.id].permissionLevel >= intent.permissionLevel) {
-            if (intent.handler) {
+            if (intent.handler) { // If an intent handler is explicitly provided
                 require("./intentHandlers/" + intent.handler).handler(eventData);
-            } else {
+            } else { // Run the handler matching the intent name
                 require("./intentHandlers/" + intent.name).handler(eventData);
             }
         } else {
@@ -84,12 +86,12 @@ async function startBotInstance(config) {
 
 var prefixer = {
     maxLength: 0,
-    log: function (name, message) {
+    log: function (name: string, message: string) {
         var prefix = "[" + name + "]";
         prefix += " ".repeat(this.maxLength - prefix.length);
         console.log(prefix + message);
     },
-    prepare: function (name) {
+    prepare: function (name: string) {
         if (name.length + 3 > this.maxLength) {
             this.maxLength = name.length + 3;
         }
