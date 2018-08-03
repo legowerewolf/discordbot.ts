@@ -3,8 +3,13 @@ var ts = require('gulp-typescript');
 
 var tsProject = ts.createProject("./tsconfig.json");
 
-gulp.task("default", function () {
+gulp.task("build-typescript", function () {
     return tsProject.src()
         .pipe(tsProject())
+        .on("error", (err) => { })
         .js.pipe(gulp.dest("build"));
 });
+
+gulp.task("default", ["build-typescript"]);
+
+gulp.watch(tsProject.config.include, ["build-typescript"]);
