@@ -1,8 +1,8 @@
-import * as Fs from 'fs';
 import * as Discord from 'discord.js';
+import * as Fs from 'fs';
 import { Brain } from './brain';
-import { ConfigElement, CommunicationEvent } from './types';
-import { ChatbaseMessageStatus, handleMessageResponse } from './chatbasehelpers'
+import { ChatbaseMessageStatus, handleMessageResponse } from './chatbasehelpers';
+import { CommunicationEvent, ConfigElement } from './types';
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
