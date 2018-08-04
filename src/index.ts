@@ -27,7 +27,7 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
 
 async function startBotInstance(config: ConfigElement) {
     var brain = new Brain();
-    config.intents.forEach((intent) => {
+    config.intents.filter(element => element.models != undefined).forEach((intent) => {
         brain.teach(intent.models, intent.name);
     });
     brain.train();
