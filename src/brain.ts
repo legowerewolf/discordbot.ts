@@ -1,6 +1,7 @@
 // Brain is based on https://github.com/andrew-templeton/bottie
 
 import * as Natural from 'natural';
+import { NaturalGuess } from './types';
 
 export class Brain {
     classifier: Natural.LogisticRegressionClassifier;
@@ -22,13 +23,11 @@ export class Brain {
     }
 
     interpret(sample: string) {
-        let guesses = this.classifier.getClassifications(sample.toLowerCase()) as any as Array<{ label: string, value: number }>;
+        let guesses = this.classifier.getClassifications(sample.toLowerCase()) as any as Array<NaturalGuess>;
         let guess = guesses.reduce((accum, newVal) => {
             return accum && accum.value > newVal.value ? accum : newVal;
         })
 
-        console.log(guesses);
-
-        return guess.value > this.minConfidence ? guess : null;
+        return guess.value > this.minConfidence ? guess : { label: "error-unknown", value: 0 };
     };
 }
