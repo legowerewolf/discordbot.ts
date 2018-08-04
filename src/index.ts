@@ -1,6 +1,6 @@
 import * as Fs from 'fs';
 import * as Discord from 'discord.js';
-const Brain = require('./brain');
+import { Brain } from './brain';
 import { ConfigElement, CommunicationEvent } from './types';
 import { ChatbaseMessageStatus, handleMessageResponse } from './chatbasehelpers'
 

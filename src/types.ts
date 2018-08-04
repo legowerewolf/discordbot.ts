@@ -43,3 +43,8 @@ export interface QuestionData {
     questionTimeout: string;
     callback: ResponseCallback;
 }
+
+export interface NaturalGuess {
+    label: string;
+    value: number;
+}
