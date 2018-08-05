@@ -17,7 +17,7 @@ export function responseToQuestion(eventData: CommunicationEvent, questionData: 
             if (eventData.author.lastMessageID != currentMessageID || index > maxIndex) {
                 if (eventData.author.lastMessageID != currentMessageID) {
                     response = eventData.author.lastMessage.cleanContent;
-                    if (eventData.chatbaseRelay) { eventData.chatbaseRelay(response) };
+                    if (eventData.subscriberPush) { eventData.subscriberPush(response) };
                     eventData.responseCallback(questionData.questionAnswered);
                 } else if (index > maxIndex) {
                     eventData.responseCallback(questionData.questionTimeout);

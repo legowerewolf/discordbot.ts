@@ -6,6 +6,7 @@ export interface ConfigElement {
         discord: string;
         chatbase?: string;
     };
+    subscribers?: any;
     users?: any;
     intents: Array<Intent>;
 }
@@ -29,8 +30,7 @@ export interface CommunicationEvent {
     messageObject?: Discord.Message;
 
     config?: any;
-    responseCallbackOrig?: ResponseCallback;
-    chatbaseRelay?: ResponseCallback;
+    subscriberPush?: ResponseCallback;
 }
 
 interface ResponseCallback {
@@ -48,3 +48,23 @@ export interface NaturalGuess {
     label: string;
     value: number;
 }
+
+export interface SubscriberMessage {
+    message: string;
+    user: string;
+    source: string;
+    intent?: string;
+    failure?: string;
+}
+
+export const SubscriberMessageSources = {
+    bot: "BOT",
+    user: "USER"
+};
+
+export interface MessageSubscriber {
+    handleMessage: {
+        (message: SubscriberMessage): void;
+    }
+}
+

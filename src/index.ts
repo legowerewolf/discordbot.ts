@@ -1,8 +1,8 @@
 import * as Discord from 'discord.js';
 import * as Fs from 'fs';
 import { Brain } from './brain';
-import { ChatbaseMessageStatus, handleMessageResponse } from './chatbasehelpers';
-import { CommunicationEvent, ConfigElement } from './types';
+import { ChatbaseSubscriber } from './messageSubscribers/chatbase';
+import { CommunicationEvent, ConfigElement, MessageSubscriber, SubscriberMessage, SubscriberMessageSources } from './types';
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
@@ -33,7 +33,14 @@ async function startBotInstance(config: ConfigElement) {
     brain.train();
 
     var client = new Discord.Client();
-    var chatbase = config.APIKeys.chatbase ? require('@google/chatbase').setApiKey(config.APIKeys.chatbase).setPlatform("Discord") : undefined;
+
+    var subscribers = new Array<MessageSubscriber>();
+    Object.keys(config.subscribers).forEach(element => {
+        switch (element) {
+            case "chatbase":
+                subscribers.push(new ChatbaseSubscriber(config.subscribers.chatbase.apikey))
+        }
+    });
 
     client.on('message', msg => {
         if (msg.author.id != client.user.id && msg.mentions.users.has(client.user.id)) {
@@ -56,21 +63,25 @@ async function startBotInstance(config: ConfigElement) {
 
     client.login(config.APIKeys.discord);
 
+    function pushSubscriberMessage(msg: SubscriberMessage) {
+        subscribers.forEach(element => {
+            element.handleMessage(msg);
+        });
+    }
+
     function handleInput(eventData: CommunicationEvent) {
         var intent = config.intents[config.intents.map(i => i.name).indexOf(brain.interpret(eventData.text).label)];
 
         eventData.config = intent.data;
-        if (chatbase) {
-            chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(eventData.text).setIntent(intent.name).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg));
 
-            eventData.responseCallbackOrig = eventData.responseCallback;
-            eventData.responseCallback = (response: string) => {
-                chatbase.newMessage().setAsTypeAgent().setUserId(eventData.author.id).setMessage(response).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg));
-                eventData.responseCallbackOrig(response);
-            };
-            eventData.chatbaseRelay = (message: string) => { chatbase.newMessage().setAsTypeUser().setUserId(eventData.author.id).setMessage(message).send().then((msg: ChatbaseMessageStatus) => handleMessageResponse(msg)); };
+        pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intent.name });
 
-        }
+        let sendResponse = eventData.responseCallback;
+        eventData.responseCallback = (response: string) => {
+            sendResponse(response);
+            pushSubscriberMessage({ message: response, user: eventData.author.id, source: SubscriberMessageSources.bot });
+        };
+        eventData.subscriberPush = (message: string) => { pushSubscriberMessage({ message: message, user: eventData.author.id, source: SubscriberMessageSources.user }); };
 
         if (!intent.permissionLevel || config.users[eventData.author.id].permissionLevel >= intent.permissionLevel) {
             if (intent.handler) { // If an intent handler is explicitly provided
