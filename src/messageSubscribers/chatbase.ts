@@ -1,20 +1,24 @@
 import { MessageSubscriber, SubscriberMessage, SubscriberMessageSources } from "../types";
 
-export interface ChatbaseMessageStatus {
+interface ChatbaseMessageStatus {
     getCreateResponse: Function;
 }
 
-export function handleMessageResponse(msg: ChatbaseMessageStatus) {
+function handleMessageResponse(msg: ChatbaseMessageStatus) {
     let resp = msg.getCreateResponse();
     //if (resp.status != 200) { console.log(`Error on message: ${msg}`) }
     console.log(`Message push status: ${resp.status}`)
 }
 
+export function getNew(config: any) {
+    return new ChatbaseSubscriber(config)
+}
+
 export class ChatbaseSubscriber implements MessageSubscriber {
     chatbaseInstance: any;
 
-    constructor(apikey: string) {
-        this.chatbaseInstance = require('@google/chatbase').setApiKey(apikey).setPlatform("Discord");
+    constructor(config: any) {
+        this.chatbaseInstance = require('@google/chatbase').setApiKey(config.apikey).setPlatform("Discord");
     }
 
     handleMessage(message: SubscriberMessage) {

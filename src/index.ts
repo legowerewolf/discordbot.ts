@@ -1,7 +1,6 @@
 import * as Discord from 'discord.js';
 import * as Fs from 'fs';
 import { Brain } from './brain';
-import { ChatbaseSubscriber } from './messageSubscribers/chatbase';
 import { CommunicationEvent, ConfigElement, MessageSubscriber, SubscriberMessage, SubscriberMessageSources } from './types';
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
@@ -36,10 +35,7 @@ async function startBotInstance(config: ConfigElement) {
 
     var subscribers = new Array<MessageSubscriber>();
     Object.keys(config.subscribers).forEach(element => {
-        switch (element) {
-            case "chatbase":
-                subscribers.push(new ChatbaseSubscriber(config.subscribers.chatbase.apikey))
-        }
+        subscribers.push(require(`./messageSubscribers/${element}`).getNew(config.subscribers[element]));
     });
 
     client.on('message', msg => {
