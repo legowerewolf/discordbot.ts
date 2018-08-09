@@ -1,6 +1,6 @@
 import { VoiceChannel } from 'discord.js';
 import { randomElementFromArray, responseToQuestion } from '../helpers';
-import { CommunicationEvent } from "../types";
+import { CommunicationEvent, OngoingProcess } from "../types";
 
 
 export function handler(eventData: CommunicationEvent) {
@@ -10,21 +10,37 @@ export function handler(eventData: CommunicationEvent) {
         questionTimeout: "Never mind. I'll pick a name.",
 
         callback: (chosenName) => {
-            chosenName = chosenName ? chosenName : randomElementFromArray(eventData.config.channelNames); // If chosenName is not set, set it to a random name
-            eventData.guild.createChannel(chosenName, "voice")
-                .then((voiceChannel: VoiceChannel) => {
-                    voiceChannel.setBitrate(eventData.config.bitrate);
-
-                    eventData.responseCallback(randomElementFromArray(eventData.config.responses) + chosenName)
-
-                    var intervalChecker = setInterval(() => {
-                        if (voiceChannel.members.size == 0) {
-                            clearInterval(intervalChecker);
-                            voiceChannel.delete();
-                        }
-                    }, eventData.config.checkForMembersInterval);
-                });
+            let haltable = createHaltableProcess(chosenName, eventData);
+            haltable.start();
         }
 
     });
+}
+
+function createHaltableProcess(newChannel: string, eventData: CommunicationEvent) {
+    return {
+        active: true,
+        data: {},
+        start: function () {
+            newChannel = newChannel ? newChannel : randomElementFromArray(eventData.config.channelNames); // If chosenName is not set, set it to a random name
+            eventData.guild.createChannel(newChannel, "voice")
+                .then((voiceChannel: VoiceChannel) => {
+                    voiceChannel.setBitrate(eventData.config.bitrate);
+
+                    eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newChannel)
+
+                    this.data.voiceChannel = voiceChannel;
+                    this.data.intervalChecker = setInterval(() => {
+                        if (voiceChannel.members.size == 0) {
+                            this.stop();
+                        }
+                    }, eventData.config.checkForMembersInterval);
+                });
+        },
+        stop: function () {
+            clearInterval(this.data.intervalChecker);
+            this.data.voiceChannel.delete();
+            this.active = false;
+        }
+    } as OngoingProcess;
 }

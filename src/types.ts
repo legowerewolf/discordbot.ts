@@ -68,3 +68,9 @@ export interface MessageSubscriber {
     }
 }
 
+export interface OngoingProcess {
+    active: boolean;
+    data: any;
+    start: Function;
+    stop: Function;
+}
