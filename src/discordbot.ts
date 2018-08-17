@@ -51,6 +51,8 @@ export class DiscordBot {
             });
         }
 
+        this.processes = new Array<OngoingProcess>();
+
         Prefixer.prepare(this.config.shortname)
     }
 
@@ -64,10 +66,15 @@ export class DiscordBot {
         });
     }
 
+    registerOngoingProcess(p: OngoingProcess) {
+        this.processes.push(p);
+    }
+
     handleInput(eventData: CommunicationEvent) {
         var intent = this.config.intents[this.config.intents.map(i => i.name).indexOf(this.brain.interpret(eventData.text).label)];
 
         eventData.config = intent.data;
+        eventData.bot = this;
 
         this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intent.name });
 

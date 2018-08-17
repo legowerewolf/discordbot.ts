@@ -1,4 +1,5 @@
 import * as Discord from 'discord.js';
+import { DiscordBot } from './discordbot';
 
 export interface ConfigElement {
     shortname: string;
@@ -31,6 +32,7 @@ export interface CommunicationEvent {
 
     config?: any;
     subscriberPush?: ResponseCallback;
+    bot?: DiscordBot;
 }
 
 interface ResponseCallback {

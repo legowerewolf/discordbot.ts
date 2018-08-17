@@ -10,14 +10,15 @@ export function handler(eventData: CommunicationEvent) {
         questionTimeout: "Never mind. I'll pick a name.",
 
         callback: (chosenName) => {
-            let haltable = createHaltableProcess(chosenName, eventData);
-            haltable.start();
+            let tempVC = createTempVoiceChannel(chosenName, eventData);
+            tempVC.start();
+            eventData.bot.registerOngoingProcess(tempVC);
         }
 
     });
 }
 
-function createHaltableProcess(newChannel: string, eventData: CommunicationEvent) {
+function createTempVoiceChannel(newChannel: string, eventData: CommunicationEvent) {
     return {
         active: true,
         data: {},
