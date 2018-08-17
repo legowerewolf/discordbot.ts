@@ -83,6 +83,19 @@
                 "make a temporary channel"
             ],
             "data": {
+                "questionData": {
+                    "question": [
+                        "Alright, what do you want to name it?"
+                    ],
+                    "answeredResponse": [
+                        "Alright, that's what I'll call it."
+                    ],
+                    "timeoutResponse": [
+                        "Never mind. I'll pick a name."
+                    ],
+                    "responseCheckInterval": 500,
+                    "responseCheckDuration": 10000
+                },
                 "responses": [
                     "welcome to your new channel: "
                 ],
@@ -96,8 +109,6 @@
                     "Johnathan"
                 ],
                 "checkForMembersInterval": 5000,
-                "checkForResponseInterval": 500,
-                "checkForResponseDuration": 10000,
                 "bitrate": 16
             }
         },

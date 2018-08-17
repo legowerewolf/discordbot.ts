@@ -1,16 +1,17 @@
-import { CommunicationEvent, QuestionData } from './types';
+import { CommunicationEvent, ResponseCallback } from './types';
+
 
 export function randomElementFromArray(array: Array<any>) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-export function responseToQuestion(eventData: CommunicationEvent, questionData: QuestionData) {
+export function responseToQuestion(eventData: CommunicationEvent, completedCallback: ResponseCallback) {
     var response: string;
 
-    if (eventData.source == "text") {
-        eventData.responseCallback(questionData.question);
+    if (eventData.source == "text") { // Only allow the question/response flow on text chats
+        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
         var index = 0;
-        var maxIndex = eventData.config.checkForResponseDuration / eventData.config.checkForResponseInterval;
+        var maxIndex = eventData.config.questionData.responseCheckDuration / eventData.config.questionData.responseCheckInterval;
         var currentMessageID = eventData.messageObject.id;
 
         var intervalChecker = setInterval(() => {
@@ -18,17 +19,17 @@ export function responseToQuestion(eventData: CommunicationEvent, questionData: 
                 if (eventData.author.lastMessageID != currentMessageID) {
                     response = eventData.author.lastMessage.cleanContent;
                     if (eventData.subscriberPush) { eventData.subscriberPush(response) };
-                    eventData.responseCallback(questionData.questionAnswered);
+                    eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse));
                 } else if (index > maxIndex) {
-                    eventData.responseCallback(questionData.questionTimeout);
+                    eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
                 }
                 clearInterval(intervalChecker);
-                questionData.callback(response);
+                completedCallback(response);
             }
             index += 1;
-        }, eventData.config.checkForResponseInterval);
+        }, eventData.config.questionData.responseCheckInterval);
     } else {
-        questionData.callback(response);
+        completedCallback(response);
     }
 
 }

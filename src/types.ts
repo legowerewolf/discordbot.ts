@@ -17,6 +17,13 @@ interface Intent {
     handler: string;
     data?: {
         responses?: Array<string>;
+        questionData?: {
+            question?: Array<string>;
+            answeredResponse?: Array<string>;
+            timeoutResponse?: Array<string>;
+            responseCheckInterval?: number;
+            responseCheckDuration?: number;
+        }
     };
     permissionLevel?: number;
 }
@@ -35,7 +42,7 @@ export interface CommunicationEvent {
     bot?: DiscordBot;
 }
 
-interface ResponseCallback {
+export interface ResponseCallback {
     (response: string): void;
 }
 
@@ -56,7 +63,7 @@ export interface SubscriberMessage {
     user: string;
     source: string;
     intent?: string;
-    failure?: string;
+    failure?: boolean;
 }
 
 export const SubscriberMessageSources = {

@@ -4,17 +4,10 @@ import { CommunicationEvent, OngoingProcess } from "../types";
 
 
 export function handler(eventData: CommunicationEvent) {
-    responseToQuestion(eventData, {
-        question: "Alright, what do you want to name it?",
-        questionAnswered: "Alright, that's what I'll call it.",
-        questionTimeout: "Never mind. I'll pick a name.",
-
-        callback: (chosenName) => {
-            let tempVC = createTempVoiceChannel(chosenName, eventData);
-            tempVC.start();
-            eventData.bot.registerOngoingProcess(tempVC);
-        }
-
+    responseToQuestion(eventData, (chosenName: string) => {
+        let tempVC = createTempVoiceChannel(chosenName, eventData);
+        tempVC.start();
+        eventData.bot.registerOngoingProcess(tempVC);
     });
 }
 

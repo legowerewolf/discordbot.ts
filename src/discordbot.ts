@@ -76,7 +76,7 @@ export class DiscordBot {
         eventData.config = intent.data;
         eventData.bot = this;
 
-        this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intent.name });
+        this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intent.name, failure: intent.name == "error_unknown" });
 
         let sendResponse = eventData.responseCallback;
         eventData.responseCallback = (response: string) => {
