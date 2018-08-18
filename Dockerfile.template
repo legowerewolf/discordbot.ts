@@ -1,7 +1,8 @@
 FROM resin/%%RESIN_MACHINE_NAME%%-node as builder
 COPY . .
-RUN npm i && gulp default-nowatch
-
+RUN npm i && \
+    npm i -g gulp-cli && \
+    gulp default-nowatch
 
 FROM FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 ENV INITSYSTEM on
