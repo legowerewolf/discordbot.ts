@@ -5,8 +5,15 @@ import { ConfigElement } from './types';
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
+
     Fs.readFile("./config/config.json", function (err, customData) {
-        if (err) throw err;
+        if (err) {
+            if (process.env.BotConfig) {
+                customData = Buffer.from(process.env.BotConfig);
+            } else { throw err; }
+        }
+
+
         var defaultConfig: ConfigElement = JSON.parse(defaultData.toString());
         var customConfig = JSON.parse(customData.toString());
 
