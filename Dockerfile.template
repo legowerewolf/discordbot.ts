@@ -1,0 +1,11 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-node as builder
+COPY . .
+RUN npm i && gulp default-nowatch
+
+
+FROM FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
+ENV INITSYSTEM on
+COPY --from=builder ./build ./build
+COPY --from=builder ./config ./config
+RUN npm i --production
+CMD ["node", "build/index"]
