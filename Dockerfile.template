@@ -4,7 +4,7 @@ RUN npm i && \
     npm i -g gulp-cli && \
     gulp default-nowatch
 
-FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
+FROM resin/%%RESIN_MACHINE_NAME%%-node
 ENV INITSYSTEM on
 COPY --from=builder ./build ./build
 COPY --from=builder ./config ./config
