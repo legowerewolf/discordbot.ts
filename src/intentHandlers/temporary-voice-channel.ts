@@ -21,7 +21,9 @@ function createTempVoiceChannel(newChannel: string, eventData: CommunicationEven
                 .then((voiceChannel: VoiceChannel) => {
                     voiceChannel.setBitrate(eventData.config.bitrate);
 
-                    eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newChannel)
+                    eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newChannel);
+
+                    voiceChannel.guild.member(eventData.author).setVoiceChannel(voiceChannel).catch((err) => console.error(err));
 
                     this.data.voiceChannel = voiceChannel;
                     this.data.intervalChecker = setInterval(() => {

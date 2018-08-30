@@ -32,7 +32,7 @@
             "handler": "basic-response",
             "data": {
                 "responses": [
-                    "You can say \"make a temporary channel\", and I'll create a voice channel that only exists as long as someone's in it. You can also say \"Join me\" and I'll join you in whatever voice channel you're in. If you do, you can dismiss me from the channel by saying \"Dismissed\". I don't do much yet, though. My developer's working on it."
+                    "You can say \"make a temporary channel\", and I'll create a voice channel that only exists as long as someone's in it. I don't do much yet, though. My developer's working on it."
                 ]
             }
         },
