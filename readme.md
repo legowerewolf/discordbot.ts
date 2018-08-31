@@ -6,6 +6,15 @@ A simple way to add a natural language Discord bot to your server.
 
 1. Add a file called `config.json` to the config directory.
 
+### Permissions
+
+The bot needs the following permissions to work at full strength.
+
+* Manage Channels
+* View Channels
+* Send Messages
+* Read Message History
+
 ## License
 
 ![](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)
