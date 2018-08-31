@@ -6,8 +6,7 @@ interface ChatbaseMessageStatus {
 
 function handleMessageResponse(msg: ChatbaseMessageStatus) {
     let resp = msg.getCreateResponse();
-    //if (resp.status != 200) { console.log(`Error on message: ${msg}`) }
-    console.log(`Message push status: ${resp.status}`)
+    if (resp.status != 200) { console.log(`Error on message push: ${msg}`) }
 }
 
 export function getNew(config: any) {

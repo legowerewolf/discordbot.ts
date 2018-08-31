@@ -1,3 +1,8 @@
+export const INFO = 0;
+export const WARN = 1;
+export const ERROR = 2;
+export const ERROR_LEVEL_PREFIXES = ["[INFO]  ", "[WARN]  ", "[ERROR] "];
+
 export var Prefixer = {
     maxLength: 0,
     log: function (name: string, message: string) {

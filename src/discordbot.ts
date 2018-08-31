@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { Brain } from './brain';
-import { Prefixer } from "./prefixer";
+import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer } from "./prefixer";
 import { CommunicationEvent, ConfigElement, MessageSubscriber, OngoingProcess, SubscriberMessage, SubscriberMessageSources } from './types';
 
 export class DiscordBot {
@@ -40,7 +40,13 @@ export class DiscordBot {
             },
             {
                 event: "ready",
-                handler: () => { Prefixer.log(config.shortname, `Logged in as ${this.client.user.tag}! ID: ${this.client.user.id}`); }
+                handler: () => { this.console(INFO, `Logged in as ${this.client.user.tag}! ID: ${this.client.user.id}`); }
+            },
+            {
+                event: "error",
+                handler: (error: Error) => {
+                    this.console(ERROR, error.message);
+                }
             }
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
@@ -93,6 +99,12 @@ export class DiscordBot {
             }
         } else {
             eventData.responseCallback("You don't have permission to ask that.");
+        }
+    }
+
+    console(level: number, message: string) {
+        if (this.config.logLevel <= level) {
+            Prefixer.log(this.config.shortname, ERROR_LEVEL_PREFIXES[level] + message);
         }
     }
 }

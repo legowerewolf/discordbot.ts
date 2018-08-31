@@ -3,6 +3,7 @@ import { DiscordBot } from './discordbot';
 
 export interface ConfigElement {
     shortname: string;
+    logLevel: number;
     APIKeys: {
         discord: string;
         chatbase?: string;
