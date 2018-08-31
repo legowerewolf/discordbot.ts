@@ -1,5 +1,6 @@
 install: true
-script:
+script: echo "Hello!"
+deploy:
   - eval "$(ssh-agent -s)" #start the ssh agent
   - echo -e $RESIN_DEPLOY_KEY > id_rsa
   - chmod 0600 id_rsa
