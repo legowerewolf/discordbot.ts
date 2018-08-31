@@ -3,6 +3,7 @@
     "APIKeys": {
         "discord": null
     },
+    "logLevel": 0,
     "intents": [
         {
             "name": "greeting",
