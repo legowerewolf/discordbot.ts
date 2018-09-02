@@ -5,7 +5,7 @@
   "private": true,
   "repository": "github:legowerewolf/discordbot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Warning: No tests specified.\"",
     "start": "node build/index"
   },
   "author": "legowerewolf",

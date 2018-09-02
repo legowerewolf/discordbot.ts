@@ -1,6 +1,12 @@
-install: true
+language: "node_js"
+node_js: 
+  - "node"
+install: 
+  - npm install
+  - npm install -g gulp-cli
 script:
-  - echo "Hello!"
+  - gulp default-nowatch
+  - npm test
 after_success:
   - eval "$(ssh-agent -s)" #start the ssh agent
   - echo -e $RESIN_DEPLOY_KEY > id_rsa
