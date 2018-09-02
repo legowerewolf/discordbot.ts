@@ -6,15 +6,15 @@ export function randomElementFromArray(array: Array<any>) {
 }
 
 export function responseToQuestion(eventData: CommunicationEvent, completedCallback: ResponseCallback) {
-    var response: string;
+    let response: string;
 
     if (eventData.source == "text") { // Only allow the question/response flow on text chats
         eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
-        var index = 0;
-        var maxIndex = eventData.config.questionData.responseCheckDuration / eventData.config.questionData.responseCheckInterval;
-        var currentMessageID = eventData.messageObject.id;
+        let index = 0;
+        let maxIndex = eventData.config.questionData.responseCheckDuration / eventData.config.questionData.responseCheckInterval;
+        let currentMessageID = eventData.messageObject.id;
 
-        var intervalChecker = setInterval(() => {
+        let intervalChecker = setInterval(() => {
             if (eventData.author.lastMessageID != currentMessageID || index > maxIndex) {
                 if (eventData.author.lastMessageID != currentMessageID) {
                     response = eventData.author.lastMessage.cleanContent;

@@ -3,10 +3,10 @@ export const WARN = 1;
 export const ERROR = 2;
 export const ERROR_LEVEL_PREFIXES = ["[INFO]  ", "[WARN]  ", "[ERROR] "];
 
-export var Prefixer = {
+export let Prefixer = {
     maxLength: 0,
     log: function (name: string, message: string) {
-        var prefix = "[" + name + "]";
+        let prefix = "[" + name + "]";
         prefix += " ".repeat(this.maxLength - prefix.length);
         console.log(prefix + message);
     },

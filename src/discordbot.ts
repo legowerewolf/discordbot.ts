@@ -77,7 +77,7 @@ export class DiscordBot {
     }
 
     handleInput(eventData: CommunicationEvent) {
-        var intent = this.config.intents[this.config.intents.map(i => i.name).indexOf(this.brain.interpret(eventData.text).label)];
+        let intent = this.config.intents[this.config.intents.map(i => i.name).indexOf(this.brain.interpret(eventData.text).label)];
 
         eventData.config = intent.data;
         eventData.bot = this;
