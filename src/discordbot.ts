@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { Brain } from './brain';
-import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer } from "./prefixer";
+import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer, WARN } from "./prefixer";
 import { CommunicationEvent, ConfigElement, MessageSubscriber, OngoingProcess, SubscriberMessage, SubscriberMessageSources } from './types';
 
 export class DiscordBot {
@@ -40,13 +40,18 @@ export class DiscordBot {
             },
             {
                 event: "ready",
-                handler: () => { this.console(INFO, `Logged in as ${this.client.user.tag}! ID: ${this.client.user.id}`); }
+                handler: () => {
+                    this.console(INFO, `Connected as @${this.client.user.tag}. ID: ${this.client.user.id}`);
+                    this.console(INFO, `Guilds: ${[...this.client.guilds.values()].map(guild => `${guild.name}#${guild.id}`).join(", ")}`);
+                }
             },
             {
                 event: "error",
-                handler: (error: Error) => {
-                    this.console(ERROR, error.message);
-                }
+                handler: (error: Error) => { this.console(ERROR, error.message); }
+            },
+            {
+                event: "warn",
+                handler: (info: string) => { this.console(WARN, info); }
             }
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
