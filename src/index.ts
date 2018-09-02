@@ -13,7 +13,6 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
             } else { throw err; }
         }
 
-
         var defaultConfig: ConfigElement = JSON.parse(defaultData.toString());
         var customConfig = JSON.parse(customData.toString());
 
@@ -22,7 +21,7 @@ Fs.readFile("./config/defaults.json", function (err, defaultData) {
         }
 
         customConfig.instances.forEach((element: ConfigElement) => {
-            var config = Object.assign({}, defaultConfig, element);
+            var config = { ...defaultConfig, ...element };
             config.intents = element.intents ? defaultConfig.intents.concat(element.intents) : defaultConfig.intents;
             var bot = new DiscordBot(config);
             bot.start();
