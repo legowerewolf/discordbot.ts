@@ -11,4 +11,3 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   git remote add resin $RESIN_REMOTE
   git push resin master
 fi
-
