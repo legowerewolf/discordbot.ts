@@ -7,4 +7,4 @@ install:
 script:
   - gulp default-nowatch
   - npm test
-after_success: ./scripts/deploy.sh
+after_success: bash ./scripts/deploy.sh
