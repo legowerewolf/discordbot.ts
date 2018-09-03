@@ -11,7 +11,7 @@ export function handler(eventData: CommunicationEvent) {
     });
 }
 
-function createTempVoiceChannel(newChannel: string, eventData: CommunicationEvent) {
+function createTempVoiceChannel(newChannel: string, eventData: CommunicationEvent): OngoingProcess {
     return {
         active: true,
         data: {},

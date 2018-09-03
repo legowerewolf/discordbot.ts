@@ -13,6 +13,8 @@ export class DiscordBot {
     constructor(config: ConfigElement) {
         this.config = config;
 
+        Prefixer.prepare(this.config.shortname);
+
         this.brain = new Brain();
         config.intents.filter(element => element.models != undefined).forEach((intent) => {
             this.brain.teach(intent.models, intent.name);
@@ -52,6 +54,29 @@ export class DiscordBot {
             {
                 event: "warn",
                 handler: (info: string) => { this.console(WARN, info); }
+            },
+            {
+                event: "presenceUpdate",
+                handler: (oldMember: Discord.GuildMember, newMember: Discord.GuildMember) => {
+                    let guild = oldMember.guild;
+                    let gameRoles = guild.roles.filter((value: Discord.Role) => value.name.startsWith("in:"));
+                    if (guild.me.permissions.has("MANAGE_ROLES") && oldMember.presence.game != newMember.presence.game) {
+
+                        let currentGame = newMember.presence.game;
+                        if (currentGame != null) {
+                            new Promise((resolve, reject) => {
+                                let r = gameRoles.find((value: Discord.Role) => value.name == `in:${currentGame.name}`);
+                                resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true }));
+                            })
+                                .then((role: Discord.Role) => {
+                                    newMember.addRole(role);
+                                });
+                        }
+
+                        newMember.removeRoles(newMember.roles.filter((value: Discord.Role) => value.name.startsWith("in:") && (currentGame != null ? value.name == `in:${currentGame.name}` : true)));
+
+                    }
+                }
             }
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
@@ -64,7 +89,6 @@ export class DiscordBot {
 
         this.processes = new Array<OngoingProcess>();
 
-        Prefixer.prepare(this.config.shortname)
     }
 
     start() {
