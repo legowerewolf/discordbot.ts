@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 # Only deploy if this is is not a pull request (i.e., this comes from a trusted source)
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
