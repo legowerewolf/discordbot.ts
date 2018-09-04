@@ -57,25 +57,25 @@ export class DiscordBot {
             },
             {
                 event: "presenceUpdate",
-                handler: (oldMember: Discord.GuildMember, newMember: Discord.GuildMember) => {
+                handler: (oldMember: Discord.GuildMember, member: Discord.GuildMember) => {
                     let guild = oldMember.guild;
                     let gameRoles = guild.roles.filter((value: Discord.Role) => value.name.startsWith("in:"));
-                    if (guild.me.permissions.has("MANAGE_ROLES") && oldMember.presence.game != newMember.presence.game) {
+                    if (guild.me.permissions.has("MANAGE_ROLES") && oldMember.presence.game != member.presence.game && !member.user.bot) {
 
-                        let currentGame = newMember.presence.game;
+                        let currentGame = member.presence.game;
                         if (currentGame != null) {
                             new Promise((resolve, reject) => { // Find or make the role
                                 let r = gameRoles.find((value: Discord.Role) => value.name == `in:${currentGame.name}`);
                                 resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true }));
                             })
                                 .then((role: Discord.Role) => { // Assign the user to the role
-                                    newMember.addRole(role);
+                                    member.addRole(role);
                                 });
                         }
 
                         //Clean up other roles
-                        newMember.roles.filter((value: Discord.Role) => value.name.startsWith("in:") && (currentGame != null ? value.name != `in:${currentGame.name}` : true)).forEach((role) => {
-                            newMember.removeRole(role).then((member) => {
+                        member.roles.filter((value: Discord.Role) => value.name.startsWith("in:") && (currentGame != null ? value.name != `in:${currentGame.name}` : true)).forEach((role) => {
+                            member.removeRole(role).then((member) => {
                                 if (role.members.size == 0) {
                                     role.delete();
                                 }
