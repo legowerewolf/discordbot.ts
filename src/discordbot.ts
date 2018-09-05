@@ -75,11 +75,16 @@ export class DiscordBot {
 
                         //Clean up other roles
                         member.roles.filter((value: Discord.Role) => value.name.startsWith("in:") && (currentGame != null ? value.name != `in:${currentGame.name}` : true)).forEach((role) => {
-                            member.removeRole(role).then((member) => {
-                                if (role.members.size == 0) {
-                                    role.delete();
-                                }
-                            })
+                            member.removeRole(role)
+                                .then((member) => {
+                                    if (role.members.size == 0) {
+                                        role.delete();
+                                    }
+                                })
+                                .catch((error) => {
+                                    this.console(ERROR, "here.");
+                                    this.console(ERROR, `${error}`);
+                                })
                         })
                     }
                 }
