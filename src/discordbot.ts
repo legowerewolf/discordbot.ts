@@ -66,11 +66,18 @@ export class DiscordBot {
                         if (currentGame != null) {
                             new Promise((resolve, reject) => { // Find or make the role
                                 let r = gameRoles.find((value: Discord.Role) => value.name == `in:${currentGame.name}`);
-                                resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true }));
+                                resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true }).catch((error) => {
+                                    this.console(ERROR, "Error on role creation.");
+                                    this.console(ERROR, `${error}`);
+                                }));
                             })
                                 .then((role: Discord.Role) => { // Assign the user to the role
-                                    member.addRole(role);
-                                });
+                                    member.addRole(role).catch((error) => {
+                                        this.console(ERROR, "Error on role assignment.");
+                                        this.console(ERROR, `${error}`);
+                                    })
+                                })
+
                         }
 
                         //Clean up other roles
@@ -78,13 +85,17 @@ export class DiscordBot {
                             member.removeRole(role)
                                 .then((member) => {
                                     if (role.members.size == 0) {
-                                        role.delete();
+                                        role.delete().catch((error) => {
+                                            this.console(ERROR, "Error on role deletion.");
+                                            this.console(ERROR, `${error}`);
+                                        });
                                     }
                                 })
                                 .catch((error) => {
-                                    this.console(ERROR, "here.");
+                                    this.console(ERROR, "Error on role removal.");
                                     this.console(ERROR, `${error}`);
                                 })
+
                         })
                     }
                 }
