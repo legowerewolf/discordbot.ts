@@ -73,7 +73,7 @@ export class DiscordBot {
                             })
                                 .then((role: Discord.Role) => { // Assign the user to the role
                                     member.addRole(role).catch((error) => {
-                                        this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role})`);
+                                        this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
                                         this.console(ERROR, `${error}`);
                                     })
                                 })
@@ -86,13 +86,13 @@ export class DiscordBot {
                                 .then((member) => {
                                     if (role.members.size == 0) {
                                         role.delete().catch((error) => {
-                                            this.console(ERROR, `Error on role deletion. ${role.guild.name}/${role.name} (${role})`);
+                                            this.console(ERROR, `Error on role deletion. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
                                             this.console(ERROR, `${error}`);
                                         });
                                     }
                                 })
                                 .catch((error) => {
-                                    this.console(ERROR, `Error on role removal. ${role.guild.name}/${role.name} (${role})`);
+                                    this.console(ERROR, `Error on role removal. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
                                     this.console(ERROR, `${error}`);
                                 })
 
