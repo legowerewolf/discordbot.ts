@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/natural": "^0.2.33",
-    "@types/node": "^10.9.3",
+    "@types/node": "^10.9.4",
     "@types/node-fetch": "^2.1.2",
     "gulp": "^3.9.1",
     "gulp-typescript": "^5.0.0-alpha.3",
