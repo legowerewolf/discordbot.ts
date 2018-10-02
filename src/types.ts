@@ -4,6 +4,7 @@ import { DiscordBot } from './discordbot';
 export interface ConfigElement {
     shortname: string;
     logLevel: number;
+    defaultPermissionLevel: number;
     APIKeys: {
         discord: string;
         chatbase?: string;

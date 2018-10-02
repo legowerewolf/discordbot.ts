@@ -142,7 +142,8 @@ export class DiscordBot {
         };
         eventData.subscriberPush = (message: string) => { this.pushSubscriberMessage({ message: message, user: eventData.author.id, source: SubscriberMessageSources.user }); };
 
-        if (!intent.permissionLevel || this.config.users[eventData.author.id].permissionLevel >= intent.permissionLevel) {
+        let userPermissionLevel = this.config.users[eventData.author.id].permissionLevel;
+        if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
             if (intent.handler) { // If an intent handler is explicitly provided
                 require("./intentHandlers/" + intent.handler).handler(eventData);
             } else { // Run the handler matching the intent name

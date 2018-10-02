@@ -4,6 +4,7 @@
         "discord": null
     },
     "logLevel": 0,
+    "defaultPermissionLevel": 0,
     "intents": [
         {
             "name": "greeting",
