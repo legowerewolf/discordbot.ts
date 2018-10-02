@@ -20,7 +20,7 @@
     "@types/natural": "^0.2.33",
     "@types/node": "^10.9.4",
     "@types/node-fetch": "^2.1.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.0-alpha.3",
     "typescript": "^3.0.3"
   }

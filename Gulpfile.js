@@ -11,10 +11,10 @@ gulp.task("build-typescript", function () {
 });
 
 gulp.task("start-watchers", () => {
-    gulp.watch(tsProject.config.include, ["build-typescript"]);
+    gulp.watch(tsProject.config.include, gulp.parallel("build-typescript"));
 })
 
-gulp.task("default-nowatch", ["build-typescript"])
+gulp.task("default-nowatch", gulp.series("build-typescript"));
 
-gulp.task("default", ["default-nowatch", "start-watchers"]);
+gulp.task("default", gulp.parallel("default-nowatch", "start-watchers"));
 
