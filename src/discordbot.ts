@@ -1,5 +1,6 @@
 import * as Discord from 'discord.js';
 import { Brain } from './brain';
+import { getPropertySafe } from './helpers';
 import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer, WARN } from "./prefixer";
 import { CommunicationEvent, ConfigElement, MessageSubscriber, OngoingProcess, SubscriberMessage, SubscriberMessageSources } from './types';
 
@@ -142,7 +143,7 @@ export class DiscordBot {
         };
         eventData.subscriberPush = (message: string) => { this.pushSubscriberMessage({ message: message, user: eventData.author.id, source: SubscriberMessageSources.user }); };
 
-        let userPermissionLevel = this.config.users[eventData.author.id].permissionLevel;
+        let userPermissionLevel = getPropertySafe(this.config.users, `${eventData.author.id}.permissionLevel`);
         if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
             if (intent.handler) { // If an intent handler is explicitly provided
                 require("./intentHandlers/" + intent.handler).handler(eventData);

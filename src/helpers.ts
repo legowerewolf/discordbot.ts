@@ -33,3 +33,10 @@ export function responseToQuestion(eventData: CommunicationEvent, completedCallb
     }
 
 }
+
+// From https://stackoverflow.com/a/23809123
+export function getPropertySafe(obj: any, key: string) {
+    return key.split(".").reduce(function (o, x) {
+        return (typeof o == "undefined" || o === null) ? o : o[x];
+    }, obj);
+}
