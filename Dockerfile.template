@@ -9,5 +9,5 @@ ENV INITSYSTEM on
 COPY --from=builder ./build ./build
 COPY --from=builder ./config ./config
 COPY ./package.json .
-RUN npm i --production
+RUN npm i --production && npm cache clean
 CMD ["node", "build/index"]
