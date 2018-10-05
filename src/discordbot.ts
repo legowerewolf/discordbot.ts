@@ -63,20 +63,28 @@ export class DiscordBot {
                     let gameRoles = guild.roles.filter((value: Discord.Role) => value.name.startsWith("in:"));
                     if (guild.me.permissions.has("MANAGE_ROLES") && oldMember.presence.game != member.presence.game && !member.user.bot) {
 
+                        let instance = Math.random();
+
                         let currentGame = member.presence.game;
                         if (currentGame != null) {
                             new Promise((resolve, reject) => { // Find or make the role
                                 let r = gameRoles.find((value: Discord.Role) => value.name == `in:${currentGame.name}`);
-                                resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true }).catch((error) => {
-                                    this.console(ERROR, "Error on role creation.");
-                                    this.console(ERROR, `${error}`);
-                                }));
+                                resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true })
+                                    .then((role) => {
+                                        this.console(INFO, `Created role: ${role.guild.name}/${role.name} (instance: ${instance})`);
+                                    }, (error) => {
+                                        this.console(ERROR, "Error on role creation.");
+                                        this.console(ERROR, `${error}`);
+                                    }));
                             })
                                 .then((role: Discord.Role) => { // Assign the user to the role
-                                    member.addRole(role).catch((error) => {
-                                        this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
-                                        this.console(ERROR, `${error}`);
-                                    })
+                                    member.addRole(role)
+                                        .then((user) => {
+                                            this.console(INFO, `Added role to user: ${role.guild.name}/${role.name} to ${user.displayName} (instance: ${instance})`);
+                                        }, (error) => {
+                                            this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted}, instance: ${instance})`);
+                                            this.console(ERROR, `${error}`);
+                                        })
                                 })
 
                         }
@@ -86,14 +94,18 @@ export class DiscordBot {
                             member.removeRole(role)
                                 .then((member) => {
                                     if (role.members.size == 0) {
-                                        role.delete().catch((error) => {
-                                            this.console(ERROR, `Error on role deletion. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
+                                        role.delete().then(() => {
+                                            this.console(INFO, `Deleted role: ${role.guild.name}/${role.name} (instance: ${instance})`);
+                                        }, (error) => {
+                                            this.console(ERROR, `Error on role deletion. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted}, instance: ${instance})`);
                                             this.console(ERROR, `${error}`);
                                         });
                                     }
                                 })
-                                .catch((error) => {
-                                    this.console(ERROR, `Error on role removal. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted})`);
+                                .then(() => {
+                                    this.console(INFO, `Removed role from user: ${role.guild.name}/${role.name} from ${member.displayName} (instance: ${instance})`);
+                                }, (error) => {
+                                    this.console(ERROR, `Error on role removal. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted}, instance: ${instance})`);
                                     this.console(ERROR, `${error}`);
                                 })
 
