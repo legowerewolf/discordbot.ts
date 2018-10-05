@@ -80,6 +80,7 @@ export class DiscordBot {
                                 .then((role: Discord.Role) => { // Assign the user to the role
                                     member.addRole(role)
                                         .then((user) => {
+                                            this.console(INFO, `Attempted to add ${role} to user ${user.displayName}`);
                                             this.console(INFO, `Added role to user: ${role.guild.name}/${role.name} to ${user.displayName} (instance: ${instance})`);
                                         }, (error) => {
                                             this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted}, instance: ${instance})`);
