@@ -72,15 +72,16 @@ export class DiscordBot {
                                 resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true })
                                     .then((role) => {
                                         this.console(INFO, `Created role: ${role.guild.name}/${role.name} (instance: ${instance})`);
+                                        return Promise.resolve(role);
                                     }, (error) => {
                                         this.console(ERROR, "Error on role creation.");
                                         this.console(ERROR, `${error}`);
+                                        return Promise.resolve(error);
                                     }));
                             })
                                 .then((role: Discord.Role) => { // Assign the user to the role
                                     member.addRole(role)
                                         .then((user) => {
-                                            this.console(INFO, `Attempted to add ${role} to user ${user.displayName}`);
                                             this.console(INFO, `Added role to user: ${role.guild.name}/${role.name} to ${user.displayName} (instance: ${instance})`);
                                         }, (error) => {
                                             this.console(ERROR, `Error on role assignment. ${role.guild.name}/${role.name} (${role}, deleted: ${(role as any).deleted}, instance: ${instance})`);
