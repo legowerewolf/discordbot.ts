@@ -5,6 +5,5 @@ install:
   - npm install
   - npm install -g gulp-cli
 script:
-  - gulp default-nowatch
   - npm test
 after_success: bash ./scripts/deploy.sh
