@@ -32,6 +32,7 @@ function run_tests(done) {
     done(pass ? null : new Error("Tests failed."));
 }
 
+gulp.task("build", build_typescript);
 gulp.task("test", gulp.series(build_typescript, run_tests));
 gulp.task("start-watchers", () => {
     gulp.watch(tsProject.config.include, gulp.parallel("test"));

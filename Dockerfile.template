@@ -2,7 +2,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node as builder
 COPY . .
 RUN npm i && \
     npm i -g gulp-cli && \
-    gulp default-nowatch
+    gulp build
 
 FROM resin/%%RESIN_MACHINE_NAME%%-alpine-node
 ENV INITSYSTEM on
