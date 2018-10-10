@@ -15,7 +15,7 @@ function run_tests(done) {
         {
             name: "Prefixer",
             test: () => {
-                let Prefixer = require("./build/Prefixer").Prefixer;
+                let Prefixer = require("./build/prefixer").Prefixer;
                 Prefixer.prepare("Testing");
                 Prefixer.prepare("Test");
                 return Prefixer.compose("T", "3.14") === "[T]       3.14"
@@ -32,7 +32,7 @@ function run_tests(done) {
     done(pass ? null : new Error("Tests failed."));
 }
 
-gulp.task("test", gulp.series(build_typescript, run_tests));
+gulp.task("test", gulp.series(build_typescript, log_files, run_tests));
 gulp.task("start-watchers", () => {
     gulp.watch(tsProject.config.include, gulp.parallel("test"));
 });
