@@ -6,9 +6,12 @@ export const ERROR_LEVEL_PREFIXES = ["[INFO]  ", "[WARN]  ", "[ERROR] "];
 export let Prefixer = {
     maxLength: 0,
     log: function (name: string, message: string) {
+        console.log(this.compose(name, message));
+    },
+    compose: function (name: string, message: string): string {
         let prefix = "[" + name + "]";
         prefix += " ".repeat(this.maxLength - prefix.length);
-        console.log(prefix + message);
+        return prefix + message;
     },
     prepare: function (name: string) {
         if (name.length + 3 > this.maxLength) {
