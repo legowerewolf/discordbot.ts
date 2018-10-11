@@ -25,6 +25,23 @@
             }
         },
         {
+            "name": "goodnight",
+            "models": [
+                "goodnight",
+                "good night",
+                "buenos noches"
+            ],
+            "handler": "basic-response",
+            "data": {
+                "responses": [
+                    "Goodnight!",
+                    "Have a good night!",
+                    "See you tomorrow, I guess?",
+                    "Adios."
+                ]
+            }
+        },
+        {
             "name": "capability-query",
             "models": [
                 "what can you do?",
