@@ -13,21 +13,30 @@ function build_typescript() {
 function run_tests(done) {
     let tests = [
         {
-            name: "Prefixer",
+            name: "Prefixer composition",
             test: () => {
-                let Prefixer = require("./build/prefixer").Prefixer;
-                Prefixer.prepare("Testing");
-                Prefixer.prepare("Test");
-                return Prefixer.compose("T", "3.14") === "[T]       3.14"
+                let prefixer = require("./build/prefixer").getNewPrefixer();
+                prefixer.prepare("Testing");
+                prefixer.prepare("Test");
+                return prefixer.compose("T", "3.14") === "[T]       3.14"
             }
         }
     ]
 
-    let pass = tests.map((test) => {
-        let result = test.test();
-        console.log(`${test.name}: ${result ? "Pass" : "Fail"}`);
-        return result
-    }).reduce((accum, result) => { return accum && result }, true);
+    let testPrefixer = require("./build/prefixer").getNewPrefixer();
+    tests.map(test => test.name).forEach((name) => { testPrefixer.prepare(name) });
+
+    console.log("=".repeat(60));
+
+    let pass = tests
+        .map((test) => {
+            let result = test.test();
+            testPrefixer.log(test.name, `${result ? "Pass" : "Fail"}`);
+            return result;
+        })
+        .reduce((accum, result) => { return accum && result }, true);
+
+    console.log("=".repeat(60));
 
     done(pass ? null : new Error("Tests failed."));
 }
