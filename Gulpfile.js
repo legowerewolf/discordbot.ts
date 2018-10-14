@@ -38,7 +38,7 @@ function run_tests(done) {
 
     console.log("=".repeat(60));
 
-    done(pass ? null : new Error("Tests failed."));
+    done(pass || tests.length == 0 ? null : new Error("Tests failed."));
 }
 
 gulp.task("build", build_typescript);
