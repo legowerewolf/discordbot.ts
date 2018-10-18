@@ -1,14 +1,14 @@
 // Brain is based on https://github.com/andrew-templeton/bottie
 
-import * as Natural from 'natural';
+import { LogisticRegressionClassifier } from 'natural';
 import { NaturalGuess } from './types';
 
 export class Brain {
-    classifier: Natural.LogisticRegressionClassifier;
+    classifier: LogisticRegressionClassifier;
     minConfidence: number;
 
     constructor() {
-        this.classifier = new Natural.LogisticRegressionClassifier();
+        this.classifier = new LogisticRegressionClassifier();
         this.minConfidence = 0.7;
     }
 
