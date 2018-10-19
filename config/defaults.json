@@ -20,7 +20,8 @@
                     "Hello!",
                     "Hi!",
                     "Greetings.",
-                    "Aloha."
+                    "Aloha.",
+                    "Salutations."
                 ]
             }
         },
@@ -98,7 +99,10 @@
                 "make a temporary voice channel",
                 "create a channel",
                 "make a vc",
-                "make a temporary channel"
+                "make a temporary channel",
+                "make a channel",
+                "create a temporary channel",
+                "create a temporary voice channel"
             ],
             "data": {
                 "questionData": {
@@ -124,7 +128,10 @@
                     "Not Murder",
                     "The End Times",
                     "How 'Bout That Lotus, Eh?",
-                    "Johnathan"
+                    "Johnathan",
+                    "The Council of Elrond",
+                    "Generic channel name",
+                    "Stuck in Vim"
                 ],
                 "checkForMembersInterval": 5000,
                 "bitrate": 16
