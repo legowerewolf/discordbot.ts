@@ -26,6 +26,22 @@
             }
         },
         {
+            "name": "despacito",
+            "models": [
+                "that's so sad",
+                "play despacito",
+                "that's so sad play despacito",
+                "despacito"
+            ],
+            "handler": "basic-response",
+            "data": {
+                "responses": [
+                    "Here's some Desapcito: https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+                    "Do I *look* like Alexa to you?"
+                ]
+            }
+        },
+        {
             "name": "goodnight",
             "models": [
                 "goodnight",
