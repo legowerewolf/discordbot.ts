@@ -10,23 +10,23 @@ export function responseToQuestion(eventData: CommunicationEvent, completedCallb
 
     if (eventData.source == "text") { // Only allow the question/response flow on text chats
         eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
-        let index = 0;
-        let maxIndex = eventData.config.questionData.responseCheckDuration / eventData.config.questionData.responseCheckInterval;
+        let ticks = 0;
+        let maxTicks = eventData.config.questionData.responseCheckDuration / eventData.config.questionData.responseCheckInterval;
         let currentMessageID = eventData.messageObject.id;
 
         let intervalChecker = setInterval(() => {
-            if (eventData.author.lastMessageID != currentMessageID || index > maxIndex) {
+            if (eventData.author.lastMessageID != currentMessageID || ticks > maxTicks) {
                 if (eventData.author.lastMessageID != currentMessageID) {
                     response = eventData.author.lastMessage.cleanContent;
                     if (eventData.subscriberPush) { eventData.subscriberPush(response) };
                     eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse));
-                } else if (index > maxIndex) {
+                } else if (ticks > maxTicks) {
                     eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
                 }
                 clearInterval(intervalChecker);
                 completedCallback(response);
             }
-            index += 1;
+            ticks += 1;
         }, eventData.config.questionData.responseCheckInterval);
     } else {
         completedCallback(response);
