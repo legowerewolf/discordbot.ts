@@ -106,7 +106,9 @@
                     "Ok. Goodbye!",
                     "I'll be back."
                 ],
-                "shutdownDelay": 3000
+                "intentSpecific": {
+                    "shutdownDelay": 3000
+                }
             }
         },
         {
@@ -122,35 +124,37 @@
             ],
             "data": {
                 "questionData": {
-                    "question": [
+                    "questionMessage": [
                         "Alright, what do you want to name it?"
                     ],
-                    "answeredResponse": [
+                    "answeredResponseMessage": [
                         "Alright, that's what I'll call it."
                     ],
-                    "timeoutResponse": [
+                    "timeoutResponseMessage": [
                         "Never mind. I'll pick a name."
                     ],
-                    "responseCheckInterval": 500,
-                    "responseCheckDuration": 10000
+                    "responseCheckIntervalMs": 500,
+                    "responseCheckDurationMs": 10000,
+                    "defaultResponses": [
+                        "Death Metal",
+                        "Rainbows",
+                        "Unicorns",
+                        "Not Murder",
+                        "The End Times",
+                        "How 'Bout That Lotus, Eh?",
+                        "Johnathan",
+                        "The Council of Elrond",
+                        "Generic channel name",
+                        "Stuck in Vim"
+                    ]
                 },
                 "responses": [
                     "welcome to your new channel: "
                 ],
-                "channelNames": [
-                    "Death Metal",
-                    "Rainbows",
-                    "Unicorns",
-                    "Not Murder",
-                    "The End Times",
-                    "How 'Bout That Lotus, Eh?",
-                    "Johnathan",
-                    "The Council of Elrond",
-                    "Generic channel name",
-                    "Stuck in Vim"
-                ],
-                "checkForMembersInterval": 5000,
-                "bitrate": 16
+                "intentSpecific": {
+                    "checkForMembersInterval": 5000,
+                    "bitrate": 16
+                }
             }
         },
         {

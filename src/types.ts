@@ -17,17 +17,14 @@ interface Intent {
     name: string;
     models: Array<string>;
     handler: string;
-    data?: {
-        responses?: Array<string>;
-        questionData?: {
-            question?: Array<string>;
-            answeredResponse?: Array<string>;
-            timeoutResponse?: Array<string>;
-            responseCheckInterval?: number;
-            responseCheckDuration?: number;
-        }
-    };
+    data?: IntentData;
     permissionLevel?: number;
+}
+
+export interface IntentData {
+    responses?: Array<string>;
+    questionData?: QuestionData;
+    intentSpecific?: any;
 }
 export interface CommunicationEvent {
     text: string;
@@ -39,7 +36,7 @@ export interface CommunicationEvent {
 
     messageObject?: Discord.Message;
 
-    config?: any;
+    config?: IntentData;
     subscriberPush?: ResponseCallback;
     bot?: DiscordBot;
 }
@@ -49,10 +46,12 @@ export interface ResponseCallback {
 }
 
 export interface QuestionData {
-    question: string;
-    questionAnswered: string;
-    questionTimeout: string;
-    callback: ResponseCallback;
+    questionMessage?: Array<string>;
+    answeredResponseMessage?: Array<string>;
+    timeoutResponseMessage?: Array<string>;
+    responseCheckIntervalMs?: number;
+    responseCheckDurationMs?: number;
+    defaultResponses?: Array<string>;
 }
 
 export interface NaturalGuess {
