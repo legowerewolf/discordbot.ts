@@ -120,18 +120,26 @@
                 "make a temporary channel",
                 "make a channel",
                 "create a temporary channel",
-                "create a temporary voice channel"
+                "create a temporary voice channel",
+                "new channel",
+                "make a new channel",
+                "make a new channel please",
+                "new channel please"
             ],
             "data": {
                 "questionData": {
                     "questionMessage": [
-                        "Alright, what do you want to name it?"
+                        "Alright, what do you want to name it?",
+                        "What do you want to call it?"
                     ],
                     "answeredResponseMessage": [
-                        "Alright, that's what I'll call it."
+                        "Alright, that's what I'll call it.",
+                        "And so it was named.",
+                        "Perfectly named. As all things should be."
                     ],
                     "timeoutResponseMessage": [
-                        "Never mind. I'll pick a name."
+                        "Never mind. I'll pick a name.",
+                        "Alright. Guess I'll pick one."
                     ],
                     "responseCheckIntervalMs": 500,
                     "responseCheckDurationMs": 10000,
@@ -149,7 +157,8 @@
                     ]
                 },
                 "responses": [
-                    "welcome to your new channel: "
+                    "welcome to your new channel: ",
+                    "Here you go! Your new channel, fresh from the factory: "
                 ],
                 "intentSpecific": {
                     "checkForMembersInterval": 5000,
