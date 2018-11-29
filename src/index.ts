@@ -1,6 +1,9 @@
 import * as Fs from 'fs';
 import { DiscordBot } from './discordbot';
 import { ConfigElement } from './types';
+import { update } from './update';
+
+update();
 
 Fs.readFile("./config/defaults.json", function (err, defaultData) {
     if (err) throw err;
