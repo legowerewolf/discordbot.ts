@@ -11,5 +11,7 @@ deploy:
   project: luna-224018
   keyfile: deploy/AppEngine.json
 before_install:
+- openssl aes-256-cbc -K $encrypted_51986a45e90d_key -iv $encrypted_51986a45e90d_iv
+  -in AppEngine.json.enc -out AppEngine.json -d
 - openssl aes-256-cbc -K $encrypted_323c3ce922a5_key -iv $encrypted_323c3ce922a5_iv
   -in deploy/AppEngine.json.enc -out deploy/AppEngine.json -d
