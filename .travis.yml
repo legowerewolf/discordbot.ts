@@ -6,4 +6,3 @@ install:
   - npm install -g gulp-cli
 script:
   - npm test
-after_success: bash ./scripts/deploy.sh
