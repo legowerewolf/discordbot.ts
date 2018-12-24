@@ -1,4 +1,4 @@
-import * as Discord from 'discord.js';
+import { Client, Guild, Message, User } from 'discord.js';
 import { DiscordBot } from './discordbot';
 
 export interface ConfigElement {
@@ -30,12 +30,12 @@ export interface IntentData {
 export interface CommunicationEvent {
     text: string;
     responseCallback: ResponseCallback;
-    author: Discord.User;
-    guild: Discord.Guild;
-    client: Discord.Client;
+    author: User;
+    guild: Guild
+    client: Client;
     source: string;
 
-    messageObject?: Discord.Message;
+    messageObject?: Message;
 
     config?: IntentData;
     subscriberPush?: ResponseCallback;

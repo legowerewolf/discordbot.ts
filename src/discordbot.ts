@@ -1,4 +1,5 @@
-import * as Discord from 'discord.js';
+
+import { Client, Message } from 'discord.js';
 import { Brain } from './brain';
 import { getPropertySafe } from './helpers';
 import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer, WARN } from "./prefixer";
@@ -7,7 +8,7 @@ import { CommunicationEvent, ConfigElement, MessageSubscriber, OngoingProcess, P
 export class DiscordBot {
     config: ConfigElement;
     brain: Brain;
-    client: Discord.Client;
+    client: Client;
     subscribers: Array<MessageSubscriber>;
     processes: Array<OngoingProcess>;
     plugins: Array<Plugin>;
@@ -23,11 +24,11 @@ export class DiscordBot {
         });
         this.brain.train();
 
-        this.client = new Discord.Client();
+        this.client = new Client();
         [
             {
                 event: "message",
-                handler: (msg: Discord.Message) => {
+                handler: (msg: Message) => {
                     if (msg.author.id != this.client.user.id && msg.mentions.users.has(this.client.user.id)) {
                         this.handleInput({
                             text: msg.cleanContent,
