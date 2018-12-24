@@ -12,6 +12,7 @@ export interface ConfigElement {
     subscribers?: any;
     users?: any;
     intents: Array<Intent>;
+    plugins: Array<string>;
 }
 interface Intent {
     name: string;
@@ -83,4 +84,8 @@ export interface OngoingProcess {
     data: any;
     start: Function;
     stop: Function;
+}
+
+export abstract class Plugin {
+    abstract inject(context: DiscordBot): void;
 }

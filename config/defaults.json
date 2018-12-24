@@ -176,5 +176,8 @@
                 ]
             }
         }
+    ],
+    "plugins": [
+        "presence-roles"
     ]
 }
