@@ -178,6 +178,7 @@
         }
     ],
     "plugins": [
-        "presence-roles"
+        "presence-roles",
+        "voice-scaling"
     ]
 }
