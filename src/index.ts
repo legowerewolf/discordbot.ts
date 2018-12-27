@@ -7,8 +7,8 @@ import { ConfigElement, IntentsResolutionMethods } from './types';
 const readFileP = promisify(readFile);
 
 Promise.all([
-    readFileP("./config/defaults.json"),
-    readFileP("./config/config.json")
+    readFileP("./config/defaults.yaml"),
+    readFileP("./config/config.yaml")
         .catch(() => {
             if (process.env.BotConfig) return Buffer.from(process.env.BotConfig);
             else throw new Error("Required custom configuration not found. Create a config file or provide via environment variable.");

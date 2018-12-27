@@ -1,0 +1,134 @@
+---
+shortname: 
+APIKeys:
+  discord: # This is the only required value for the entire bot. Paste the key from the Discord API console here.
+logLevel: 0
+defaultPermissionLevel: 0
+intentsResolutionMethod: useDefault
+intents:
+- name: greeting
+  models:
+  - hello
+  - hi
+  - greetings
+  - welcome
+  handler: basic-response
+  data:
+    responses:
+    - Hello!
+    - Hi!
+    - Greetings.
+    - Aloha.
+    - Salutations.
+- name: despacito
+  models:
+  - that's so sad
+  - play despacito
+  - that's so sad play despacito
+  - despacito
+  handler: basic-response
+  data:
+    responses:
+    - 'Here''s some Desapcito: https: //www.youtube.com/watch?v=kJQP7kiw5Fk'
+    - Do I *look* like Alexa to you?
+- name: goodnight
+  models:
+  - goodnight
+  - good night
+  - buenos noches
+  handler: basic-response
+  data:
+    responses:
+    - Goodnight!
+    - Have a good night!
+    - See you tomorrow, I guess?
+- name: capability-query
+  models:
+  - what can you do?
+  - help
+  - what can I say?
+  handler: basic-response
+  data:
+    responses:
+    - You can say "make a temporary channel", and I'll create a voice channel that
+      only exists as long as someone's in it. I don't do much yet, though. My developer's
+      working on it.
+- name: declaration-of-love
+  models:
+  - I love you
+  - ily
+  handler: basic-response
+  data:
+    responses:
+    - Aww, I love you too!
+    - "\\*blushes\\*"
+- name: ip-finder
+  permissionLevel: 5
+  models:
+  - where am I?
+  - what is my IP address
+- name: bot-shutdown
+  permissionLevel: 5
+  models:
+  - shut down
+  - shutdown
+  - go offline
+  data:
+    responses:
+    - Ok. Goodbye!
+    - I'll be back.
+    intentSpecific:
+      shutdownDelay: 3000
+- name: temporary-voice-channel
+  models:
+  - make a temporary voice channel
+  - create a channel
+  - make a vc
+  - make a temporary channel
+  - make a channel
+  - create a temporary channel
+  - create a temporary voice channel
+  - new channel
+  - make a new channel
+  - make a new channel please
+  - new channel please
+  data:
+    questionData:
+      questionMessage:
+      - Alright, what do you want to name it?
+      - What do you want to call it?
+      answeredResponseMessage:
+      - Alright, that's what I'll call it.
+      - And so it was named.
+      - Perfectly named. As all things should be.
+      timeoutResponseMessage:
+      - Never mind. I'll pick a name.
+      - Alright. Guess I'll pick one.
+      responseCheckIntervalMs: 500
+      responseCheckDurationMs: 10000
+      defaultResponses:
+      - Death Metal
+      - Rainbows
+      - Unicorns
+      - Not Murder
+      - The End Times
+      - How 'Bout That Lotus, Eh?
+      - Johnathan
+      - The Council of Elrond
+      - Generic channel name
+      - Stuck in Vim
+    responses:
+    - 'welcome to your new channel: '
+    - 'Here you go! Your new channel, fresh from the factory: '
+    intentSpecific:
+      checkForMembersInterval: 5000
+      bitrate: 16
+- name: error-unknown
+  handler: basic-response
+  data:
+    responses:
+    - I'm sorry, what was that?
+    - I didn't understand. Could you rephrase that?
+plugins:
+- presence-roles
+- voice-scaling
