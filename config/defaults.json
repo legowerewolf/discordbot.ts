@@ -5,6 +5,7 @@
     },
     "logLevel": 0,
     "defaultPermissionLevel": 0,
+    "intentsResolutionMethod": "useDefault",
     "intents": [
         {
             "name": "greeting",

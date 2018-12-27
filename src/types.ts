@@ -1,6 +1,12 @@
 import { Client, Guild, Message, User } from 'discord.js';
 import { DiscordBot } from './discordbot';
 
+export enum IntentsResolutionMethods {
+    UseDefault = "useDefault",
+    UseCustom = "useCustom",
+    Concatenate = "concatenate"
+}
+
 export interface ConfigElement {
     shortname: string;
     logLevel: number;
@@ -11,7 +17,10 @@ export interface ConfigElement {
     };
     subscribers?: any;
     users?: any;
+
+    intentsResolutionMethod: IntentsResolutionMethods;
     intents: Array<Intent>;
+
     plugins: Array<string>;
 }
 interface Intent {

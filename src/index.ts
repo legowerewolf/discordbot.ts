@@ -1,30 +1,37 @@
-import * as Fs from 'fs';
+import { readFile } from 'fs';
+import { promisify } from 'util';
 import { DiscordBot } from './discordbot';
-import { ConfigElement } from './types';
+import { ConfigElement, IntentsResolutionMethods } from './types';
 
-Fs.readFile("./config/defaults.json", function (err, defaultData) {
-    if (err) throw err;
+const readFileP = promisify(readFile);
 
-    Fs.readFile("./config/config.json", function (err, customData) {
-        if (err) {
-            if (process.env.BotConfig) {
-                customData = Buffer.from(process.env.BotConfig);
-            } else { throw err; }
-        }
+Promise.all([
+    readFileP("./config/defaults.json"),
+    readFileP("./config/config.json")
+        .catch(() => {
+            if (process.env.BotConfig) return Buffer.from(process.env.BotConfig);
+            else throw new Error("Required custom configuration not found. Create a config file or provide via environment variable.");
+        })
+])
+    .then((data) => {
+        let defaultConfig: ConfigElement = JSON.parse(data[0].toString());
+        let customConfig: ConfigElement[] = JSON.parse(data[1].toString()).instances;
 
-        let defaultConfig: ConfigElement = JSON.parse(defaultData.toString());
-        let customConfig = JSON.parse(customData.toString());
+        if (customConfig === undefined) throw new Error("Malformed configuration data.")
 
-        if (!customConfig.instances) {
-            customConfig = { instances: [customConfig] };
-        }
+        customConfig.forEach((element: ConfigElement) => {
+            let config = { ...defaultConfig, ...element }; // Merge preferring external data
 
-        customConfig.instances.forEach((element: ConfigElement) => {
-            let config = { ...defaultConfig, ...element };
-            config.intents = element.intents ? defaultConfig.intents.concat(element.intents) : defaultConfig.intents;
+            config.intents = (() => {
+                switch (element.intentsResolutionMethod) {
+                    default: return defaultConfig.intents;
+                    case IntentsResolutionMethods.UseCustom: return element.intents;
+                    case IntentsResolutionMethods.Concatenate: return [...defaultConfig.intents, ...element.intents];
+                }
+            })();
+
             let bot = new DiscordBot(config);
             bot.start();
-        });
 
-    });
-});
+        });
+    })
