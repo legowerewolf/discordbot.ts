@@ -1,4 +1,5 @@
 import { readFile } from 'fs';
+import { safeLoad } from 'js-yaml';
 import { promisify } from 'util';
 import { DiscordBot } from './discordbot';
 import { ConfigElement, IntentsResolutionMethods } from './types';
@@ -14,8 +15,8 @@ Promise.all([
         })
 ])
     .then((data) => {
-        let defaultConfig: ConfigElement = JSON.parse(data[0].toString());
-        let customConfig: ConfigElement[] = JSON.parse(data[1].toString()).instances;
+        let defaultConfig: ConfigElement = safeLoad(data[0].toString());
+        let customConfig: ConfigElement[] = safeLoad(data[1].toString()).instances;
 
         if (customConfig === undefined) throw new Error("Malformed configuration data.")
 

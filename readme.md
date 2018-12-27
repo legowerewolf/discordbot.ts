@@ -1,14 +1,21 @@
 # Discordbot.js
 
-A simple way to add a natural language Discord bot to your server.
+A simple way to add natural-language-powered Discord bots to your server.
 
 ## Setup
 
-1. Add a file called `config.json` to the config directory.
+1. `npm i` to install all dependencies.
+1. `npm test` to build and test everything. \*
+1. Compose your configuration, then write it to `./config/config.yaml` or an environment var called `botConfig`.
+1. `npm start` to start up your bot(s)!
+
+### Configuration
+
+Check out the defaults.
 
 ### Permissions
 
-The bot needs the following permissions to work at full strength.
+With all features and plugins, the bot needs the following permissions to run.
 
 * Manage Channels
 * View Channels
