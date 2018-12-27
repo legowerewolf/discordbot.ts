@@ -11,7 +11,7 @@ A simple way to add natural-language-powered Discord bots to your server.
 
 ### Configuration
 
-Check out the defaults.
+Check out the commented defaults in `./config/defaults.yaml`.
 
 ### Permissions
 
@@ -21,6 +21,11 @@ With all features and plugins, the bot needs the following permissions to run.
 * View Channels
 * Send Messages
 * Read Message History
+
+## Contributing
+
+Things that need to get done:
+* Unit tests, holy crap. Worry about the little stuff, there's not much to be done for stuff depending on API data or the state of the whole bot.
 
 ## License
 

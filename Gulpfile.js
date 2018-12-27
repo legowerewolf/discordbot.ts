@@ -12,6 +12,11 @@ function build_typescript() {
 
 function run_tests(done) {
     let tests = [
+        ////////////////////// Tests go here. //////////////////////
+        /*
+        Tests are just functions that return a true or a false.
+
+        */
         {
             name: "Prefixer composition",
             test: () => {
@@ -21,6 +26,7 @@ function run_tests(done) {
                 return prefixer.compose("T", "3.14") === "[T]       3.14"
             }
         }
+        ///////////////////// End testing block ///////////////////
     ]
 
     let testPrefixer = require("./build/prefixer").getNewPrefixer();
