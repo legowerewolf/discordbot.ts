@@ -1,20 +1,20 @@
 ---
-shortname: 
+shortname: # This is the name that will be prefixed to logs from *this* bot instance.
 APIKeys:
-  discord: # This is the only required value for the entire bot. Paste the key from the Discord API console here.
-logLevel: 0
-defaultPermissionLevel: 0
-intentsResolutionMethod: useDefault
+  discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
+logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.
+defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
+intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Set to "useCustom" or "concatenate" to use your own intents or combine them with the defaults, respectively.
 intents:
-- name: greeting
-  models:
+- name: greeting # names must be unique
+  models: # Models are what get fed to the natural language system to train it to interpret messages.
   - hello
   - hi
   - greetings
   - welcome
-  handler: basic-response
+  handler: basic-response # Handler that picks a random response from the provided list.
   data:
-    responses:
+    responses: # Provide responses to be randomly replied with for the provided models.
     - Hello!
     - Hi!
     - Greetings.
@@ -61,14 +61,14 @@ intents:
   data:
     responses:
     - Aww, I love you too!
-    - "\\*blushes\\*"
+    - \*blushes\* # You can use any of Discord's standard text formatting.
 - name: ip-finder
-  permissionLevel: 5
+  permissionLevel: 5 # You must be previliged to know the bot's IP address.
   models:
   - where am I?
   - what is my IP address
 - name: bot-shutdown
-  permissionLevel: 5
+  permissionLevel: 5 
   models:
   - shut down
   - shutdown
@@ -77,9 +77,9 @@ intents:
     responses:
     - Ok. Goodbye!
     - I'll be back.
-    intentSpecific:
-      shutdownDelay: 3000
-- name: temporary-voice-channel
+    handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
+      shutdownDelay: 3000 
+- name: temporary-voice-channel # If no handler is specified, the bot tries to load a handler named the same as the intent.
   models:
   - make a temporary voice channel
   - create a channel
@@ -93,20 +93,20 @@ intents:
   - make a new channel please
   - new channel please
   data:
-    questionData:
-      questionMessage:
+    questionData: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
+      questionMessage: # This is the question the user is asked. Multiple possibilities are encouraged.
       - Alright, what do you want to name it?
       - What do you want to call it?
-      answeredResponseMessage:
+      answeredResponseMessage: # When the bot has the user's response, it replies with one of these.
       - Alright, that's what I'll call it.
       - And so it was named.
       - Perfectly named. As all things should be.
-      timeoutResponseMessage:
+      timeoutResponseMessage: # If the user takes too long, it replies with one of these. 
       - Never mind. I'll pick a name.
       - Alright. Guess I'll pick one.
-      responseCheckIntervalMs: 500
-      responseCheckDurationMs: 10000
-      defaultResponses:
+      responseCheckIntervalMs: 500 # How often to check for a response...
+      responseCheckDurationMs: 10000 # And how long to wait for a response.
+      defaultResponses: # Acceptable default responses to the question, picked at random if the user takes too long.
       - Death Metal
       - Rainbows
       - Unicorns
@@ -120,15 +120,15 @@ intents:
     responses:
     - 'welcome to your new channel: '
     - 'Here you go! Your new channel, fresh from the factory: '
-    intentSpecific:
-      checkForMembersInterval: 5000
-      bitrate: 16
-- name: error-unknown
+    handlerSpecific:
+      checkForMembersInterval: 5000 # How often to check if people are still in the voice channel
+      bitrate: 16 # The default bitrate for newly created temporary voice channels.
+- name: error-unknown # This intent is invoked when the bot has no goddamn clue what's going on.
   handler: basic-response
   data:
     responses:
     - I'm sorry, what was that?
     - I didn't understand. Could you rephrase that?
-plugins:
-- presence-roles
-- voice-scaling
+plugins: # Plugins add additional functionality. They don't currently each have any configuration options.
+- presence-roles # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
+- voice-scaling # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number. 

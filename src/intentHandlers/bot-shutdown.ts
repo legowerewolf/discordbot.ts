@@ -8,5 +8,5 @@ export function handler(eventData: CommunicationEvent) {
     });
     setTimeout(() => {
         eventData.client.destroy();
-    }, eventData.config.intentSpecific.shutdownDelay)
+    }, eventData.config.handlerSpecific.shutdownDelay)
 }

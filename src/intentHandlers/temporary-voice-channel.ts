@@ -18,7 +18,7 @@ function createTempVoiceChannel(newChannel: string, eventData: CommunicationEven
         start: function () {
             eventData.guild.createChannel(newChannel, "voice")
                 .then((voiceChannel: VoiceChannel) => {
-                    voiceChannel.setBitrate(eventData.config.intentSpecific.bitrate);
+                    voiceChannel.setBitrate(eventData.config.handlerSpecific.bitrate);
 
                     eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newChannel);
 
@@ -29,7 +29,7 @@ function createTempVoiceChannel(newChannel: string, eventData: CommunicationEven
                         if (voiceChannel.members.size == 0) {
                             this.stop();
                         }
-                    }, eventData.config.intentSpecific.checkForMembersInterval);
+                    }, eventData.config.handlerSpecific.checkForMembersInterval);
                 });
         },
         stop: function () {

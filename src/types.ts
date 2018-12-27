@@ -34,7 +34,7 @@ interface Intent {
 export interface IntentData {
     responses?: Array<string>;
     questionData?: QuestionData;
-    intentSpecific?: any;
+    handlerSpecific?: any;
 }
 export interface CommunicationEvent {
     text: string;
