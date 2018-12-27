@@ -13,8 +13,6 @@ export default class PresenceRoles extends Plugin {
                 let x: VoiceChannel = memberNewStatus.voiceChannel;
                 console.log(`${memberNewStatus} joined a channel`)
 
-                console.log(this.getEmptyDuplicateChannelsCount(this.findDuplicates(x)));
-
                 if (x.members.size == 1 && x.name.match(indexableChannelRegex) != null) { // Only if this is the first person in the channel AND it's an indexable channel
                     x.clone(`${x.name.match(indexableChannelRegex)[1]} ${this.getNewPrimaryKey(this.getDuplicateIDs(x))}`) // Clone the channel
                         .then((channel) => channel.setParent(x.parentID)); // Move it to the appropriate category
