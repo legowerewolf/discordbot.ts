@@ -16,7 +16,6 @@ export interface ConfigElement {
         discord: string;
         chatbase?: string;
     };
-    subscribers?: any;
     users?: any;
 
     intentsResolutionMethod: IntentsResolutionMethods;
@@ -49,7 +48,6 @@ export interface CommunicationEvent {
     messageObject?: Message;
 
     config?: IntentData;
-    subscriberPush?: ResponseCallback;
     bot?: DiscordBot;
 }
 
@@ -71,25 +69,6 @@ export interface NaturalGuess {
     value: number;
 }
 
-export interface SubscriberMessage {
-    message: string;
-    user: string;
-    source: string;
-    intent?: string;
-    failure?: boolean;
-}
-
-export const SubscriberMessageSources = {
-    bot: "BOT",
-    user: "USER"
-};
-
-export interface MessageSubscriber {
-    handleMessage: {
-        (message: SubscriberMessage): void;
-    }
-}
-
 export interface OngoingProcess {
     active: boolean;
     data: any;
@@ -99,4 +78,4 @@ export interface OngoingProcess {
 
 export abstract class Plugin {
     abstract inject(context: DiscordBot): void;
-}
+} 

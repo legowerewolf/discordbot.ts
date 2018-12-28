@@ -18,7 +18,6 @@ export function responseToQuestion(eventData: CommunicationEvent, completedCallb
             if (eventData.author.lastMessageID != currentMessageID || ticks > maxTicks) {
                 if (eventData.author.lastMessageID != currentMessageID) {
                     response = eventData.author.lastMessage.cleanContent;
-                    if (eventData.subscriberPush) { eventData.subscriberPush(response) };
                     eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponseMessage));
                 } else if (ticks > maxTicks) {
                     eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponseMessage));

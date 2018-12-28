@@ -3,13 +3,12 @@ import { Client, Message } from 'discord.js';
 import { Brain } from './brain';
 import { getPropertySafe } from './helpers';
 import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer, WARN } from "./prefixer";
-import { CommunicationEvent, ConfigElement, MessageSubscriber, OngoingProcess, Plugin, SubscriberMessage, SubscriberMessageSources } from './types';
+import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin } from './types';
 
 export class DiscordBot {
     config: ConfigElement;
     brain: Brain;
     client: Client;
-    subscribers: Array<MessageSubscriber>;
     processes: Array<OngoingProcess>;
     plugins: Array<Plugin>;
 
@@ -62,13 +61,6 @@ export class DiscordBot {
             },
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
-        this.subscribers = new Array<MessageSubscriber>();
-        if (this.config.subscribers) {
-            Object.keys(this.config.subscribers).forEach(element => {
-                this.subscribers.push(require(`./messageSubscribers/${element}`).getNew(this.config.subscribers[element]));
-            });
-        }
-
         this.processes = new Array<OngoingProcess>();
         this.plugins = new Array<Plugin>();
 
@@ -85,12 +77,6 @@ export class DiscordBot {
         this.client.login(this.config.APIKeys.discord);
     }
 
-    pushSubscriberMessage(msg: SubscriberMessage) {
-        this.subscribers.forEach(element => {
-            element.handleMessage(msg);
-        });
-    }
-
     registerOngoingProcess(p: OngoingProcess) {
         this.processes.push(p);
     }
@@ -101,15 +87,6 @@ export class DiscordBot {
 
         eventData.config = intent.data;
         eventData.bot = this;
-
-        this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intentName, failure: intentName == "error_unknown" });
-
-        let sendResponse = eventData.responseCallback;
-        eventData.responseCallback = (response: string) => {
-            sendResponse(response);
-            this.pushSubscriberMessage({ message: response, user: eventData.author.id, source: SubscriberMessageSources.bot });
-        };
-        eventData.subscriberPush = (message: string) => { this.pushSubscriberMessage({ message: message, user: eventData.author.id, source: SubscriberMessageSources.user }); };
 
         let userPermissionLevel = getPropertySafe(this.config.users, `${eventData.author.id}.permissionLevel`);
         if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
