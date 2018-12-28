@@ -21,15 +21,18 @@ Promise.all([
         if (customConfig === undefined) throw new Error("Malformed configuration data.")
 
         customConfig.forEach((element: ConfigElement) => {
-            let config = { ...defaultConfig, ...element }; // Merge preferring external data
+            let config = { ...defaultConfig, ...element }; // Merge preferring custom data
 
             config.intents = (() => {
                 switch (element.intentsResolutionMethod) {
-                    default: return defaultConfig.intents;
+                    case IntentsResolutionMethods.UseDefault: return defaultConfig.intents;
                     case IntentsResolutionMethods.UseCustom: return element.intents;
-                    case IntentsResolutionMethods.Concatenate: return [...defaultConfig.intents, ...element.intents];
+                    default:
+                    case IntentsResolutionMethods.MergePreferCustom: return { ...defaultConfig.intents, ...element.intents };
+                    case IntentsResolutionMethods.MergePreferDefault: return { ...element.intents, ...defaultConfig.intents };
                 }
             })();
+
 
             let bot = new DiscordBot(config);
             bot.start();

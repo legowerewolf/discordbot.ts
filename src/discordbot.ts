@@ -19,9 +19,11 @@ export class DiscordBot {
         Prefixer.prepare(this.config.shortname);
 
         this.brain = new Brain();
-        config.intents.filter(element => element.models != undefined).forEach((intent) => {
-            this.brain.teach(intent.models, intent.name);
-        });
+        Object.keys(config.intents)
+            .filter(name => (config.intents[name]).models != undefined)
+            .forEach((name) => {
+                this.brain.teach(this.config.intents[name].models, name);
+            });
         this.brain.train();
 
         this.client = new Client();
@@ -74,8 +76,7 @@ export class DiscordBot {
             .map(name => `./plugins/${name}`)
             .map(path => require(path).default)
             .map(plugin => new plugin())
-        )
-
+        );
         this.plugins.forEach((p: Plugin) => p.inject(this)) // Inject all plugins
 
     }
@@ -95,12 +96,13 @@ export class DiscordBot {
     }
 
     handleInput(eventData: CommunicationEvent) {
-        let intent = this.config.intents[this.config.intents.map(i => i.name).indexOf(this.brain.interpret(eventData.text).label)];
+        let intentName = this.brain.interpret(eventData.text).label
+        let intent = this.config.intents[intentName];
 
         eventData.config = intent.data;
         eventData.bot = this;
 
-        this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intent.name, failure: intent.name == "error_unknown" });
+        this.pushSubscriberMessage({ message: eventData.text, user: eventData.author.id, source: SubscriberMessageSources.user, intent: intentName, failure: intentName == "error_unknown" });
 
         let sendResponse = eventData.responseCallback;
         eventData.responseCallback = (response: string) => {
@@ -113,8 +115,8 @@ export class DiscordBot {
         if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
             if (intent.handler) { // If an intent handler is explicitly provided
                 require("./intentHandlers/" + intent.handler).handler(eventData);
-            } else { // Run the handler matching the intent name
-                require("./intentHandlers/" + intent.name).handler(eventData);
+            } else {
+                this.console(ERROR, `You must use explicitly-named handlers for intents. (${intentName})`)
             }
         } else {
             eventData.responseCallback("You don't have permission to ask that.");

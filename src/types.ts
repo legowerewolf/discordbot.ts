@@ -4,7 +4,8 @@ import { DiscordBot } from './discordbot';
 export enum IntentsResolutionMethods {
     UseDefault = "useDefault",
     UseCustom = "useCustom",
-    Concatenate = "concatenate"
+    MergePreferDefault = "mergePreferDefault",
+    MergePreferCustom = "mergePreferCustom"
 }
 
 export interface ConfigElement {
@@ -19,12 +20,13 @@ export interface ConfigElement {
     users?: any;
 
     intentsResolutionMethod: IntentsResolutionMethods;
-    intents: Array<Intent>;
+    intents: {
+        [key: string]: Intent;
+    };
 
     plugins: Array<string>;
 }
-interface Intent {
-    name: string;
+export interface Intent {
     models: Array<string>;
     handler: string;
     data?: IntentData;
