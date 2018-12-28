@@ -16,7 +16,11 @@ export interface ConfigElement {
         discord: string;
         chatbase?: string;
     };
-    users?: any;
+    users?: {
+        [key: string]: {
+            permissionLevel: number
+        }
+    };
 
     intentsResolutionMethod: IntentsResolutionMethods;
     intents: {
