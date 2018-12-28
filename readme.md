@@ -5,11 +5,13 @@ A simple way to add natural-language-powered Discord bots to your server.
 ## Setup
 
 1. `npm i` to install all dependencies.
-1. `npm test` to build and test everything. \*
+1. `npm test` to build and test everything.
 1. Compose your configuration, then write it to `./config/config.yaml` or an environment var called `botConfig`.
 1. `npm start` to start up your bot(s)!
 
 ### Configuration
+
+Bots support YAML 1.2 for configuration. 
 
 Check out the commented defaults in `./config/defaults.yaml`.
 
