@@ -1,9 +1,10 @@
 
 import { Client, Message } from 'discord.js';
+import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from 'legowerewolf-prefixer';
 import { Brain } from './brain';
 import { getPropertySafe } from './helpers';
-import { ERROR, ERROR_LEVEL_PREFIXES, INFO, Prefixer, WARN } from "./prefixer";
 import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin } from './types';
+
 
 export class DiscordBot {
     config: ConfigElement;
@@ -15,7 +16,7 @@ export class DiscordBot {
     constructor(config: ConfigElement) {
         this.config = config;
 
-        Prefixer.prepare(this.config.shortname);
+        defaultPrefixer.update(this.config.shortname);
 
         this.brain = new Brain();
         Object.keys(config.intents)
@@ -47,17 +48,17 @@ export class DiscordBot {
             {
                 event: "ready",
                 handler: () => {
-                    this.console(INFO, `Connected as @${this.client.user.tag}. ID: ${this.client.user.id}`);
-                    this.console(INFO, `Guilds: ${[...this.client.guilds.values()].map(guild => `${guild.name}#${guild.id}`).join(", ")}`);
+                    this.console(ErrorLevels.Info, `Connected as @${this.client.user.tag}. ID: ${this.client.user.id}`);
+                    this.console(ErrorLevels.Info, `Guilds: ${[...this.client.guilds.values()].map(guild => `${guild.name}#${guild.id}`).join(", ")}`);
                 }
             },
             {
                 event: "error",
-                handler: (error: Error) => { this.console(ERROR, error.message); }
+                handler: (error: Error) => { this.console(ErrorLevels.Error, error.message); }
             },
             {
                 event: "warn",
-                handler: (info: string) => { this.console(WARN, info); }
+                handler: (info: string) => { this.console(ErrorLevels.Warn, info); }
             },
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
@@ -93,16 +94,16 @@ export class DiscordBot {
             if (intent.handler) { // If an intent handler is explicitly provided
                 require("./intentHandlers/" + intent.handler).handler(eventData);
             } else {
-                this.console(ERROR, `You must use explicitly-named handlers for intents. (${intentName})`)
+                this.console(ErrorLevels.Error, `You must use explicitly-named handlers for intents. (${intentName})`)
             }
         } else {
             eventData.responseCallback("You don't have permission to ask that.");
         }
     }
 
-    console(level: number, message: string) {
-        if (this.config.logLevel <= level) {
-            Prefixer.log(this.config.shortname, ERROR_LEVEL_PREFIXES[level] + message);
+    console(level: ErrorLevels, message: string) {
+        if (this.config.logLevel <= Object.keys(ErrorLevels).findIndex(l => l === level)) {
+            console.log(defaultPrefixer.prefix(this.config.shortname, errorLevelPrefixer.prefix(level, message)))
         }
     }
 }
