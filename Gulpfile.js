@@ -1,5 +1,6 @@
 let gulp = require('gulp');
 let ts = require('gulp-typescript');
+let pre = require('legowerewolf-prefixer');
 
 let tsProject = ts.createProject("./tsconfig.json");
 
@@ -18,33 +19,27 @@ function run_tests(done) {
 
         */
         {
-            name: "Prefixer composition",
-            test: () => {
-                let prefixer = require("./build/prefixer").getNewPrefixer();
-                prefixer.prepare("Testing");
-                prefixer.prepare("Test");
-                return prefixer.compose("T", "3.14") === "[T]       3.14"
-            }
+            name: "Template",
+            test: () => true
         }
         ///////////////////// End testing block ///////////////////
     ]
 
-    let testPrefixer = require("./build/prefixer").getNewPrefixer();
-    tests.map(test => test.name).forEach((name) => { testPrefixer.prepare(name) });
+    let testPrefixer = new pre.Prefixer(...tests.map(test => test.name));
 
     console.log("=".repeat(60));
 
     let pass = tests
         .map((test) => {
             let result = test.test();
-            testPrefixer.log(test.name, `${result ? "Pass" : "Fail"}`);
+            console.log(testPrefixer.prefix(test.name, `${result ? "Pass" : "Fail"}`));
             return result;
         })
         .reduce((accum, result) => { return accum && result }, true);
 
     console.log("=".repeat(60));
 
-    done(pass || tests.length == 0 ? null : new Error("Tests failed."));
+    done(!pass);
 }
 
 gulp.task("build", build_typescript);
