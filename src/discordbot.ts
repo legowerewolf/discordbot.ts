@@ -102,7 +102,7 @@ export class DiscordBot {
     }
 
     console(level: ErrorLevels, message: string) {
-        if (this.config.logLevel <= Object.keys(ErrorLevels).findIndex(l => l === level)) {
+        if (this.config.logLevel <= Object.keys(ErrorLevels).map((name: any) => ErrorLevels[name]).findIndex(l => l == level)) {
             console.log(defaultPrefixer.prefix(this.config.shortname, errorLevelPrefixer.prefix(level, message)))
         }
     }
