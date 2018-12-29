@@ -39,7 +39,7 @@ function run_tests(done) {
 
     console.log("=".repeat(60));
 
-    done(true);
+    done(!pass);
 }
 
 gulp.task("build", build_typescript);
