@@ -20,10 +20,13 @@ function run_tests(done) {
         Tests are just functions that return a true or a false.
 
         */
+
+        /*
         {
             name: "Template",
-            test: () => false
+            test: () => true
         }
+        */
         ///////////////////// End testing block ///////////////////
     ]
 
