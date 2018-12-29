@@ -4,6 +4,8 @@ let pre = require('legowerewolf-prefixer');
 
 let tsProject = ts.createProject("./tsconfig.json");
 
+let isWatched = false;
+
 function build_typescript() {
     return tsProject.src()
         .pipe(tsProject())
@@ -20,7 +22,7 @@ function run_tests(done) {
         */
         {
             name: "Template",
-            test: () => true
+            test: () => false
         }
         ///////////////////// End testing block ///////////////////
     ]
@@ -39,12 +41,13 @@ function run_tests(done) {
 
     console.log("=".repeat(60));
 
-    done(!pass);
+    done(isWatched ? false : !pass);
 }
 
 gulp.task("build", build_typescript);
 gulp.task("test", gulp.series(build_typescript, run_tests));
 gulp.task("start-watchers", () => {
+    isWatched = true;
     gulp.watch(tsProject.config.include, gulp.parallel("test"));
 });
 gulp.task("default", gulp.parallel("test", "start-watchers"));
