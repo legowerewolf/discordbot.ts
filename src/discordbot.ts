@@ -2,7 +2,7 @@
 import { Client, Message } from 'discord.js';
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from 'legowerewolf-prefixer';
 import { Brain } from './brain';
-import { getPropertySafe } from './helpers';
+import { getPropertySafe, valuesOf } from './helpers';
 import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin } from './types';
 
 
@@ -12,11 +12,13 @@ export class DiscordBot {
     client: Client;
     processes: Array<OngoingProcess>;
     plugins: Array<Plugin>;
+    prefix: (msg: string) => string;
 
     constructor(config: ConfigElement) {
         this.config = config;
 
         defaultPrefixer.update(this.config.shortname);
+        this.prefix = (msg: string) => defaultPrefixer.prefix(this.config.shortname, msg);
 
         this.brain = new Brain();
         Object.keys(config.intents)
@@ -102,8 +104,8 @@ export class DiscordBot {
     }
 
     console(level: ErrorLevels, message: string) {
-        if (this.config.logLevel <= Object.keys(ErrorLevels).map((name: any) => ErrorLevels[name]).findIndex(l => l == level)) {
-            console.log(defaultPrefixer.prefix(this.config.shortname, errorLevelPrefixer.prefix(level, message)))
+        if (this.config.logLevel <= valuesOf(ErrorLevels).findIndex(l => l == level)) {
+            console.log(this.prefix(errorLevelPrefixer.prefix(level, message)))
         }
     }
 }

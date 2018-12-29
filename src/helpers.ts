@@ -39,3 +39,5 @@ export function getPropertySafe(obj: any, key: string) {
         return (typeof o == "undefined" || o === null) ? o : o[x];
     }, obj);
 }
+
+export function valuesOf(obj: any) { return Object.keys(obj).map((prop: string) => obj[prop]) }

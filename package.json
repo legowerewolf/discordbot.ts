@@ -15,7 +15,7 @@
     "@google/chatbase": "^1.1.2",
     "discord.js": "^11.4.2",
     "js-yaml": "^3.12.0",
-    "legowerewolf-prefixer": "^1.0.3",
+    "legowerewolf-prefixer": "^2.1.0",
     "natural": "^0.6.2",
     "node-fetch": "^2.3.0"
   },
