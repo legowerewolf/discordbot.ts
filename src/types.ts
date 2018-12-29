@@ -23,12 +23,15 @@ export interface ConfigElement {
     };
 
     intentsResolutionMethod: IntentsResolutionMethods;
-    intents: {
-        [key: string]: Intent;
-    };
+    intents: IntentsMap;
 
     plugins: Array<string>;
 }
+
+export interface IntentsMap {
+    [key: string]: Intent;
+};
+
 export interface Intent {
     models: Array<string>;
     handler: string;

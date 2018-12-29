@@ -2,9 +2,16 @@ import { readFile } from 'fs';
 import { safeLoad } from 'js-yaml';
 import { promisify } from 'util';
 import { DiscordBot } from './discordbot';
-import { ConfigElement, IntentsResolutionMethods } from './types';
+import { ConfigElement, IntentsMap, IntentsResolutionMethods } from './types';
 
 const readFileP = promisify(readFile);
+
+const intentResolver: Map<IntentsResolutionMethods, (defaults: IntentsMap, custom: IntentsMap) => IntentsMap> = new Map([
+    [IntentsResolutionMethods.UseDefault, (defaults: IntentsMap, custom: IntentsMap) => defaults],
+    [IntentsResolutionMethods.UseCustom, (defaults: IntentsMap, custom: IntentsMap) => custom],
+    [IntentsResolutionMethods.MergePreferCustom, (defaults: IntentsMap, custom: IntentsMap) => { return { ...defaults, ...custom } }],
+    [IntentsResolutionMethods.MergePreferDefault, (defaults: IntentsMap, custom: IntentsMap) => { return { ...custom, ...defaults } }]
+]);
 
 Promise.all([
     readFileP("./config/defaults.yaml"),
@@ -23,16 +30,7 @@ Promise.all([
         customConfig.forEach((element: ConfigElement) => {
             let config = { ...defaultConfig, ...element }; // Merge preferring custom data
 
-            config.intents = (() => {
-                switch (element.intentsResolutionMethod) {
-                    case IntentsResolutionMethods.UseDefault: return defaultConfig.intents;
-                    case IntentsResolutionMethods.UseCustom: return element.intents;
-                    default:
-                    case IntentsResolutionMethods.MergePreferCustom: return { ...defaultConfig.intents, ...element.intents };
-                    case IntentsResolutionMethods.MergePreferDefault: return { ...element.intents, ...defaultConfig.intents };
-                }
-            })();
-
+            config.intents = intentResolver.get(config.intentsResolutionMethod)(defaultConfig.intents, element.intents);
 
             let bot = new DiscordBot(config);
             bot.start();
