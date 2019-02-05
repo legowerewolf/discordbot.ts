@@ -3,7 +3,7 @@ import { Client, Message } from 'discord.js';
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from 'legowerewolf-prefixer';
 import { Brain } from './brain';
 import { getPropertySafe, valuesOf } from './helpers';
-import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin, PluginClass } from './types';
+import { CommunicationEvent, ConfigElement, IntentHandler, OngoingProcess, Plugin, PluginClass } from './types';
 
 export class DiscordBot {
     config: ConfigElement;
@@ -11,6 +11,7 @@ export class DiscordBot {
     client: Client;
     processes: Array<OngoingProcess>;
     plugins: Array<Plugin>;
+    handlers: { [key: string]: IntentHandler }
     prefix: (msg: string) => string;
 
     constructor(config: ConfigElement) {
@@ -94,7 +95,7 @@ export class DiscordBot {
         let userPermissionLevel = getPropertySafe(this.config.users, `${eventData.author.id}.permissionLevel`);
         if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
             if (intent.handler) { // If an intent handler is explicitly provided
-                require("./intentHandlers/" + intent.handler).handler(eventData);
+                this.handlers[intent.handler](eventData);
             } else {
                 this.console(ErrorLevels.Error, `You must use explicitly-named handlers for intents. (${intentName})`)
             }

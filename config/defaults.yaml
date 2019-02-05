@@ -12,7 +12,7 @@ intents:
     - hi
     - greetings
     - welcome
-    handler: basic-response # Handler that picks a random response from the provided list.
+    handler: basic_response # Handler that picks a random response from the provided list.
     data:
       responses: # Provide responses to be randomly replied with for the provided models.
       - Hello!
@@ -26,7 +26,7 @@ intents:
     - play despacito
     - that's so sad play despacito
     - despacito
-    handler: basic-response
+    handler: basic_response
     data:
       responses:
       - 'Here''s some Desapcito: https: //www.youtube.com/watch?v=kJQP7kiw5Fk'
@@ -36,7 +36,7 @@ intents:
     - goodnight
     - good night
     - buenos noches
-    handler: basic-response
+    handler: basic_response
     data:
       responses:
       - Goodnight!
@@ -47,7 +47,7 @@ intents:
     - what can you do?
     - help
     - what can I say?
-    handler: basic-response
+    handler: basic_response
     data:
       responses:
       - You can say "make a temporary channel", and I'll create a voice channel that
@@ -57,19 +57,19 @@ intents:
     models:
     - I love you
     - ily
-    handler: basic-response
+    handler: basic_response
     data:
       responses:
       - Aww, I love you too!
       - \*blushes\* # You can use any of Discord's standard text formatting.
   ipFinder:
-    handler: ip-finder
+    handler: ip_finder
     permissionLevel: 5 # You must be previliged to know the bot's IP address.
     models:
     - where am I?
     - what is my IP address
   botShutdown:
-    handler: bot-shutdown
+    handler: bot_shutdown
     permissionLevel: 5
     models:
     - shut down
@@ -82,7 +82,7 @@ intents:
       handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
         shutdownDelay: 3000 
   temporaryVoiceChannel: # If no handler is specified, the bot tries to load a handler named the same as the intent.
-    handler: temporary-voice-channel
+    handler: temporary_voice_channel
     models:
     - make a temporary voice channel
     - create a channel
@@ -127,7 +127,7 @@ intents:
         checkForMembersInterval: 5000 # How often to check if people are still in the voice channel
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   errorUnknown: # This intent is invoked when the bot has no goddamn clue what's going on.
-    handler: basic-response
+    handler: basic_response
     data:
       responses:
       - I'm sorry, what was that?
@@ -135,3 +135,5 @@ intents:
 plugins: # Plugins add additional functionality. They don't currently each have any configuration options.
 - presence-roles # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
 - voice-scaling # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number. 
+- standard-handlers # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
+- temporary-voice-channels

@@ -90,3 +90,5 @@ export abstract class Plugin {
 export interface PluginClass {
     new(): Plugin;
 }
+
+export type IntentHandler = (eventData: CommunicationEvent) => void;

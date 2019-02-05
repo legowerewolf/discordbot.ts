@@ -1,14 +1,21 @@
 import { VoiceChannel } from 'discord.js';
+import { DiscordBot } from '../discordbot';
 import { randomElementFromArray, responseToQuestion } from '../helpers';
-import { CommunicationEvent, OngoingProcess } from "../types";
+import { CommunicationEvent, OngoingProcess, Plugin } from "../types";
 
-
-export function handler(eventData: CommunicationEvent) {
-    responseToQuestion(eventData, (chosenName: string) => {
-        let tempVC = createTempVoiceChannel(chosenName, eventData);
-        tempVC.start();
-        eventData.bot.registerOngoingProcess(tempVC);
-    });
+export default class TemporaryVoiceChannel extends Plugin {
+    inject(context: DiscordBot) {
+        context.handlers = {
+            ...context.handlers,
+            temporary_voice_channel: (eventData: CommunicationEvent) => {
+                responseToQuestion(eventData, (chosenName: string) => {
+                    let tempVC = createTempVoiceChannel(chosenName, eventData);
+                    tempVC.start();
+                    eventData.bot.registerOngoingProcess(tempVC);
+                });
+            }
+        }
+    }
 }
 
 function createTempVoiceChannel(newChannel: string, eventData: CommunicationEvent): OngoingProcess {
