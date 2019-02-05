@@ -86,6 +86,7 @@ export class DiscordBot {
     handleInput(eventData: CommunicationEvent) {
         let intentName = this.brain.interpret(eventData.text).label
         let intent = this.config.intents[intentName];
+        if (!intent) { intent = this.config.intents["errorUnknown"]; }
 
         eventData.config = intent.data;
         eventData.bot = this;
