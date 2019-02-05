@@ -1,4 +1,5 @@
 import { GuildMember, VoiceChannel } from "discord.js";
+import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { Plugin } from "../types";
 
@@ -11,7 +12,7 @@ export default class PresenceRoles extends Plugin {
 
             if (memberNewStatus.voiceChannel !== undefined) {
                 let x: VoiceChannel = memberNewStatus.voiceChannel;
-                console.log(`${memberNewStatus} joined a channel`)
+                context.console(ErrorLevels.Info, `${memberNewStatus} joined a channel`)
 
                 if (x.members.size == 1 && x.name.match(indexableChannelRegex) != null) { // Only if this is the first person in the channel AND it's an indexable channel
                     x.clone(`${x.name.match(indexableChannelRegex)[1]} ${this.getNewPrimaryKey(this.getDuplicateIDs(x))}`) // Clone the channel
@@ -20,7 +21,7 @@ export default class PresenceRoles extends Plugin {
             }
 
             if (memberOldStatus.voiceChannel !== undefined) {
-                console.log(`${memberNewStatus} left a channel`)
+                context.console(ErrorLevels.Info, `${memberNewStatus} left a channel`)
                 let x: VoiceChannel = memberOldStatus.voiceChannel;
 
                 if (x.members.size == 0 && x.name.match(indexableChannelRegex) != null) {
