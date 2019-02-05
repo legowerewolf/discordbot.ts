@@ -1,5 +1,5 @@
+import { Message } from 'discord.js';
 import { CommunicationEvent } from './types';
-
 
 export function randomElementFromArray(array: Array<any>) {
     return array[Math.floor(Math.random() * array.length)];
@@ -11,30 +11,29 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
         let response = randomElementFromArray(eventData.config.questionData.defaultResponses);
 
         if (eventData.source == "text") { // Only allow the question/response flow on text chats
-            eventData.responseCallback(randomElementFromArray(eventData.config.questionData.questionMessage));
-            let ticks = 0;
-            let maxTicks = eventData.config.questionData.responseCheckDurationMs / eventData.config.questionData.responseCheckIntervalMs;
-            let currentMessageID = eventData.messageObject.id;
+            eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
 
-            let intervalChecker = setInterval(() => {
-                if (eventData.author.lastMessageID != currentMessageID || ticks > maxTicks) {
-                    if (eventData.author.lastMessageID != currentMessageID) {
-                        response = eventData.author.lastMessage.cleanContent;
-                        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponseMessage));
-                    } else if (ticks > maxTicks) {
-                        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponseMessage));
-                    }
-                    clearInterval(intervalChecker);
-                    resolve(response);
+            let timeout = setTimeout(() => { // Set up a timeout for when to stop listening
+                eventData.bot.client.off("message", eventFunc); // Clear the event listener
+
+                eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
+                resolve(response);
+            }, eventData.config.questionData.timeout)
+
+            let eventFunc = function (message: Message) {
+                if (message.author.id == eventData.author.id) { // If this is the person we're listening for
+                    clearTimeout(timeout); // Clear the timeout
+                    eventData.bot.client.off("message", eventFunc); // Clear this event listener
+
+                    eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse)); // Send the message that we're done here
+                    resolve(message.cleanContent); // Resolve the promise
                 }
-                ticks += 1;
-            }, eventData.config.questionData.responseCheckIntervalMs);
+            }
+            eventData.bot.client.on("message", eventFunc);
         } else {
             resolve(response);
         }
-
     })
-
 }
 
 // From https://stackoverflow.com/a/23809123

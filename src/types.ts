@@ -63,11 +63,10 @@ export interface ResponseCallback {
 }
 
 export interface QuestionData {
-    questionMessage?: Array<string>;
-    answeredResponseMessage?: Array<string>;
-    timeoutResponseMessage?: Array<string>;
-    responseCheckIntervalMs?: number;
-    responseCheckDurationMs?: number;
+    question?: Array<string>;
+    answeredResponse?: Array<string>;
+    timeoutResponse?: Array<string>;
+    timeout?: number; // ms
     defaultResponses?: Array<string>;
 }
 
