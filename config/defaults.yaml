@@ -97,18 +97,17 @@ intents:
     - new channel please
     data:
       questionData: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
-        questionMessage: # This is the question the user is asked. Multiple possibilities are encouraged.
+        question: # This is the question the user is asked. Multiple possibilities are encouraged.
         - Alright, what do you want to name it?
         - What do you want to call it?
-        answeredResponseMessage: # When the bot has the user's response, it replies with one of these.
+        answeredResponse: # When the bot has the user's response, it replies with one of these.
         - Alright, that's what I'll call it.
         - And so it was named.
         - Perfectly named. As all things should be.
-        timeoutResponseMessage: # If the user takes too long, it replies with one of these. 
+        timeoutResponse: # If the user takes too long, it replies with one of these. 
         - Never mind. I'll pick a name.
         - Alright. Guess I'll pick one.
-        responseCheckIntervalMs: 500 # How often to check for a response...
-        responseCheckDurationMs: 10000 # And how long to wait for a response.
+        timeout: 10000 # How long to wait for a response.
         defaultResponses: # Acceptable default responses to the question, picked at random if the user takes too long.
         - Death Metal
         - Rainbows
