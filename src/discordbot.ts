@@ -3,7 +3,7 @@ import { Client, Message } from 'discord.js';
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from 'legowerewolf-prefixer';
 import { Brain } from './brain';
 import { getPropertySafe, valuesOf } from './helpers';
-import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin } from './types';
+import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin, PluginClass } from './types';
 
 export class DiscordBot {
     config: ConfigElement;
@@ -67,9 +67,9 @@ export class DiscordBot {
         this.plugins = new Array<Plugin>();
 
         this.plugins.push(...this.config.plugins
-            .map(name => `./plugins/${name}`)
-            .map(path => require(path).default)
-            .map(plugin => new plugin())
+            .map((name: string) => `./plugins/${name}`)
+            .map((path: string) => require(path).default)
+            .map((plugin: PluginClass) => new plugin())
         );
         this.plugins.forEach((p: Plugin) => p.inject(this)) // Inject all plugins
 

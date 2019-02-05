@@ -85,4 +85,8 @@ export interface OngoingProcess {
 
 export abstract class Plugin {
     abstract inject(context: DiscordBot): void;
-} 
+}
+
+export interface PluginClass {
+    new(): Plugin;
+}
