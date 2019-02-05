@@ -39,15 +39,15 @@ export default class PresenceRoles extends Plugin {
             .filter(x => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]) // Filter out channels that aren't part of the same group
     }
 
-    getDuplicateIDs(channel: VoiceChannel) {
+    getDuplicateIDs(channel: VoiceChannel): number[] { // Get the numbers of all channels with the same name
         return this.findDuplicates(channel).map(c => Number(c.name.match(indexableChannelRegex)[2]))
     }
 
-    getNewPrimaryKey(primaryKeys: Array<number>) {
+    getNewPrimaryKey(primaryKeys: Array<number>): number { // Get a new channel number suffix
         return primaryKeys.reduce((accum, curr) => { return accum == curr ? curr + 1 : accum }, 1)
     }
 
-    getEmptyDuplicateChannelsCount(channels: Array<VoiceChannel>) {
+    getEmptyDuplicateChannelsCount(channels: Array<VoiceChannel>): number { // Get a count of all the duplicate channels with no current members
         return channels.map(c => c.members.size).reduce((prev, cur) => cur == 0 ? prev + 1 : prev)
     }
 }
