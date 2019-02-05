@@ -3,13 +3,12 @@ import { Client, Message } from 'discord.js';
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from 'legowerewolf-prefixer';
 import { Brain } from './brain';
 import { getPropertySafe, valuesOf } from './helpers';
-import { CommunicationEvent, ConfigElement, IntentHandler, OngoingProcess, Plugin, PluginClass } from './types';
+import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, PluginClass } from './types';
 
 export class DiscordBot {
     config: ConfigElement;
     brain: Brain;
     client: Client;
-    processes: Array<OngoingProcess>;
     plugins: Array<Plugin>;
     handlers: { [key: string]: IntentHandler }
     prefix: (msg: string) => string;
@@ -64,7 +63,6 @@ export class DiscordBot {
             },
         ].forEach((element) => { this.client.on(element.event, element.handler) });
 
-        this.processes = new Array<OngoingProcess>();
         this.plugins = new Array<Plugin>();
 
         this.plugins.push(...this.config.plugins
@@ -78,10 +76,6 @@ export class DiscordBot {
 
     start() {
         this.client.login(this.config.APIKeys.discord);
-    }
-
-    registerOngoingProcess(p: OngoingProcess) {
-        this.processes.push(p);
     }
 
     handleInput(eventData: CommunicationEvent) {

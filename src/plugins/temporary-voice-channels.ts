@@ -1,7 +1,7 @@
-import { VoiceChannel } from 'discord.js';
+import { GuildMember, VoiceChannel } from 'discord.js';
 import { DiscordBot } from '../discordbot';
 import { randomElementFromArray, responseToQuestion } from '../helpers';
-import { CommunicationEvent, OngoingProcess, Plugin } from "../types";
+import { CommunicationEvent, Plugin } from "../types";
 
 export default class TemporaryVoiceChannel extends Plugin {
     inject(context: DiscordBot) {
@@ -9,41 +9,32 @@ export default class TemporaryVoiceChannel extends Plugin {
             ...context.handlers,
             temporary_voice_channel: (eventData: CommunicationEvent) => {
                 responseToQuestion(eventData)
-                    .then((chosenName: string) => {
-                        let tempVC = createTempVoiceChannel(chosenName, eventData);
-                        tempVC.start();
-                        eventData.bot.registerOngoingProcess(tempVC);
-                    });
+                    .then((chosenName: string) => eventData.guild.createChannel(chosenName, "voice"))
+                    .then((newC: VoiceChannel) => {
+                        newC.setBitrate(eventData.config.handlerSpecific.bitrate);
+
+                        eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newC.name);
+
+                        newC.guild.member(eventData.author).setVoiceChannel(newC).catch((err) => console.error(err));
+
+                        const events = ['voiceStateUpdate', 'destroy'];
+
+                        let listenerFunc = function (...args: GuildMember[]) {
+                            if (args.length == 2) { // Event is 'voiceStateUpdate'
+                                if (args[0].voiceChannelID == newC.id && newC.members.size == 0) {
+                                    newC.delete();
+
+                                    events.map((event) => eventData.bot.client.off(event, listenerFunc));
+                                }
+                            } else { // Event is 'destroy'
+                                newC.delete();
+                            }
+                        }
+
+                        events.map((event) => eventData.bot.client.on(event, listenerFunc));
+
+                    })
             }
         }
     }
-}
-
-function createTempVoiceChannel(newChannel: string, eventData: CommunicationEvent): OngoingProcess {
-    return {
-        active: true,
-        data: {},
-        start: function () {
-            eventData.guild.createChannel(newChannel, "voice")
-                .then((voiceChannel: VoiceChannel) => {
-                    voiceChannel.setBitrate(eventData.config.handlerSpecific.bitrate);
-
-                    eventData.responseCallback(randomElementFromArray(eventData.config.responses) + newChannel);
-
-                    voiceChannel.guild.member(eventData.author).setVoiceChannel(voiceChannel).catch((err) => console.error(err));
-
-                    this.data.voiceChannel = voiceChannel;
-                    this.data.intervalChecker = setInterval(() => {
-                        if (voiceChannel.members.size == 0) {
-                            this.stop();
-                        }
-                    }, eventData.config.handlerSpecific.checkForMembersInterval);
-                });
-        },
-        stop: function () {
-            clearInterval(this.data.intervalChecker);
-            this.data.voiceChannel.delete();
-            this.active = false;
-        }
-    } as OngoingProcess;
 }

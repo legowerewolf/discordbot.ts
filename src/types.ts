@@ -75,13 +75,6 @@ export interface NaturalGuess {
     value: number;
 }
 
-export interface OngoingProcess {
-    active: boolean;
-    data: any;
-    start: Function;
-    stop: Function;
-}
-
 export abstract class Plugin {
     abstract inject(context: DiscordBot): void;
 }
