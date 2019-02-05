@@ -23,12 +23,13 @@ export default class TemporaryVoiceChannel extends Plugin {
                         const events = ['voiceStateUpdate', 'destroy'];
 
                         let listenerFunc = function (...args: GuildMember[]) {
-                            if (channel.members.size == 0) { // Check and see if the channel is empty.
+                            if (channel.members.size == 0 || eventData.bot.destroy) { // Check and see if the channel is empty.
                                 channel.delete();
 
                                 events.map((event) => eventData.bot.client.off(event, listenerFunc));
                             }
                         }
+
 
                         setTimeout(() => {
                             listenerFunc();

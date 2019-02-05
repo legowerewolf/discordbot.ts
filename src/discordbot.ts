@@ -11,6 +11,7 @@ export class DiscordBot {
     client: Client;
     plugins: Array<Plugin>;
     handlers: { [key: string]: IntentHandler }
+    destroy: boolean = false;
     prefix: (msg: string) => string;
 
     constructor(config: ConfigElement) {
@@ -76,6 +77,12 @@ export class DiscordBot {
 
     start() {
         this.client.login(this.config.APIKeys.discord);
+    }
+
+    stop() {
+        this.destroy = true;
+        this.client.emit('destroy');
+        this.client.destroy();
     }
 
     handleInput(eventData: CommunicationEvent) {
