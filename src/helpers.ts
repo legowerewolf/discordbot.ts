@@ -1,35 +1,39 @@
-import { CommunicationEvent, ResponseCallback } from './types';
+import { CommunicationEvent } from './types';
 
 
 export function randomElementFromArray(array: Array<any>) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-export function responseToQuestion(eventData: CommunicationEvent, completedCallback: ResponseCallback) {
-    let response = randomElementFromArray(eventData.config.questionData.defaultResponses);
+export function responseToQuestion(eventData: CommunicationEvent): Promise<string> {
+    return new Promise((resolve, reject) => {
 
-    if (eventData.source == "text") { // Only allow the question/response flow on text chats
-        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.questionMessage));
-        let ticks = 0;
-        let maxTicks = eventData.config.questionData.responseCheckDurationMs / eventData.config.questionData.responseCheckIntervalMs;
-        let currentMessageID = eventData.messageObject.id;
+        let response = randomElementFromArray(eventData.config.questionData.defaultResponses);
 
-        let intervalChecker = setInterval(() => {
-            if (eventData.author.lastMessageID != currentMessageID || ticks > maxTicks) {
-                if (eventData.author.lastMessageID != currentMessageID) {
-                    response = eventData.author.lastMessage.cleanContent;
-                    eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponseMessage));
-                } else if (ticks > maxTicks) {
-                    eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponseMessage));
+        if (eventData.source == "text") { // Only allow the question/response flow on text chats
+            eventData.responseCallback(randomElementFromArray(eventData.config.questionData.questionMessage));
+            let ticks = 0;
+            let maxTicks = eventData.config.questionData.responseCheckDurationMs / eventData.config.questionData.responseCheckIntervalMs;
+            let currentMessageID = eventData.messageObject.id;
+
+            let intervalChecker = setInterval(() => {
+                if (eventData.author.lastMessageID != currentMessageID || ticks > maxTicks) {
+                    if (eventData.author.lastMessageID != currentMessageID) {
+                        response = eventData.author.lastMessage.cleanContent;
+                        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponseMessage));
+                    } else if (ticks > maxTicks) {
+                        eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponseMessage));
+                    }
+                    clearInterval(intervalChecker);
+                    resolve(response);
                 }
-                clearInterval(intervalChecker);
-                completedCallback(response);
-            }
-            ticks += 1;
-        }, eventData.config.questionData.responseCheckIntervalMs);
-    } else {
-        completedCallback(response);
-    }
+                ticks += 1;
+            }, eventData.config.questionData.responseCheckIntervalMs);
+        } else {
+            resolve(response);
+        }
+
+    })
 
 }
 

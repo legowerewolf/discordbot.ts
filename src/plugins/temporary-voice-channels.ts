@@ -8,11 +8,12 @@ export default class TemporaryVoiceChannel extends Plugin {
         context.handlers = {
             ...context.handlers,
             temporary_voice_channel: (eventData: CommunicationEvent) => {
-                responseToQuestion(eventData, (chosenName: string) => {
-                    let tempVC = createTempVoiceChannel(chosenName, eventData);
-                    tempVC.start();
-                    eventData.bot.registerOngoingProcess(tempVC);
-                });
+                responseToQuestion(eventData)
+                    .then((chosenName: string) => {
+                        let tempVC = createTempVoiceChannel(chosenName, eventData);
+                        tempVC.start();
+                        eventData.bot.registerOngoingProcess(tempVC);
+                    });
             }
         }
     }
