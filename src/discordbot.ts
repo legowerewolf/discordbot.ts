@@ -5,7 +5,6 @@ import { Brain } from './brain';
 import { getPropertySafe, valuesOf } from './helpers';
 import { CommunicationEvent, ConfigElement, OngoingProcess, Plugin } from './types';
 
-
 export class DiscordBot {
     config: ConfigElement;
     brain: Brain;
