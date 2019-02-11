@@ -26,6 +26,6 @@
     "@types/node-fetch": "^2.1.6",
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.0",
-    "typescript": "^3.3.1"
+    "typescript": "^3.3.3"
   }
 }
