@@ -1,5 +1,7 @@
 # Discordbot.js
 
+![](https://img.shields.io/travis/legowerewolf/discordbot.js.svg?style=flat-square)
+
 A simple way to add natural-language-powered Discord bots to your server.
 
 ## Setup
