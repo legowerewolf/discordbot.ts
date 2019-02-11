@@ -16,7 +16,7 @@
     "discord.js": "^11.4.2",
     "js-yaml": "^3.12.1",
     "legowerewolf-prefixer": "^2.1.0",
-    "natural": "^0.6.2",
+    "natural": "^0.6.3",
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {
