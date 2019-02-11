@@ -20,7 +20,7 @@ export class DiscordBot {
         defaultPrefixer.update(this.config.shortname);
         this.prefix = (msg: string) => defaultPrefixer.prefix(this.config.shortname, msg);
 
-        this.brain = new Brain();
+        this.brain = new Brain(0.7);
         Object.keys(config.intents)
             .filter(name => (config.intents[name]).models != undefined)
             .forEach((name) => {

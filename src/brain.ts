@@ -7,9 +7,9 @@ export class Brain {
     classifier: LogisticRegressionClassifier;
     minConfidence: number;
 
-    constructor() {
+    constructor(confidence: number) {
         this.classifier = new LogisticRegressionClassifier();
-        this.minConfidence = 0.7;
+        this.minConfidence = confidence;
     }
 
     teach(samples: Array<string>, label: string) {
@@ -28,6 +28,6 @@ export class Brain {
             return accum && accum.value > newVal.value ? accum : newVal;
         })
 
-        return guess.value > this.minConfidence ? guess : { label: "error-unknown", value: 0 };
+        return guess.value > this.minConfidence ? guess : null;
     };
 }
