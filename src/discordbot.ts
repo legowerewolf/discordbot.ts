@@ -80,6 +80,7 @@ export class DiscordBot {
     }
 
     stop() {
+        this.plugins.map(plugin => plugin.extract(this))
         this.destroy = true;
         this.client.emit('destroy');
         this.client.destroy();

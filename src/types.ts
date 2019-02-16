@@ -76,7 +76,20 @@ export interface NaturalGuess {
 }
 
 export abstract class Plugin {
+
+    /** Injects the plugin's hooks into the bot. 
+     * It's up to the plugin developer to not break anything.
+     * 
+     * @param context - the Discord bot context to inject into.
+     */
     abstract inject(context: DiscordBot): void;
+
+    /** Removes the plugin's hooks from the bot.
+     * It's up to the plugin developer to not break anything. 
+     * 
+     * @param context - the Discord bot context to remove plugin elements from.
+     */
+    abstract extract(context: DiscordBot): void;
 }
 
 export interface PluginClass {

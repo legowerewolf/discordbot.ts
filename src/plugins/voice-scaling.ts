@@ -51,4 +51,6 @@ export default class PresenceRoles extends Plugin {
     getEmptyDuplicateChannelsCount(channels: Array<VoiceChannel>): number { // Get a count of all the duplicate channels with no current members
         return channels.map(c => c.members.size).reduce((prev, cur) => cur == 0 ? prev + 1 : prev)
     }
+
+    extract(context: DiscordBot) { }
 }

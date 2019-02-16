@@ -25,4 +25,5 @@ export default class StandardHandlers extends Plugin {
             }
         }
     }
+    extract(context: DiscordBot) { }
 }

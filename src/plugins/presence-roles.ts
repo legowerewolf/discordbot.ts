@@ -67,4 +67,8 @@ export default class PresenceRoles extends Plugin {
                 }
             });
     }
+
+    extract(context: DiscordBot) {
+        //context.client.guilds.map(guild => guild.roles)
+    }
 }

@@ -40,4 +40,6 @@ export default class TemporaryVoiceChannel extends Plugin {
             }
         }
     }
+
+    extract(context: DiscordBot) { }
 }
