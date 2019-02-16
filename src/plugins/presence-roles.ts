@@ -4,6 +4,8 @@ import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { Plugin } from "../types";
 
+const role_prefix = 'in:'
+
 
 export default class PresenceRoles extends Plugin {
 
@@ -12,7 +14,7 @@ export default class PresenceRoles extends Plugin {
 
             (oldMember: GuildMember, member: GuildMember) => {
                 let guild = oldMember.guild;
-                let gameRoles = guild.roles.filter((value: Role) => value.name.startsWith("in:"));
+                let gameRoles = guild.roles.filter((value: Role) => value.name.startsWith(role_prefix));
                 if (guild.me.permissions.has("MANAGE_ROLES") && oldMember.presence.game != member.presence.game && !member.user.bot) {
 
                     let instance = Math.random();
@@ -20,8 +22,8 @@ export default class PresenceRoles extends Plugin {
                     let currentGame = member.presence.game;
                     if (currentGame != null) {
                         new Promise((resolve, reject) => { // Find or make the role
-                            let r = gameRoles.find((value: Role) => value.name == `in:${currentGame.name}`);
-                            resolve(r != null ? r : guild.createRole({ name: `in:${currentGame.name}`, mentionable: true })
+                            let r = gameRoles.find((value: Role) => value.name == `${role_prefix}${currentGame.name}`);
+                            resolve(r != null ? r : guild.createRole({ name: `${role_prefix}${currentGame.name}`, mentionable: true })
                                 .then((role) => {
                                     context.console(ErrorLevels.Info, `Created role: ${role.guild.name}/${role.name} (instance: ${instance})`);
                                     return Promise.resolve(role);
@@ -44,7 +46,7 @@ export default class PresenceRoles extends Plugin {
                     }
 
                     //Clean up other roles
-                    member.roles.filter((value: Role) => value.name.startsWith("in:") && (currentGame != null ? value.name != `in:${currentGame.name}` : true)).forEach((role) => {
+                    member.roles.filter((value: Role) => value.name.startsWith(role_prefix) && (currentGame != null ? value.name != `${role_prefix}${currentGame.name}` : true)).forEach((role) => {
                         member.removeRole(role)
                             .then((member) => {
                                 if (role.members.size == 0) {
@@ -69,6 +71,10 @@ export default class PresenceRoles extends Plugin {
     }
 
     extract(context: DiscordBot) {
-        //context.client.guilds.map(guild => guild.roles)
+        context.client.guilds.forEach(
+            (guild) => guild.roles.filter(
+                (role) => role.name.startsWith(role_prefix)
+            ).forEach(role => role.delete())
+        )
     }
 }
