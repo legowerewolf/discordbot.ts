@@ -21,6 +21,49 @@ function run_tests(done) {
 
         */
 
+        {
+            name: "helpers.getPropertySafe - empty object",
+            test: () => {
+                let getPropertySafe = require('./build/helpers').getPropertySafe;
+
+                let testObj = {};
+
+                return getPropertySafe(testObj, "path.to.key") == undefined;
+            }
+        },
+        {
+            name: "helpers.getPropertySafe - object without specified value",
+            test: () => {
+                let getPropertySafe = require('./build/helpers').getPropertySafe;
+
+                let testObj = {
+                    path: {
+                        to: {
+                            not_key: true
+                        }
+                    }
+                };
+
+                return getPropertySafe(testObj, "path.to.key") == undefined;
+            }
+        },
+        {
+            name: "helpers.getPropertySafe - object with specified value",
+            test: () => {
+                let getPropertySafe = require('./build/helpers').getPropertySafe;
+
+                let testObj = {
+                    path: {
+                        to: {
+                            key: "value"
+                        }
+                    }
+                };
+
+                return getPropertySafe(testObj, "path.to.key") == "value";
+            }
+        }
+
         /*
         {
             name: "Template",
@@ -32,7 +75,7 @@ function run_tests(done) {
 
     let testPrefixer = new pre.Prefixer(...tests.map(test => test.name));
 
-    console.log("=".repeat(60));
+    console.log("=".repeat(80));
 
     let pass = tests
         .map((test) => {
@@ -42,7 +85,7 @@ function run_tests(done) {
         })
         .reduce((accum, result) => { return accum && result }, true);
 
-    console.log("=".repeat(60));
+    console.log("=".repeat(80));
 
     done(isWatched ? false : !pass);
 }
