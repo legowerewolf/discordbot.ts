@@ -11,7 +11,6 @@ export class DiscordBot {
     client: Client;
     plugins: Array<Plugin>;
     handlers: { [key: string]: IntentHandler }
-    destroy: boolean = false;
     prefix: (msg: string) => string;
 
     constructor(config: ConfigElement) {
@@ -81,8 +80,6 @@ export class DiscordBot {
 
     stop() {
         this.plugins.map(plugin => plugin.extract(this))
-        this.destroy = true;
-        this.client.emit('destroy');
         this.client.destroy();
     }
 

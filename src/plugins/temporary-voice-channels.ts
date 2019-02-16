@@ -1,9 +1,26 @@
-import { GuildMember, VoiceChannel } from 'discord.js';
+import { VoiceChannel } from 'discord.js';
 import { DiscordBot } from '../discordbot';
 import { randomElementFromArray, responseToQuestion } from '../helpers';
 import { CommunicationEvent, Plugin } from "../types";
 
+interface ManagedChannel {
+    channel: VoiceChannel;
+    shutdown: Function;
+}
+
 export default class TemporaryVoiceChannel extends Plugin {
+
+    managedChannels: Array<ManagedChannel>;
+
+    constructor() {
+        super();
+
+        this.managedChannels = new Array<ManagedChannel>();
+        setInterval(() => {
+            this.managedChannels = this.managedChannels.filter(managedChannel => managedChannel.channel.deletable); // Garbage collect the managed channels.
+        }, 15000)
+    }
+
     inject(context: DiscordBot) {
         context.handlers = {
             ...context.handlers,
@@ -16,24 +33,26 @@ export default class TemporaryVoiceChannel extends Plugin {
                         channel.guild.member(eventData.author).setVoiceChannel(channel).catch((err) => console.error(err)) // Move the user
                     ]))
                     .then((p: any[]) => {
-                        let channel = p[0];
+                        let channel: VoiceChannel = p[0];
 
                         eventData.responseCallback(randomElementFromArray(eventData.config.responses) + channel.name);
 
-                        const events = ['voiceStateUpdate', 'destroy'];
-
-                        let listenerFunc = function (...args: GuildMember[]) {
-                            if (channel.members.size == 0 || eventData.bot.destroy) { // Check and see if the channel is empty.
+                        let listenerFunc = function (shutdownOverride = false) {
+                            if (channel.members.size == 0 || shutdownOverride) { // Check and see if the channel is empty.
                                 channel.delete();
 
-                                events.map((event) => eventData.bot.client.off(event, listenerFunc));
+                                eventData.bot.client.off('voiceStateUpdate', listenerFunc);
                             }
                         }
 
+                        this.managedChannels.push({
+                            channel: channel,
+                            shutdown: listenerFunc
+                        })
 
                         setTimeout(() => {
                             listenerFunc();
-                            events.map((event) => eventData.bot.client.on(event, listenerFunc));
+                            eventData.bot.client.off('voiceStateUpdate', listenerFunc);
                         }, eventData.config.handlerSpecific.checkForMembersInterval)
 
                     })
@@ -41,5 +60,7 @@ export default class TemporaryVoiceChannel extends Plugin {
         }
     }
 
-    extract(context: DiscordBot) { }
+    extract(context: DiscordBot) {
+        this.managedChannels.forEach(channel => channel.shutdown(true));
+    }
 }
