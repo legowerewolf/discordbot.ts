@@ -25,6 +25,7 @@
     "@types/node": "^11.9.4",
     "@types/node-fetch": "^2.1.6",
     "gulp": "^4.0.0",
+    "gulp-cli": "^2.0.1",
     "gulp-typescript": "^5.0.0",
     "typescript": "^3.3.3"
   }
