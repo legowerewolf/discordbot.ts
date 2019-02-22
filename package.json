@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/js-yaml": "^3.12.0",
     "@types/natural": "^0.2.33",
-    "@types/node": "^11.9.4",
+    "@types/node": "^11.9.5",
     "@types/node-fetch": "^2.1.6",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
