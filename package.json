@@ -27,6 +27,6 @@
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
     "gulp-typescript": "^5.0.1",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.4000"
   }
 }
