@@ -15,7 +15,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	mode: "production",
+	mode: "development",
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "build"),

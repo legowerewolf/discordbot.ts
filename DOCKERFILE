@@ -1,0 +1,10 @@
+from node:latest as builder
+copy . /app/
+workdir /app/
+run npm i && npm run build
+
+from node:slim
+workdir /app/
+copy --from=builder /app/build/ .
+copy ./config ./config
+cmd node bundle.js

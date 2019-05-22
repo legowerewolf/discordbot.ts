@@ -84,6 +84,7 @@ export class DiscordBot {
 	stop() {
 		this.plugins.map((plugin) => plugin.extract(this));
 		this.client.destroy();
+		process.exit();
 	}
 
 	handleInput(eventData: CommunicationEvent) {
