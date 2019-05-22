@@ -5,15 +5,12 @@
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
 	"scripts": {
-		"build": "gulp build",
-		"test": "gulp test",
-		"start": "node build/index",
-		"webpack-build": "webpack"
+		"build": "webpack",
+		"start": "node build/bundled"
 	},
 	"author": "legowerewolf",
 	"license": "ISC",
 	"dependencies": {
-		"@google/chatbase": "^1.1.2",
 		"discord.js": "^11.4.2",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.1.0",
@@ -25,9 +22,6 @@
 		"@types/natural": "^0.2.33",
 		"@types/node": "^11.13.0",
 		"@types/node-fetch": "^2.3.0",
-		"gulp": "^4.0.0",
-		"gulp-cli": "^2.1.0",
-		"gulp-typescript": "^5.0.1",
 		"ts-loader": "^6.0.1",
 		"typescript": "^3.4.2",
 		"webpack": "^4.32.0",

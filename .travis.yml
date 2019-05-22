@@ -5,4 +5,4 @@ install:
 - npm i -g pnpm
 - pnpm i
 script:
-- pnpm test
+- pnpm run build
