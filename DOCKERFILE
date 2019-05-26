@@ -1,7 +1,8 @@
 from node:latest as builder
 copy . /app/
 workdir /app/
-run npm i && npm run build
+run npm ci              && \
+    npm run build
 
 from node:slim
 workdir /app/
