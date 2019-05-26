@@ -6,51 +6,68 @@ import { Plugin } from "../types";
 const indexableChannelRegex = /([\w ]+) (\d+)/;
 
 export default class PresenceRoles extends Plugin {
+	inject(context: DiscordBot) {
+		context.client.on("voiceStateUpdate", (memberOldStatus: GuildMember, memberNewStatus: GuildMember) => {
+			if (memberNewStatus.voiceChannel !== undefined && memberNewStatus.voiceChannel.name.match(indexableChannelRegex) != null) {
+				// The user has joined an indexed channel.
+				context.console(ErrorLevels.Info, `${memberNewStatus} joined an indexed channel`);
 
-    inject(context: DiscordBot) {
-        context.client.on("voiceStateUpdate", (memberOldStatus: GuildMember, memberNewStatus: GuildMember) => {
+				let newChannel: VoiceChannel = memberNewStatus.voiceChannel;
 
-            if (memberNewStatus.voiceChannel !== undefined) {
-                let x: VoiceChannel = memberNewStatus.voiceChannel;
-                context.console(ErrorLevels.Info, `${memberNewStatus} joined a channel`)
+				if (newChannel.members.size == 1) {
+					// Only if this is the first person in the channel
 
-                if (x.members.size == 1 && x.name.match(indexableChannelRegex) != null) { // Only if this is the first person in the channel AND it's an indexable channel
-                    x.clone(`${x.name.match(indexableChannelRegex)[1]} ${this.getNewPrimaryKey(this.getDuplicateIDs(x))}`) // Clone the channel
-                        .then((channel) => channel.setParent(x.parentID)); // Move it to the appropriate category
-                }
-            }
+					newChannel
+						.clone(this.newNameFromExisting(newChannel)) // Clone the channel
+						.then((channel) => channel.setParent(newChannel.parentID)); // Move it to the appropriate category
+				}
+			}
 
-            if (memberOldStatus.voiceChannel !== undefined) {
-                context.console(ErrorLevels.Info, `${memberNewStatus} left a channel`)
-                let x: VoiceChannel = memberOldStatus.voiceChannel;
+			if (memberOldStatus.voiceChannel !== undefined && memberOldStatus.voiceChannel.name.match(indexableChannelRegex) != null) {
+				// The user in question has switched away from an indexed channel.
+				context.console(ErrorLevels.Info, `${memberNewStatus} left an indexed channel`);
 
-                if (x.members.size == 0 && x.name.match(indexableChannelRegex) != null) {
-                    if (this.getDuplicateIDs(x).length > 1) {
-                        x.delete();
-                    }
-                }
-            }
-        })
-    }
+				let oldChannel: VoiceChannel = memberOldStatus.voiceChannel;
 
-    findDuplicates(channel: VoiceChannel): Array<VoiceChannel> {
-        return (channel.parent.children //@todo: crashes if channel is not in a category
-            .array() as Array<VoiceChannel>)
-            .filter(x => x.name.match(indexableChannelRegex) != null) // Filter out channels that aren't indexable
-            .filter(x => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]) // Filter out channels that aren't part of the same group
-    }
+				if (oldChannel.members.size == 0) {
+					let duplicateIDCount = this.getDuplicateIDs(oldChannel).length;
+					if (duplicateIDCount > 1) {
+						oldChannel.delete();
+					} else if (duplicateIDCount == 1) {
+						oldChannel.setName(this.newNameFromExisting(oldChannel, 1));
+					}
+				}
+			}
+		});
+	}
 
-    getDuplicateIDs(channel: VoiceChannel): number[] { // Get the numbers of all channels with the same name
-        return this.findDuplicates(channel).map(c => Number(c.name.match(indexableChannelRegex)[2]))
-    }
+	findDuplicates(channel: VoiceChannel): Array<VoiceChannel> {
+		return (channel.parent.children //@todo: crashes if channel is not in a category
+			.array() as Array<VoiceChannel>)
+			.filter((x) => x.name.match(indexableChannelRegex) != null) // Filter out channels that aren't indexable
+			.filter((x) => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]); // Filter out channels that aren't part of the same group
+	}
 
-    getNewPrimaryKey(primaryKeys: Array<number>): number { // Get a new channel number suffix
-        return primaryKeys.reduce((accum, curr) => { return accum == curr ? curr + 1 : accum }, 1)
-    }
+	getDuplicateIDs(channel: VoiceChannel): number[] {
+		// Get the numbers of all channels with the same name
+		return this.findDuplicates(channel).map((c) => Number(c.name.match(indexableChannelRegex)[2]));
+	}
 
-    getEmptyDuplicateChannelsCount(channels: Array<VoiceChannel>): number { // Get a count of all the duplicate channels with no current members
-        return channels.map(c => c.members.size).reduce((prev, cur) => cur == 0 ? prev + 1 : prev)
-    }
+	getNewPrimaryKey(primaryKeys: Array<number>): number {
+		// Get a new channel number suffix
+		return primaryKeys.reduce((accum, curr) => {
+			return accum == curr ? curr + 1 : accum;
+		}, 1);
+	}
 
-    extract(context: DiscordBot) { }
+	getEmptyDuplicateChannelsCount(channels: Array<VoiceChannel>): number {
+		// Get a count of all the duplicate channels with no current members
+		return channels.map((c) => c.members.size).reduce((prev, cur) => (cur == 0 ? prev + 1 : prev));
+	}
+
+	newNameFromExisting(channel: VoiceChannel, number: number = null) {
+		return `${channel.name.match(indexableChannelRegex)[1]} ${number == null ? this.getNewPrimaryKey(this.getDuplicateIDs(channel)) : number}`;
+	}
+
+	extract(context: DiscordBot) {}
 }
