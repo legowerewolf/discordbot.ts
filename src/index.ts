@@ -31,16 +31,14 @@ Promise.all([
 	}),
 ]).then((data) => {
 	let defaultConfig: ConfigElement = safeLoad(data[0].toString());
-	let customConfig: ConfigElement[] = safeLoad(data[1].toString()).instances;
+	let customConfig: ConfigElement = safeLoad(data[1].toString());
 
 	if (customConfig === undefined) throw new Error("Malformed configuration data.");
 
-	customConfig.forEach((element: ConfigElement) => {
-		let config = { ...defaultConfig, ...element }; // Merge preferring custom data
+	let resolvedConfig = { ...defaultConfig, ...customConfig }; // Merge preferring custom data
 
-		config.intents = intentResolver.get(config.intentsResolutionMethod)(defaultConfig.intents, element.intents);
+	resolvedConfig.intents = intentResolver.get(resolvedConfig.intentsResolutionMethod)(defaultConfig.intents, customConfig.intents);
 
-		let bot = new DiscordBot(config);
-		bot.start();
-	});
+	let bot = new DiscordBot(resolvedConfig);
+	bot.start();
 });
