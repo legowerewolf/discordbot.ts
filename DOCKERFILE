@@ -1,11 +1,11 @@
-from node:latest as builder
-copy . /app/
-workdir /app/
-run npm ci              && \
+FROM node:latest AS builder
+COPY . /app/
+WORKDIR /app/
+RUN npm ci              && \
     npm run build
 
-from node:slim
-workdir /app/
-copy --from=builder /app/build/ .
-copy ./config ./config
-cmd node bundle.js
+FROM node:slim
+WORKDIR /app/
+COPY --from=builder /app/build/ .
+COPY ./config ./config
+CMD node bundle.js
