@@ -39,6 +39,5 @@ Promise.all([
 
 	resolvedConfig.intents = intentResolver.get(resolvedConfig.intentsResolutionMethod)(defaultConfig.intents, customConfig.intents);
 
-	let bot = new DiscordBot(resolvedConfig);
-	bot.start();
+	new DiscordBot(resolvedConfig).start();
 });
