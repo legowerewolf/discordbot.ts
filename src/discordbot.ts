@@ -1,4 +1,4 @@
-import { Client, Message } from "discord.js";
+import { Client, Guild, Message } from "discord.js";
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
 import { getPropertySafe, valuesOf } from "./helpers";
@@ -55,6 +55,12 @@ export class DiscordBot {
 				},
 			},
 			{
+				event: "guildCreate",
+				handler: (newGuild: Guild) => {
+					this.console(ErrorLevels.Info, `Bot added to guild: ${newGuild.name}`);
+				},
+			},
+			{
 				event: "error",
 				handler: (error: Error) => {
 					this.console(ErrorLevels.Error, error.message);
@@ -74,7 +80,7 @@ export class DiscordBot {
 
 		this.plugins.push(...this.config.plugins.map((name: string) => require(/* webpackMode: "eager" */ `./plugins/${name}`).default).map((plugin: PluginClass) => new plugin()));
 		this.plugins.forEach((p: Plugin) => p.inject(this)); // Inject all plugins
-		this.console(ErrorLevels.Info, `Loaded plugins: ${this.config.plugins}`);
+		this.console(ErrorLevels.Info, `Loaded plugins: ${this.config.plugins.join(", ")}`);
 	}
 
 	start() {
