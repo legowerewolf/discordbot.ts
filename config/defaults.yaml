@@ -80,7 +80,7 @@ intents:
       - Ok. Goodbye!
       - I'll be back.
       handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
-        shutdownDelay: 3000 
+        shutdownDelay: 3000
   temporaryVoiceChannel: # If no handler is specified, the bot tries to load a handler named the same as the intent.
     handler: temporary_voice_channel
     models:
@@ -104,7 +104,7 @@ intents:
         - Alright, that's what I'll call it.
         - And so it was named.
         - Perfectly named. As all things should be.
-        timeoutResponse: # If the user takes too long, it replies with one of these. 
+        timeoutResponse: # If the user takes too long, it replies with one of these.
         - Never mind. I'll pick a name.
         - Alright. Guess I'll pick one.
         timeout: 10000 # How long to wait for a response.
@@ -114,13 +114,12 @@ intents:
         - Unicorns
         - Not Murder
         - The End Times
-        - How 'Bout That Lotus, Eh?
         - Johnathan
         - The Council of Elrond
         - Generic channel name
         - Stuck in Vim
       responses:
-      - 'welcome to your new channel: '
+      - 'Welcome to your new channel: '
       - 'Here you go! Your new channel, fresh from the factory: '
       handlerSpecific:
         checkForMembersInterval: 5000 # How often to check if people are still in the voice channel
@@ -133,6 +132,6 @@ intents:
       - I didn't understand. Could you rephrase that?
 plugins: # Plugins add additional functionality. They don't currently each have any configuration options.
 - presence-roles # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-- voice-scaling # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number. 
+- voice-scaling # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
 - standard-handlers # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
 - temporary-voice-channels
