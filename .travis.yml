@@ -1,8 +1,4 @@
 language: node_js
-node_js:
-- node
-install:
-- npm i -g pnpm
-- pnpm i
+node_js: node
 script:
-- pnpm run build
+    - npm run build
