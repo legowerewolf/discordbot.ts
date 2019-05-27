@@ -1,13 +1,16 @@
 ---
-shortname: # This is the name that will be prefixed to logs from *this* bot instance.
+shortname: # This is the name that will be prefixed to logs from the bot.
 APIKeys:
     discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
 logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.
 defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
-intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Set to "useCustom" or "concatenate" to use your own intents or combine them with the defaults, respectively.
+users:
+#   '[user's numerical id]': # enable dev mode, right click on a user, and select "Copy ID".
+#       permissionLevel: 5 # A user's permission level must meet or exceed that of a command's permission level to execute that command.
+intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Available options are "useDefault" (uses only default intents), "useCustom" (uses only custom intents), "mergePreferDefault" (uses both default and custom, but chooses default in the event of a name collision), and "mergePreferCustom" (same as "mergePreferDefault", but chooses custom over defaults).
 intents:
-    greeting: # names must be unique
-        models: # Models are what get fed to the natural language system to train it to interpret messages.
+    greeting: # intent names must be unique in the config file
+        models: # Models get fed to the natural language system to train it to interpret messages.
             - hello
             - hi
             - greetings
@@ -39,9 +42,9 @@ intents:
         handler: basic_response
         data:
             responses:
-                - You can say "make a temporary channel", and I'll create a voice channel that
-                  only exists as long as someone's in it. I don't do much yet, though. My developer's
-                  working on it.
+                - You can say "make a temporary channel" (or something similar), and I'll create a voice channel that
+                  only exists as long as someone's in it. I also manage the replication of numbered voice channels
+                  and roles assigned based on the game you're currently playing.
     declarationOfLove:
         models:
             - I love you
@@ -105,10 +108,10 @@ intents:
                     - Unicorns
                     - Not Murder
                     - The End Times
-                    - Johnathan
                     - The Council of Elrond
                     - Generic channel name
                     - Stuck in Vim
+                    - Fleet Command
             responses:
                 - "Welcome to your new channel: "
                 - "Here you go! Your new channel, fresh from the factory: "
