@@ -17,7 +17,7 @@ module.exports = {
 	target: "node",
 	mode: "development",
 	output: {
-		filename: "bundle.js",
+		filename: "index.js",
 		path: path.resolve(__dirname, "build"),
 	},
 };

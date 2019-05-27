@@ -8,4 +8,4 @@ FROM node:12.3.1-slim
 WORKDIR /app/
 COPY --from=builder /app/build/ .
 COPY ./config ./config
-CMD node bundle.js
+CMD ["node"]
