@@ -45,7 +45,8 @@ export default class PresenceRoles extends Plugin {
 		return (channel.parent.children //@todo: crashes if channel is not in a category
 			.array() as Array<VoiceChannel>)
 			.filter((x) => x.name.match(indexableChannelRegex) != null) // Filter out channels that aren't indexable
-			.filter((x) => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]); // Filter out channels that aren't part of the same group
+			.filter((x) => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]) // Filter out channels that aren't part of the same group
+			.sort((a, b) => a.name.localeCompare(b.name));
 	}
 
 	getDuplicateIDs(channel: VoiceChannel): number[] {
