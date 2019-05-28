@@ -1,67 +1,31 @@
-import { VoiceChannel } from "discord.js";
+import { GuildMember, VoiceChannel } from "discord.js";
 import { DiscordBot } from "../discordbot";
-import { randomElementFromArray, responseToQuestion } from "../helpers";
+import { responseToQuestion } from "../helpers";
 import { CommunicationEvent, Plugin } from "../types";
 
-interface ManagedChannel {
-	channel: VoiceChannel;
-	shutdown: Function;
-}
+const nameSuffix = "🤖";
+const nameRegex = new RegExp(`[\\w ]* 🤖$`, "g");
 
 export default class TemporaryVoiceChannel extends Plugin {
-	managedChannels: Array<ManagedChannel>;
-
-	constructor() {
-		super();
-
-		this.managedChannels = new Array<ManagedChannel>();
-		setInterval(() => {
-			this.managedChannels = this.managedChannels.filter((managedChannel) => managedChannel.channel.deletable); // Garbage collect the managed channels.
-		}, 15000);
-	}
-
 	inject(context: DiscordBot) {
 		context.handlers["temporary_voice_channel"] = (eventData: CommunicationEvent) => {
 			responseToQuestion(eventData)
-				.then((chosenName: string) => eventData.guild.createChannel(chosenName, "voice")) // Make the voice channel
-				.then((channel: VoiceChannel) =>
-					Promise.all([
-						Promise.resolve(channel), // The first return will be the channel, garunteed.
-						channel.setBitrate(eventData.config.handlerSpecific.bitrate).catch((err) => console.error(err)), // Fix up the bitrate
+				.then((chosenName: string) => eventData.guild.createChannel(`${chosenName} ${nameSuffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
+				.then(
+					(channel: VoiceChannel) =>
 						channel.guild
 							.member(eventData.author)
 							.setVoiceChannel(channel)
-							.catch((err) => console.error(err)), // Move the user
-					])
-				)
-				.then((p: any[]) => {
-					let channel: VoiceChannel = p[0];
-
-					eventData.responseCallback(randomElementFromArray(eventData.config.responses) + channel.name);
-
-					let listenerFunc = function(shutdownOverride = false) {
-						if (channel.members.size == 0 || shutdownOverride) {
-							// Check and see if the channel is empty.
-							channel.delete();
-
-							eventData.bot.client.off("voiceStateUpdate", listenerFunc);
-						}
-					};
-
-					this.managedChannels.push({
-						channel: channel,
-						shutdown: listenerFunc,
-					});
-
-					setTimeout(() => {
-						listenerFunc();
-						eventData.bot.client.off("voiceStateUpdate", listenerFunc);
-					}, eventData.config.handlerSpecific.checkForMembersInterval);
-				});
+							.catch((err) => console.error(err)) // Move the user
+				);
 		};
+
+		context.client.on("voiceStateUpdate", (memberOldStatus: GuildMember, memberNewStatus: GuildMember) => {
+			if (memberOldStatus.voiceChannel && memberOldStatus.voiceChannel.name.match(nameRegex) != null && memberOldStatus.voiceChannel.members.size == 0 && memberOldStatus.voiceChannel.deletable) {
+				memberOldStatus.voiceChannel.delete();
+			}
+		});
 	}
 
-	extract(context: DiscordBot) {
-		this.managedChannels.forEach((channel) => channel.shutdown(true));
-	}
+	extract(context: DiscordBot) {}
 }
