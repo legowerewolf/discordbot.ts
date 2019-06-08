@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-	entry: "./src/index.ts",
+	entry: { shard: "./src/index.ts" },
 	module: {
 		rules: [
 			{
@@ -17,7 +17,7 @@ module.exports = {
 	target: "node",
 	mode: "development",
 	output: {
-		filename: "index.js",
+		filename: "[name].js",
 		path: path.resolve(__dirname, "build"),
 	},
 };
