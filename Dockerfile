@@ -6,6 +6,6 @@ RUN npm ci              && \
 
 FROM node:12.3.1-slim
 WORKDIR /app/
-COPY --from=builder /app/build/ .
+COPY --from=builder /app/build/ /app/build/
 COPY ./config ./config
-ENTRYPOINT [ "node", "index.js" ]
+ENTRYPOINT [ "node", "build/spawner.js" ]
