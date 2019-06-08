@@ -1,5 +1,8 @@
 import { Message } from "discord.js";
-import { CommunicationEvent, IntentsMap, IntentsResolutionMethods } from "./types";
+import { readFile } from "fs";
+import { safeLoad } from "js-yaml";
+import { promisify } from "util";
+import { CommunicationEvent, ConfigElement, IntentsMap, IntentsResolutionMethods } from "./types";
 
 export function randomElementFromArray(array: Array<any>) {
 	return array[Math.floor(Math.random() * array.length)];
@@ -71,3 +74,26 @@ export const intentResolver: Map<IntentsResolutionMethods, (defaults: IntentsMap
 		},
 	],
 ]);
+
+const readFileP = promisify(readFile);
+
+export function parseConfig(): Promise<ConfigElement> {
+	return Promise.all([
+		readFileP("./config/defaults.yaml"),
+		readFileP("./config/config.yaml").catch(() => {
+			if (process.env.BotConfig) return Buffer.from(process.env.BotConfig);
+			else throw new Error("Required custom configuration not found. Create a config file or provide via environment variable.");
+		}),
+	]).then((data) => {
+		let defaultConfig: ConfigElement = safeLoad(data[0].toString());
+		let customConfig: ConfigElement = safeLoad(data[1].toString());
+
+		if (customConfig === undefined) throw new Error("Malformed configuration data.");
+
+		let resolvedConfig = { ...defaultConfig, ...customConfig }; // Merge preferring custom data
+
+		resolvedConfig.intents = intentResolver.get(resolvedConfig.intentsResolutionMethod)(defaultConfig.intents, customConfig.intents);
+
+		return resolvedConfig;
+	});
+}

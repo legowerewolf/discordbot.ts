@@ -1,8 +1,12 @@
 import { Client, Guild, Message } from "discord.js";
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
-import { getPropertySafe, valuesOf } from "./helpers";
+import { getPropertySafe, parseConfig, valuesOf } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, PluginClass } from "./types";
+
+parseConfig().then((config) => {
+	new DiscordBot(config).start();
+});
 
 export class DiscordBot {
 	config: ConfigElement;
@@ -50,8 +54,7 @@ export class DiscordBot {
 			{
 				event: "ready",
 				handler: () => {
-					this.console(ErrorLevels.Info, `Connected as @${this.client.user.tag}. ID: ${this.client.user.id}`);
-					this.console(ErrorLevels.Info, `Guilds: ${[...this.client.guilds.values()].map((guild) => `${guild.name}#${guild.id}`).join(", ")}`);
+					this.console(ErrorLevels.Info, `Shard ${this.client.shard.id} ready. Connected to ${this.client.guilds.size} guilds.`);
 				},
 			},
 			{
@@ -78,7 +81,6 @@ export class DiscordBot {
 
 		this.plugins = new Array<Plugin>(...this.config.plugins.map((name: string) => require(/* webpackMode: "eager" */ `./plugins/${name}`).default).map((plugin: PluginClass) => new plugin()));
 		this.plugins.forEach((p: Plugin) => p.inject(this)); // Inject all plugins
-		this.console(ErrorLevels.Info, `Loaded plugins: ${this.config.plugins.join(", ")}`);
 	}
 
 	start() {
