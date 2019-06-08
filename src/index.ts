@@ -2,26 +2,10 @@ import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
 import { promisify } from "util";
 import { DiscordBot } from "./discordbot";
-import { ConfigElement, IntentsMap, IntentsResolutionMethods } from "./types";
+import { intentResolver } from "./helpers";
+import { ConfigElement } from "./types";
 
 const readFileP = promisify(readFile);
-
-const intentResolver: Map<IntentsResolutionMethods, (defaults: IntentsMap, custom: IntentsMap) => IntentsMap> = new Map([
-	[IntentsResolutionMethods.UseDefault, (defaults: IntentsMap, custom: IntentsMap) => defaults],
-	[IntentsResolutionMethods.UseCustom, (defaults: IntentsMap, custom: IntentsMap) => custom],
-	[
-		IntentsResolutionMethods.MergePreferCustom,
-		(defaults: IntentsMap, custom: IntentsMap) => {
-			return { ...defaults, ...custom };
-		},
-	],
-	[
-		IntentsResolutionMethods.MergePreferDefault,
-		(defaults: IntentsMap, custom: IntentsMap) => {
-			return { ...custom, ...defaults };
-		},
-	],
-]);
 
 Promise.all([
 	readFileP("./config/defaults.yaml"),
