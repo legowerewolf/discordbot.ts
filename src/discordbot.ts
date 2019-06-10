@@ -1,5 +1,5 @@
 import { Client, Guild, Message } from "discord.js";
-import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
+import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
 import { getPropertySafe, parseConfig, valuesOf } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, PluginClass } from "./types";
@@ -15,11 +15,6 @@ export class DiscordBot {
 	plugins: Array<Plugin>;
 	handlers: { [key: string]: IntentHandler };
 	prefix: (msg: string) => string;
-
-	get shardID() {
-		let shardID = getPropertySafe(this, ["client", "shard", "id"]);
-		return String(shardID !== null ? shardID : "___");
-	}
 
 	constructor(config: ConfigElement) {
 		this.config = config;
@@ -56,7 +51,7 @@ export class DiscordBot {
 			{
 				event: "ready",
 				handler: () => {
-					this.console(ErrorLevels.Info, `Shard ${this.shardID} ready. Connected to ${this.client.guilds.size} guilds.`);
+					this.console(ErrorLevels.Info, `Shard ready. Connected to ${this.client.guilds.size} guilds.`);
 				},
 			},
 			{
@@ -117,8 +112,7 @@ export class DiscordBot {
 
 	console(level: ErrorLevels, message: string) {
 		if (this.config.logLevel <= valuesOf(ErrorLevels).findIndex((l) => l == level)) {
-			defaultPrefixer.update(`Shard ${this.shardID}`);
-			this.client.shard.send(defaultPrefixer.prefix(`Shard ${this.shardID}`, errorLevelPrefixer.prefix(level, message)));
+			this.client.shard.send(errorLevelPrefixer.prefix(level, message));
 		}
 	}
 }
