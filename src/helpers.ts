@@ -48,9 +48,9 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
  * @param key - the path to look for the value
  * @returns the value if it exists, otherwise undefined
  */
-export function getPropertySafe(obj: any, key: string) {
-	return key.split(".").reduce(function(o, x) {
-		return typeof o == "undefined" || o === null ? o : o[x];
+export function getPropertySafe(obj: any, key: Array<string>) {
+	return key.reduce(function(o, x) {
+		return typeof o == "undefined" || o === null ? null : o[x];
 	}, obj);
 }
 

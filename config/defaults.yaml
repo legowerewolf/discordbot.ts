@@ -1,5 +1,4 @@
 ---
-shortname: # This is the name that will be prefixed to logs from the bot.
 APIKeys:
     discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
 logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.

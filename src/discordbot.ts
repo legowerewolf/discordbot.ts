@@ -16,11 +16,13 @@ export class DiscordBot {
 	handlers: { [key: string]: IntentHandler };
 	prefix: (msg: string) => string;
 
+	get shardID() {
+		let shardID = getPropertySafe(this, ["client", "shard", "id"]);
+		return String(shardID !== null ? shardID : "___");
+	}
+
 	constructor(config: ConfigElement) {
 		this.config = config;
-
-		defaultPrefixer.update(this.config.shortname);
-		this.prefix = (msg: string) => defaultPrefixer.prefix(this.config.shortname, msg);
 
 		this.brain = new Brain(0.7);
 		Object.keys(config.intents)
@@ -54,7 +56,7 @@ export class DiscordBot {
 			{
 				event: "ready",
 				handler: () => {
-					this.console(ErrorLevels.Info, `Shard ${this.client.shard.id} ready. Connected to ${this.client.guilds.size} guilds.`);
+					this.console(ErrorLevels.Info, `Shard ${this.shardID} ready. Connected to ${this.client.guilds.size} guilds.`);
 				},
 			},
 			{
@@ -100,7 +102,7 @@ export class DiscordBot {
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		let userPermissionLevel = getPropertySafe(this.config.users, `${eventData.author.id}.permissionLevel`);
+		let userPermissionLevel = getPropertySafe(this.config.users, [eventData.author.id, "permissionLevel"]);
 		if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
@@ -115,7 +117,8 @@ export class DiscordBot {
 
 	console(level: ErrorLevels, message: string) {
 		if (this.config.logLevel <= valuesOf(ErrorLevels).findIndex((l) => l == level)) {
-			console.log(this.prefix(errorLevelPrefixer.prefix(level, message)));
+			defaultPrefixer.update(`Shard ${this.shardID}`);
+			this.client.shard.send(defaultPrefixer.prefix(`Shard ${this.shardID}`, errorLevelPrefixer.prefix(level, message)));
 		}
 	}
 }

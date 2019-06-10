@@ -8,4 +8,8 @@ parseConfig().then((config) => {
 	});
 
 	manager.spawn();
+
+	manager.on("message", (shard, message) => {
+		console.log(message);
+	});
 });
