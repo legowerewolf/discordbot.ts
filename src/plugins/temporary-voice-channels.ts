@@ -4,7 +4,7 @@ import { responseToQuestion } from "../helpers";
 import { CommunicationEvent, Plugin } from "../types";
 
 const nameSuffix = "🤖";
-const nameRegex = new RegExp(`[\\w ]* 🤖$`, "g");
+const nameRegex = new RegExp(`[\\w ]* ${nameSuffix}$`, "g");
 
 export default class TemporaryVoiceChannel extends Plugin {
 	inject(context: DiscordBot) {
