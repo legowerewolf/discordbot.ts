@@ -105,6 +105,9 @@ export class DiscordBot {
 			} else {
 				this.console(ErrorLevels.Error, `You must use explicitly-named handlers for intents. (${intentName})`);
 			}
+			if (intentName == "_unknown") {
+				this.console(ErrorLevels.Warn, `Unknown message: ${eventData.text}`);
+			}
 		} else {
 			eventData.responseCallback("You don't have permission to ask that.");
 		}
