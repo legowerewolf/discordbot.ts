@@ -1,6 +1,7 @@
 import { GuildMember, Role } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
+import { getPropertySafe } from "../helpers";
 import { Plugin } from "../types";
 
 const role_prefix = "in:";
@@ -9,7 +10,7 @@ export default class PresenceRoles extends Plugin {
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldMember, newMember) => {
 			if (
-				oldMember.presence.game.name == newMember.presence.game.name || // they haven't changed games
+				getPropertySafe(oldMember, ["presence", "game", "name"]) == getPropertySafe(newMember, ["presence", "game", "name"]) || // they haven't changed games
 				oldMember.user.bot || // they're a bot
 				!oldMember.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with the
 			)
