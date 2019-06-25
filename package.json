@@ -9,7 +9,7 @@
 		"start": "node build"
 	},
 	"author": "legowerewolf",
-	"license": "ISC",
+	"license": "GPL-3.0-only",
 	"dependencies": {
 		"discord.js": "^11.5.1",
 		"js-yaml": "^3.13.1",
