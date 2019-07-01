@@ -1,4 +1,4 @@
-FROM node:12.4.0 AS builder
+FROM node:12.5.0 AS builder
 COPY . /app/
 WORKDIR /app/
 RUN npm ci              && \
