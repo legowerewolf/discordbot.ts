@@ -1,6 +1,6 @@
 # Discordbot.js
 
-![](https://img.shields.io/travis/legowerewolf/discordbot.ts.svg?style=flat-square) [![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/O4O6QKLP)
+[![](https://travis-ci.org/legowerewolf/discordbot.ts.svg?branch=master)](https://travis-ci.org/legowerewolf/discordbot.ts) [![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/O4O6QKLP)
 
 A simple way to add natural-language-powered Discord bots to your server.
 
