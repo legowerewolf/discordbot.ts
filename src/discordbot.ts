@@ -2,7 +2,7 @@ import { Client, Guild, Message } from "discord.js";
 import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
 import { getPropertySafe, parseConfig, valuesOf } from "./helpers";
-import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, PluginClass } from "./types";
+import { ClassType, CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
 
 parseConfig().then((config) => {
 	new DiscordBot(config).start();
@@ -76,7 +76,7 @@ export class DiscordBot {
 			this.client.on(element.event, element.handler);
 		});
 
-		this.plugins = new Array<Plugin>(...this.config.plugins.map((name: string) => require(/* webpackMode: "eager" */ `./plugins/${name}`).default).map((plugin: PluginClass) => new plugin()));
+		this.plugins = new Array<Plugin>(...this.config.plugins.map((name: string) => require(/* webpackMode: "eager" */ `./plugins/${name}`).default).map((plugin: ClassType<Plugin>) => new plugin()));
 		this.plugins.forEach((p: Plugin) => p.inject(this)); // Inject all plugins
 	}
 
