@@ -123,8 +123,9 @@ intents:
             responses:
                 - I'm sorry, what was that?
                 - I didn't understand. Could you rephrase that?
-plugins: # Plugins add additional functionality. They don't currently have any configuration options.
-    - presence-roles # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-    - voice-scaling # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
-    - standard-handlers # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
-    - temporary-voice-channels # Spawn temporary voice channels on request.
+plugins: # Plugins add additional functionality.
+    presence-roles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
+        role_prefix: "playing:"
+    voice-scaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
+    standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
+    temporary-voice-channels: # Spawn temporary voice channels on request.

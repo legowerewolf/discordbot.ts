@@ -76,7 +76,11 @@ export class DiscordBot {
 			this.client.on(element.event, element.handler);
 		});
 
-		this.plugins = new Array<Plugin>(...this.config.plugins.map((name: string) => require(/* webpackMode: "eager" */ `./plugins/${name}`).default).map((plugin: ClassType<Plugin>) => new plugin()));
+		this.plugins = new Array<Plugin>(
+			...Object.keys(this.config.plugins).map((name: string) => {
+				return new (require(/* webpackMode: "eager" */ `./plugins/${name}`).default as ClassType<Plugin>)(this.config.plugins[name]);
+			})
+		);
 		this.plugins.forEach((p: Plugin) => p.inject(this)); // Inject all plugins
 	}
 

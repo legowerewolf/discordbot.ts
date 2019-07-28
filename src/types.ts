@@ -24,7 +24,9 @@ export interface ConfigElement {
 	intentsResolutionMethod: IntentsResolutionMethods;
 	intents: IntentsMap;
 
-	plugins: Array<string>;
+	plugins: {
+		[key: string]: any;
+	};
 }
 
 export interface IntentsMap {
@@ -91,7 +93,7 @@ export abstract class Plugin {
 }
 
 export interface ClassType<T> {
-	new (): T;
+	new (args: any[]): T;
 }
 
 export type IntentHandler = (eventData: CommunicationEvent) => void;
