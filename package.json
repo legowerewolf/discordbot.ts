@@ -20,7 +20,7 @@
 	},
 	"devDependencies": {
 		"@types/js-yaml": "^3.12.1",
-		"@types/natural": "^0.6.0",
+		"@types/natural": "^0.6.1",
 		"@types/node": "^12.7.1",
 		"@types/node-fetch": "^2.5.0",
 		"ts-loader": "^6.0.4",
