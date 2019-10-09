@@ -1,12 +1,10 @@
 {
-    "include": [
-        "src/**/*"
-    ],
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "module": "commonjs",
-        "target": "es6",
-        "noImplicitAny": true,
-        "allowJs": false
-    }
+	"include": ["src/**/*"],
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"module": "commonjs",
+		"target": "es6",
+		"noImplicitAny": true,
+		"allowJs": false
+	}
 }
