@@ -81,7 +81,6 @@ export abstract class Plugin {
 	defaultConfig: any;
 
 	constructor(_config?: any) {
-		console.log(_config);
 		if (_config) {
 			this.config = { ...this.defaultConfig, ..._config };
 		}
