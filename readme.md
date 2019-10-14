@@ -6,6 +6,10 @@
 
 A simple way to add natural-language-powered Discord bots to your server.
 
+## Implementation
+
+[Luna](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot) is this repository's official Discord bot. 
+
 ## Setup
 
 1. `npm i` to install all dependencies.
