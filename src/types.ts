@@ -77,6 +77,16 @@ export interface NaturalGuess {
 }
 
 export abstract class Plugin {
+	config: any;
+	defaultConfig: any;
+
+	constructor(_config?: any) {
+		console.log(_config);
+		if (_config) {
+			this.config = { ...this.defaultConfig, ..._config };
+		}
+	}
+
 	/** Injects the plugin's hooks into the bot.
 	 * It's up to the plugin developer to not break anything.
 	 *

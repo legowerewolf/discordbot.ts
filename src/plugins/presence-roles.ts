@@ -6,17 +6,9 @@ import { Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
-	config: any = {
+	defaultConfig: any = {
 		role_prefix: "in:",
 	};
-
-	constructor(_config?: any) {
-		super();
-
-		if (_config) {
-			this.config = { ...this.config, ..._config };
-		}
-	}
 
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldMember, newMember) => {
