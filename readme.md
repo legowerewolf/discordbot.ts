@@ -3,9 +3,12 @@
 ![David](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies)
 [![Travis (.org)](https://img.shields.io/travis/legowerewolf/discordbot.ts?label=travis%20build)](https://travis-ci.org/legowerewolf/discordbot.ts)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts)](https://hub.docker.com/r/legowerewolf/discordbot.ts)
-[![ko-fi](https://img.shields.io/badge/ko--fi-support-blue)](https://ko-fi.com/O4O6QKLP)
 
 A simple way to add natural-language-powered Discord bots to your server.
+
+## Implementation
+
+[Luna](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot) is this repository's official Discord bot. 
 
 ## Setup
 
