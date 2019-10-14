@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
 	entry: {
 		shard: "./src/discordbot.ts",
-		spawner: "./src/shard-manager.ts",
+		manager: "./src/shard-manager.ts",
 	},
 	module: {
 		rules: [
