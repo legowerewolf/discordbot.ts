@@ -34,7 +34,7 @@ export default class PresenceRoles extends Plugin {
 						.removeRole(gameRole)
 						.catch((reason) => context.console(ErrorLevels.Error, `Error removing role. ${reason}, ${gameRole}`))
 						.then(() => {
-							if (gameRole.members.size == 0) gameRole.delete().catch((reason) => context.console(ErrorLevels.Error, `Error deleting role. ${reason}, ${gameRole}`));
+							if (gameRole.members.size == 0 && !(gameRole as any).deleted) gameRole.delete().catch((reason) => context.console(ErrorLevels.Error, `Error deleting role. ${reason}, ${gameRole}`));
 						})
 						.catch((reason) => context.console(ErrorLevels.Error, reason));
 				});
@@ -43,7 +43,7 @@ export default class PresenceRoles extends Plugin {
 				new Promise((resolve) => {
 					let gameRole = newMember.guild.roles.filter((role) => role.name == this.config.role_prefix.concat(newMember.presence.game.name)).first();
 					if (gameRole) resolve(gameRole);
-					resolve(newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true }));
+					else resolve(newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true }));
 				})
 					.then((role: Role) => newMember.addRole(role))
 					.catch((reason) => context.console(ErrorLevels.Error, `Error adding role. ${reason}`));
