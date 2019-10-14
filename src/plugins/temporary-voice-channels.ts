@@ -1,4 +1,5 @@
 import { GuildMember, VoiceChannel } from "discord.js";
+import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { responseToQuestion } from "../helpers";
 import { CommunicationEvent, Plugin } from "../types";
@@ -16,7 +17,7 @@ export default class TemporaryVoiceChannel extends Plugin {
 						channel.guild
 							.member(eventData.author)
 							.setVoiceChannel(channel)
-							.catch((err) => console.error(err)) // Move the user
+							.catch((err) => context.console(ErrorLevels.Error, err)) // Move the user
 				);
 		};
 
