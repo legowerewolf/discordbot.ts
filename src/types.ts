@@ -78,12 +78,10 @@ export interface NaturalGuess {
 
 export abstract class Plugin {
 	config: any;
-	defaultConfig: any;
+	static defaultConfig: any;
 
 	constructor(_config?: any) {
-		if (_config) {
-			this.config = { ...this.defaultConfig, ..._config };
-		}
+		this.config = { ...(<typeof Plugin>this.constructor).defaultConfig, ..._config };
 	}
 
 	/** Injects the plugin's hooks into the bot.

@@ -6,7 +6,7 @@ import { Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
-	defaultConfig: any = {
+	static defaultConfig = {
 		role_prefix: "in:",
 	};
 
