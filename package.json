@@ -7,7 +7,7 @@
 	"scripts": {
 		"prepare": "npm run build",
 		"build": "webpack",
-		"start": "node build/spawner.js"
+		"start": "node build/manager.js"
 	},
 	"author": "legowerewolf",
 	"license": "GPL-3.0-only",
