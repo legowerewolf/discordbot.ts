@@ -76,12 +76,13 @@ export class DiscordBot {
 			this.client.on(element.event, element.handler);
 		});
 
-		this.plugins = new Array<Plugin>(
-			...Object.keys(this.config.plugins).map((name: string) => {
-				return new (require(/* webpackMode: "eager" */ `./plugins/${name}`).default as ClassType<Plugin>)(this.config.plugins[name]);
-			})
-		);
-		this.plugins.forEach((p: Plugin) => p.inject(this)); // Inject all plugins
+		this.plugins = new Array<Plugin>();
+		Object.keys(this.config.plugins).map(async (name: string) => {
+			let pluginClass: ClassType<Plugin> = (await import(`./plugins/${name}`)).default;
+			let instance: Plugin = new pluginClass(this.config.plugins[name]);
+			instance.inject(this);
+			this.plugins.push(instance);
+		}, this);
 	}
 
 	start() {
