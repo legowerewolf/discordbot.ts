@@ -18,7 +18,6 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	mode: "development",
 	output: {
 		filename: "[name].js",
 		path: path.resolve(__dirname, "build"),
