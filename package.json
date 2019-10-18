@@ -6,7 +6,7 @@
 	"repository": "github:legowerewolf/discordbot.js",
 	"scripts": {
 		"prepare": "npm run build",
-		"build": "webpack --config webpack.dev.js",
+		"build": "webpack --config webpack.prod.js",
 		"start": "node build/manager.js"
 	},
 	"author": "legowerewolf",
