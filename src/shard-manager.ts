@@ -14,7 +14,7 @@ parseConfig().then((config) => {
 
 	manager.on("launch", (shard) => {
 		defaultPrefixer.update(`Shard ${shard.id}`);
-		console.log(defaultPrefixer.prefix("MANAGER", errorLevelPrefixer.prefix(ErrorLevels.Info, `Launched shard ${shard.id}`)));
+		console.log(defaultPrefixer.prefix("MANAGER", errorLevelPrefixer.prefix(ErrorLevels.Info, `Launching shard ${shard.id}...`)));
 	});
 
 	manager.on("message", (shard, message) => {
