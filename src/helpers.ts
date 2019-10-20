@@ -9,7 +9,7 @@ export function randomElementFromArray(array: Array<any>) {
 }
 
 export function responseToQuestion(eventData: CommunicationEvent): Promise<string> {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		let response = randomElementFromArray(eventData.config.questionData.defaultResponses);
 
 		if (eventData.source == "text") {
