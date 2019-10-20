@@ -10,6 +10,9 @@ parseConfig().then((config) => {
 
 	defaultPrefixer.update("MANAGER");
 
+	// @ts-ignore - these values are filled in at build time.
+	console.log(defaultPrefixer.prefix("MANAGER", `Starting shard manager for v${META_VERSION} / ${META_HASH}`));
+
 	manager.spawn();
 
 	manager.on("launch", (shard) => {
