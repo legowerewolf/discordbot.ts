@@ -2,7 +2,7 @@ import { Client, Guild, Message } from "discord.js";
 import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
 import { getPropertySafe, parseConfig, valuesOf } from "./helpers";
-import { ClassType, CommunicationEvent, ConfigElement, IntentHandler, meta, Plugin } from "./types";
+import { ClassType, CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
 
 parseConfig().then((config) => {
 	new DiscordBot(config).start();
@@ -52,7 +52,9 @@ export class DiscordBot {
 				event: "ready",
 				handler: () => {
 					this.console(ErrorLevels.Info, `Shard ready. Connected to ${this.client.guilds.size} guilds.`);
-					this.client.user.setPresence({ game: { name: `v${meta.VERSION} / ${meta.HASH}` } });
+
+					// @ts-ignore
+					this.client.user.setPresence({ game: { name: `v${META_VERSION} / ${META_HASH}` } });
 				},
 			},
 			{

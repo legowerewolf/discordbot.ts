@@ -21,8 +21,8 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(), // Clean the build directory
 		new DefinePlugin({
-			"meta.VERSION": JSON.stringify(packagejson.version),
-			"meta.HASH": JSON.stringify(childprocess.execSync("git rev-parse --short HEAD").toString()),
+			META_VERSION: JSON.stringify(packagejson.version),
+			META_HASH: JSON.stringify(childprocess.execSync("git rev-parse --short HEAD").toString()),
 		}),
 	],
 	resolve: {
