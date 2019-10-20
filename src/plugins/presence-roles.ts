@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
-import { getPropertySafe } from "../helpers";
+import { getPropertySafe, roleStringify } from "../helpers";
 import { Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
@@ -24,9 +24,9 @@ export default class PresenceRoles extends Plugin {
 				.forEach((gameRole) => {
 					oldMember
 						.removeRole(gameRole)
-						.catch((reason) => context.console(ErrorLevels.Error, `Error removing role. ${reason}, ${gameRole}`))
+						.catch((reason) => context.console(ErrorLevels.Error, `Error removing role ${roleStringify(gameRole)}. (${reason})`))
 						.then(() => {
-							if (gameRole.members.size == 0 && !(gameRole as any).deleted) gameRole.delete().catch((reason) => context.console(ErrorLevels.Error, `Error deleting role. ${reason}, ${gameRole}`));
+							if (gameRole.members.size == 0 && !(gameRole as any).deleted) gameRole.delete().catch((reason) => context.console(ErrorLevels.Error, `Error deleting role ${roleStringify(gameRole)}. (${reason})`));
 						})
 						.catch((reason) => context.console(ErrorLevels.Error, reason));
 				});
@@ -36,9 +36,7 @@ export default class PresenceRoles extends Plugin {
 					let gameRole = newMember.guild.roles.filter((role) => role.name == this.config.role_prefix.concat(newMember.presence.game.name)).first();
 					if (gameRole) resolve(gameRole);
 					else resolve(newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true }));
-				})
-					.then((role: Role) => newMember.addRole(role))
-					.catch((reason) => context.console(ErrorLevels.Error, `Error adding role. ${reason}`));
+				}).then((role: Role) => newMember.addRole(role).catch((reason) => context.console(ErrorLevels.Error, `Error adding role ${roleStringify(role)}. (${reason})`)));
 			}
 		});
 	}

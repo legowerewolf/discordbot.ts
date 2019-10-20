@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, Role } from "discord.js";
 import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
 import { promisify } from "util";
@@ -98,4 +98,8 @@ export function parseConfig(): Promise<ConfigElement> {
 
 		return resolvedConfig;
 	});
+}
+
+export function roleStringify(role: Role): string {
+	return `{name: ${role.name}, id: ${role.id}, editable?: ${role.editable}}`;
 }
