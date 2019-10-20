@@ -104,3 +104,5 @@ export interface ClassType<T> {
 }
 
 export type IntentHandler = (eventData: CommunicationEvent) => void;
+
+export declare var meta: any;

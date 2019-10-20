@@ -1,5 +1,8 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { DefinePlugin } = require("webpack");
+const packagejson = require("./package.json");
+const childprocess = require("child_process");
 
 module.exports = {
 	entry: {
@@ -15,7 +18,13 @@ module.exports = {
 			},
 		],
 	},
-	plugins: [new CleanWebpackPlugin()],
+	plugins: [
+		new CleanWebpackPlugin(), // Clean the build directory
+		new DefinePlugin({
+			"meta.VERSION": JSON.stringify(packagejson.version),
+			"meta.HASH": JSON.stringify(childprocess.execSync("git rev-parse --short HEAD").toString()),
+		}),
+	],
 	resolve: {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
