@@ -19,7 +19,7 @@ export default class PresenceRoles extends Plugin {
 			)
 				return;
 
-			oldMember.guild.roles
+			oldMember.roles
 				.filter((role) => role.name.startsWith(this.config.role_prefix))
 				.forEach((gameRole) => {
 					oldMember
