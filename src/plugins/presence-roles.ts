@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
-import { getPropertySafe, roleStringify } from "../helpers";
+import { roleStringify } from "../helpers";
 import { Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
@@ -13,7 +13,7 @@ export default class PresenceRoles extends Plugin {
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldMember, newMember) => {
 			if (
-				getPropertySafe(oldMember, ["presence", "game", "name"]) == getPropertySafe(newMember, ["presence", "game", "name"]) || // they haven't changed games
+				oldMember?.presence?.game?.name  == newMember?.presence?.game?.name || // they haven't changed games
 				oldMember.user.bot || // they're a bot
 				!oldMember.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
 			)
