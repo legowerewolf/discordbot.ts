@@ -106,7 +106,7 @@ export class DiscordBot {
 		eventData.bot = this;
 
 		let userPermissionLevel = this.config.users?.[eventData.author.id]?.permissionLevel;
-		if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
+		if (!intent.permissionLevel || (userPermissionLevel ?? this.config.defaultPermissionLevel) >= intent.permissionLevel) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);
