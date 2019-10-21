@@ -1,6 +1,6 @@
 # Discordbot.js
 
-![David](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies) [![Travis (.org)](https://img.shields.io/travis/legowerewolf/discordbot.ts?label=travis%20build)](https://travis-ci.org/legowerewolf/discordbot.ts)
+![David](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies) [![Travis (.com)](https://img.shields.io/travis/legowerewolf/discordbot.ts?label=travis%20build)](https://travis-ci.com/legowerewolf/discordbot.ts)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts)](https://hub.docker.com/r/legowerewolf/discordbot.ts)
 
 A simple way to add natural-language-powered Discord bots to your server.
