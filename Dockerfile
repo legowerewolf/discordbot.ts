@@ -1,10 +1,10 @@
-FROM node:12.12.0 AS builder
+FROM node:13.0.0 AS builder
 COPY . /app/
 WORKDIR /app/
 RUN npm ci              && \
     npm run build
 
-FROM node:12.12.0-slim
+FROM node:13.0.0-slim
 WORKDIR /app/
 COPY --from=builder /app/build/ /app/build/
 COPY ./config ./config
