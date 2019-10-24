@@ -81,10 +81,18 @@ export class DiscordBot {
 
 		this.plugins = new Array<Plugin>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
-			let pluginClass: ClassType<Plugin> = (await import(`./plugins/${name}`)).default;
-			let instance: Plugin = new pluginClass(this.config.plugins[name]);
-			instance.inject(this);
-			this.plugins.push(instance);
+			import(`./plugins/${name}`)
+				.then(
+					(plugin) => plugin.default,
+					(reason) => {
+						this.console(ErrorLevels.Error, `Unable to load plugin ${name}: ${reason}`);
+					}
+				)
+				.then((pluginClass: ClassType<Plugin>) => {
+					let instance: Plugin = new pluginClass(this.config.plugins[name]);
+					instance.inject(this);
+					this.plugins.push(instance);
+				});
 		}, this);
 	}
 
