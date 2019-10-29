@@ -13,7 +13,7 @@
 	"author": "legowerewolf",
 	"license": "GPL-3.0-only",
 	"dependencies": {
-		"discord.js": "^11.5.1",
+		"discord.js": "github:discordjs/discord.js#11.5-dev",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
 		"natural": "^0.6.3",
