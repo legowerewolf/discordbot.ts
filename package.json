@@ -17,15 +17,14 @@
 		"discord.js": "github:discordjs/discord.js#11.5-dev",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
-		"natural": "^0.6.3",
-		"node-fetch": "^2.3.0"
+		"natural": "^0.6.3"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.4",
 		"@types/js-yaml": "^3.12.1",
 		"@types/mocha": "^5.2.7",
 		"@types/natural": "^0.6.1",
-		"@types/node": "^12.11.7",
+		"@types/node": "^12.12.0",
 		"@types/node-fetch": "^2.5.2",
 		"chai": "^4.2.0",
 		"clean-webpack-plugin": "^3.0.0",

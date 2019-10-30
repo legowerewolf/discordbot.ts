@@ -52,12 +52,6 @@ intents:
             responses:
                 - Aww, I love you too!
                 - \*blushes\* # You can use any of Discord's standard text formatting.
-    ipFinder:
-        handler: ip_finder
-        permissionLevel: 5 # You must be previliged to know the bot's IP address.
-        models:
-            - where am I?
-            - what is my IP address
     botShutdown:
         handler: bot_shutdown
         permissionLevel: 5
@@ -114,7 +108,6 @@ intents:
                 - "Welcome to your new channel: "
                 - "Here you go! Your new channel, fresh from the factory: "
             handlerSpecific:
-                checkForMembersInterval: 5000 # How often to check if people are still in the voice channel
                 bitrate: 16 # The default bitrate for newly created temporary voice channels.
     _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
         handler: basic_response
