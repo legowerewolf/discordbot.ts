@@ -15,12 +15,14 @@ parseConfig().then((config) => {
 
 	manager.spawn();
 
-	manager.on("launch", (shard) => {
+	manager.on("shardCreate", (shard) => {
 		defaultPrefixer.update(`Shard ${shard.id}`);
 		console.log(defaultPrefixer.prefix("MANAGER", errorLevelPrefixer.prefix(ErrorLevels.Info, `Launching shard ${shard.id}...`)));
 	});
 
+	/*
 	manager.on("message", (shard, message) => {
 		console.log(defaultPrefixer.prefix(`Shard ${shard.id}`, message));
 	});
+	*/
 });
