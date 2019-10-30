@@ -32,7 +32,7 @@ export class DiscordBot {
 			{
 				event: "message",
 				handler: (msg: Message) => {
-					if (msg.author.id != this.client.user.id && msg.mentions.users.has(this.client.user.id)) {
+					if (!msg.author.bot && msg.mentions.users.has(this.client.user.id)) {
 						this.handleInput({
 							text: msg.cleanContent,
 							responseCallback: (response: string) => {
