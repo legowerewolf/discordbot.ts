@@ -35,9 +35,7 @@ export class DiscordBot {
 					if (!msg.author.bot && msg.mentions.users.has(this.client.user.id)) {
 						this.handleInput({
 							text: msg.cleanContent,
-							responseCallback: (response: string) => {
-								msg.reply(response);
-							},
+							responseCallback: (response: string) => msg.reply(response),
 							author: msg.author,
 							guild: msg.guild,
 							client: this.client,
