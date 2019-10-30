@@ -52,12 +52,6 @@ intents:
             responses:
                 - Aww, I love you too!
                 - \*blushes\* # You can use any of Discord's standard text formatting.
-    ipFinder:
-        handler: ip_finder
-        permissionLevel: 5 # You must be previliged to know the bot's IP address.
-        models:
-            - where am I?
-            - what is my IP address
     botShutdown:
         handler: bot_shutdown
         permissionLevel: 5
