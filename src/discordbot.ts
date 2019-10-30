@@ -22,9 +22,7 @@ export class DiscordBot {
 		this.brain = new Brain(0.7);
 		Object.keys(config.intents)
 			.filter((name) => config.intents[name].models != undefined)
-			.forEach((name) => {
-				this.brain.teach(this.config.intents[name].models, name);
-			});
+			.forEach((name) => this.brain.teach(this.config.intents[name].models, name));
 		this.brain.train();
 
 		this.client = new Client();
@@ -57,21 +55,15 @@ export class DiscordBot {
 			},
 			{
 				event: "guildCreate",
-				handler: (newGuild: Guild) => {
-					this.console(ErrorLevels.Info, `Bot added to guild: ${newGuild.name}`);
-				},
+				handler: (newGuild: Guild) => this.console(ErrorLevels.Info, `Bot added to guild: ${newGuild.name}`),
 			},
 			{
 				event: "error",
-				handler: (error: Error) => {
-					this.console(ErrorLevels.Error, error.message);
-				},
+				handler: (error: Error) => this.console(ErrorLevels.Error, error.message),
 			},
 			{
 				event: "warn",
-				handler: (info: string) => {
-					this.console(ErrorLevels.Warn, info);
-				},
+				handler: (info: string) => this.console(ErrorLevels.Warn, info),
 			},
 		].forEach((element) => {
 			this.client.on(element.event, element.handler);
