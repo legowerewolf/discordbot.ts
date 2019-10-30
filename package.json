@@ -21,6 +21,7 @@
 	"license": "GPL-3.0-only",
 	"dependencies": {
 		"discord.js": "github:discordjs/discord.js",
+		"ffmpeg-static": "^2.7.0",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
 		"natural": "^0.6.3"
