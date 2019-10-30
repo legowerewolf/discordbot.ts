@@ -36,15 +36,16 @@ export default class VoiceScaling extends Plugin {
 	}
 
 	// Get a new channel number suffix
-	newIndex(primaryKeys: Array<number>): number {
-		return primaryKeys.reduce((accum, curr) => {
-			return accum == curr ? curr + 1 : accum;
-		}, 1);
+	static newIndex(primaryKeys: Array<number>): number {
+		let key: number = 1;
+		let index: number = 0;
+		while (key++ == primaryKeys[index++]);
+		return --key;
 	}
 
 	// Generate a new name from the name of an existing channel.
 	newNameFromExisting(channel: VoiceChannel) {
-		return `${channel.name.match(indexableChannelRegex)[1]} ${this.newIndex(this.getDuplicateChannelIDs(channel))}`;
+		return `${channel.name.match(indexableChannelRegex)[1]} ${VoiceScaling.newIndex(this.getDuplicateChannelIDs(channel))}`;
 	}
 
 	extract(context: DiscordBot) {}
