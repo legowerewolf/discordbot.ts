@@ -108,7 +108,6 @@ intents:
                 - "Welcome to your new channel: "
                 - "Here you go! Your new channel, fresh from the factory: "
             handlerSpecific:
-                checkForMembersInterval: 5000 # How often to check if people are still in the voice channel
                 bitrate: 16 # The default bitrate for newly created temporary voice channels.
     _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
         handler: basic_response

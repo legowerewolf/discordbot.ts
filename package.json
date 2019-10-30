@@ -1,6 +1,6 @@
 {
 	"name": "discordbot",
-	"version": "1.8.0",
+	"version": "1.8.2-0",
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
@@ -8,24 +8,39 @@
 		"prepare": "npm run build",
 		"build": "webpack --config webpack.prod.js",
 		"build-dev": "webpack --config webpack.dev.js",
-		"start": "node build/manager.js"
+		"start": "node build/manager.js",
+		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha"
+	},
+	"mocha": {
+		"require": [
+			"ts-node/register"
+		],
+		"recursive": true,
+		"spec": "src/**/*.spec.ts"
 	},
 	"author": "legowerewolf",
 	"license": "GPL-3.0-only",
 	"dependencies": {
-		"discord.js": "^11.5.1",
+		"discord.js": "github:discordjs/discord.js#11.5-dev",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
 		"natural": "^0.6.3"
 	},
 	"devDependencies": {
+		"@types/chai": "^4.2.4",
 		"@types/js-yaml": "^3.12.1",
+		"@types/mocha": "^5.2.7",
 		"@types/natural": "^0.6.1",
 		"@types/node": "^12.12.0",
 		"@types/node-fetch": "^2.5.2",
+		"chai": "^4.2.0",
 		"clean-webpack-plugin": "^3.0.0",
+		"cross-env": "^6.0.3",
+		"mocha": "^6.2.2",
+		"nyc": "^14.1.1",
 		"terser-webpack-plugin": "^2.2.1",
 		"ts-loader": "^6.2.1",
+		"ts-node": "^8.4.1",
 		"typescript": "^3.6.4",
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.9",
