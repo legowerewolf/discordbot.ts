@@ -1,4 +1,4 @@
-import { Message, Role } from "discord.js";
+import { GuildMember, Message, Role } from "discord.js";
 import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
 import { promisify } from "util";
@@ -102,4 +102,36 @@ export function parseConfig(): Promise<ConfigElement> {
 
 export function roleStringify(role: Role): string {
 	return `{name: ${role.name}, id: ${role.id}, editable?: ${role.editable}}`;
+}
+
+export function memberStringify(member: GuildMember) {
+	return `{name: ${member.displayName}, id: ${member.id}`;
+}
+
+export function promiseRetry(
+	promise: () => Promise<any>,
+	opts?: {
+		backoff?: (last: number, factor: number) => number;
+		factor?: number;
+		maxDelay?: number;
+		delay?: number;
+		warnMsg?: string;
+		console?: (msg: string) => void;
+	}
+) {
+	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "Promise failed. Retrying...", console: console.log, ...opts };
+	return new Promise((resolve, reject) => {
+		promise().then(
+			(success) => {
+				resolve(success);
+			},
+			(reason) => {
+				let backoff = Math.min(opts.backoff(opts.delay, opts.factor), opts.maxDelay);
+				opts.console(`${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
+				setTimeout(() => {
+					resolve(promiseRetry(promise, { ...opts, delay: backoff }));
+				}, backoff);
+			}
+		);
+	});
 }
