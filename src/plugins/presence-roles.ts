@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
-import { roleStringify } from "../helpers";
+import { memberStringify, promiseRetry, roleStringify } from "../helpers";
 import { Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
@@ -19,16 +19,35 @@ export default class PresenceRoles extends Plugin {
 			)
 				return;
 
+			let updatedMember = () => context.client.guilds.get(newMember.guild.id).members.get(newMember.user.id);
+
 			oldMember.roles
 				.filter((role) => role.name.startsWith(this.config.role_prefix))
 				.forEach((gameRole) => {
-					oldMember
-						.removeRole(gameRole)
-						.catch((reason) => context.console(ErrorLevels.Error, `Error removing role ${roleStringify(gameRole)}. (${reason})`))
-						.then(() => {
-							if (gameRole.members.size == 0 && !(gameRole as any).deleted) gameRole.delete().catch((reason) => context.console(ErrorLevels.Error, `Error deleting role ${roleStringify(gameRole)}. (${reason})`));
-						})
-						.catch((reason) => context.console(ErrorLevels.Error, reason));
+					promiseRetry(
+						() => {
+							return updatedMember().roles.get(gameRole.id) ? updatedMember().removeRole(gameRole) : Promise.resolve();
+						},
+						{
+							warnMsg: `Error removing role ${roleStringify(gameRole)} from user ${memberStringify(oldMember)}.`,
+							console: (msg) => {
+								context.console(ErrorLevels.Warn, msg);
+							},
+						}
+					).then(() => {
+						promiseRetry(
+							() => {
+								let currentRole = updatedMember().guild.roles.get(gameRole.id);
+								return currentRole != undefined && currentRole.members.size == 0 ? currentRole.delete() : Promise.resolve();
+							},
+							{
+								warnMsg: `Error deleting role ${roleStringify(gameRole)}.`,
+								console: (msg) => {
+									context.console(ErrorLevels.Warn, msg);
+								},
+							}
+						);
+					});
 				});
 
 			if (newMember.presence.game != null) {

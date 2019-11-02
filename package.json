@@ -1,11 +1,10 @@
 {
 	"name": "discordbot",
-	"version": "1.8.2",
+	"version": "1.8.5",
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
 	"scripts": {
-		"prepare": "npm run build",
 		"build": "webpack --config webpack.prod.js",
 		"build-dev": "webpack --config webpack.dev.js",
 		"start": "node build/manager.js",
@@ -31,8 +30,8 @@
 		"@types/js-yaml": "^3.12.1",
 		"@types/mocha": "^5.2.7",
 		"@types/natural": "^0.6.1",
-		"@types/node": "^12.12.0",
-		"@types/node-fetch": "^2.5.2",
+		"@types/node": "^12.12.5",
+		"@types/node-fetch": "^2.5.3",
 		"chai": "^4.2.0",
 		"clean-webpack-plugin": "^3.0.0",
 		"cross-env": "^6.0.3",
@@ -43,7 +42,7 @@
 		"ts-node": "^8.4.1",
 		"typescript": "^3.7.1-rc",
 		"webpack": "^4.41.2",
-		"webpack-cli": "^3.3.9",
+		"webpack-cli": "^3.3.10",
 		"webpack-merge": "^4.2.2"
 	}
 }
