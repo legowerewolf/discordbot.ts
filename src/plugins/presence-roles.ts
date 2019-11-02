@@ -19,17 +19,17 @@ export default class PresenceRoles extends Plugin {
 			)
 				return;
 
-			let updatedMember = () => context.client.guilds.get(newMember.guild.id).members.get(newMember.user.id);
+			let updatedMember = () => context.client.guilds.get(newPresence.guild.id).members.get(newPresence.user.id);
 
-			oldMember.roles
+			oldPresence.member.roles
 				.filter((role) => role.name.startsWith(this.config.role_prefix))
 				.forEach((gameRole) => {
 					promiseRetry(
 						() => {
-							return updatedMember().roles.get(gameRole.id) ? updatedMember().removeRole(gameRole) : Promise.resolve();
+							return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
 						},
 						{
-							warnMsg: `Error removing role ${roleStringify(gameRole)} from user ${memberStringify(oldMember)}.`,
+							warnMsg: `Error removing role ${roleStringify(gameRole)} from user ${memberStringify(oldPresence.member)}.`,
 							console: (msg) => {
 								context.console(ErrorLevels.Warn, msg);
 							},
