@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const packagejson = require("./package.json");
 const childprocess = require("child_process");
+const webpack = require("webpack");
 
 module.exports = {
 	entry: {
@@ -26,6 +27,7 @@ module.exports = {
 		}),
 	],
 	resolve: {
+		mainFields: ["main", "module"],
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
