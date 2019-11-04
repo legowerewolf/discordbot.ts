@@ -123,11 +123,12 @@ export function promiseRetry(
 	return new Promise((resolve, reject) => {
 		promise().then(
 			(success) => {
+				if (opts.delay > 0) opts.console(`Succeeded ${opts.warnMsg}`);
 				resolve(success);
 			},
 			(reason) => {
 				let backoff = Math.min(opts.backoff(opts.delay, opts.factor), opts.maxDelay);
-				opts.console(`${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
+				opts.console(`Error ${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
 				setTimeout(() => {
 					resolve(promiseRetry(promise, { ...opts, delay: backoff }));
 				}, backoff);
