@@ -41,21 +41,6 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 	});
 }
 
-/** Gets a value whose existence is questionable from an object.
- * From https://stackoverflow.com/a/23809123
- *
- * Soon to be replaced by Optional Chaining ( x?.y )
- *
- * @param obj - an object to get a value from
- * @param key - the path to look for the value
- * @returns the value if it exists, otherwise undefined
- */
-export function getPropertySafe(obj: any, key: Array<string>) {
-	return key.reduce(function(o, x) {
-		return typeof o == "undefined" || o === null ? null : o[x];
-	}, obj);
-}
-
 export function valuesOf(obj: any) {
 	return Object.keys(obj).map((prop: string) => obj[prop]);
 }
