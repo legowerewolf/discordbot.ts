@@ -2,7 +2,7 @@ import { Role } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
-import { Plugin } from "../types";
+import { CommunicationEvent, Plugin } from "../types";
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
@@ -20,6 +20,7 @@ export default class PresenceRoles extends Plugin {
 				return;
 
 			let updatedMember = () => context.client.guilds.get(newMember.guild.id).members.get(newMember.user.id);
+			let updatedRole = (id: string) => updatedMember().guild.roles.get(id);
 
 			oldMember.roles
 				.filter((role) => role.name.startsWith(this.config.role_prefix))
@@ -37,8 +38,7 @@ export default class PresenceRoles extends Plugin {
 					).then(() => {
 						promiseRetry(
 							() => {
-								let currentRole = updatedMember().guild.roles.get(gameRole.id);
-								return currentRole != undefined && currentRole.members.size == 0 ? currentRole.delete() : Promise.resolve();
+								return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
 							},
 							{
 								warnMsg: `deleting role ${roleStringify(gameRole)}.`,
@@ -52,10 +52,10 @@ export default class PresenceRoles extends Plugin {
 
 			if (newMember.presence.game != null) {
 				promiseRetry(() => {
-						return new Promise((resolve) => {
+					return new Promise((resolve) => {
 							resolve(
-								newMember.guild.roles.filter((role) => role.name == this.config.role_prefix.concat(newMember.presence.game.name)).first() ??
-								newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true })
+								updatedMember().guild.roles.filter((role) => role.name === this.config.role_prefix.concat(newMember.presence.game.name)).first() ??
+								updatedMember().guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true })
 							);
 						}).then((role: Role) => newMember.addRole(role));
 					},
@@ -68,6 +68,23 @@ export default class PresenceRoles extends Plugin {
 				);
 			}
 		});
+
+		context.handlers["purge_gameroles"] = (eventData: CommunicationEvent) => {
+			eventData.responseCallback(`Purging game roles from this server.`);
+			eventData.guild.roles.filter((role) => role.name.startsWith(this.config.role_prefix)).forEach((gameRole) => {
+				promiseRetry(
+					() => {
+						return context.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve();
+					},
+					{
+						warnMsg: `deleting role ${roleStringify(gameRole)}.`,
+						console: (msg) => {
+							context.console(ErrorLevels.Warn, msg);
+						},
+					}
+				);
+			})
+		 }
 	}
 
 	extract(context: DiscordBot) {
