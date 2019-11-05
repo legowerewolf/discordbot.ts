@@ -69,6 +69,7 @@ export class DiscordBot {
 			this.client.on(element.event, element.handler);
 		});
 
+		this.handlers = {};
 		this.plugins = new Array<Plugin>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
 			import(`./plugins/${name}`).then(
