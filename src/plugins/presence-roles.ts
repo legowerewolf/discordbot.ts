@@ -29,7 +29,7 @@ export default class PresenceRoles extends Plugin {
 							return updatedMember().roles.get(gameRole.id) ? updatedMember().removeRole(gameRole) : Promise.resolve();
 						},
 						{
-							warnMsg: `Error removing role ${roleStringify(gameRole)} from user ${memberStringify(oldMember)}.`,
+							warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(oldMember)}.`,
 							console: (msg) => {
 								context.console(ErrorLevels.Warn, msg);
 							},
@@ -41,7 +41,7 @@ export default class PresenceRoles extends Plugin {
 								return currentRole != undefined && currentRole.members.size == 0 ? currentRole.delete() : Promise.resolve();
 							},
 							{
-								warnMsg: `Error deleting role ${roleStringify(gameRole)}.`,
+								warnMsg: `deleting role ${roleStringify(gameRole)}.`,
 								console: (msg) => {
 									context.console(ErrorLevels.Warn, msg);
 								},
