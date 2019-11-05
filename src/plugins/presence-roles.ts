@@ -51,12 +51,21 @@ export default class PresenceRoles extends Plugin {
 				});
 
 			if (newMember.presence.game != null) {
-				new Promise((resolve) => {
-					resolve(
-						newMember.guild.roles.filter((role) => role.name == this.config.role_prefix.concat(newMember.presence.game.name)).first() ??
-							newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true })
-					);
-				}).then((role: Role) => newMember.addRole(role).catch((reason) => context.console(ErrorLevels.Error, `Error adding role ${roleStringify(role)}. (${reason})`)));
+				promiseRetry(() => {
+						return new Promise((resolve) => {
+							resolve(
+								newMember.guild.roles.filter((role) => role.name == this.config.role_prefix.concat(newMember.presence.game.name)).first() ??
+								newMember.guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true })
+							);
+						}).then((role: Role) => newMember.addRole(role));
+					},
+					{
+						warnMsg: `adding role for game ${newMember.presence?.game?.name} to member ${memberStringify(newMember)}`,
+						console: (msg) => {
+							context.console(ErrorLevels.Warn, msg);
+						}
+					}
+				);
 			}
 		});
 	}
