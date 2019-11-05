@@ -111,6 +111,7 @@ intents:
                 bitrate: 16 # The default bitrate for newly created temporary voice channels.
     purgeGameroles:
         handler: purge_gameroles
+        permissionLevel: 5
         models:
             - purge game roles
             - clean game roles
