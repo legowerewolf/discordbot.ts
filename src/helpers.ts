@@ -86,11 +86,11 @@ export function parseConfig(): Promise<ConfigElement> {
 }
 
 export function roleStringify(role: Role): string {
-	return `{name: ${role.name}, id: ${role.id}, editable?: ${role.editable}}`;
+	return `{name: ${role.name}, id: ${role.id}, guild: ${role.guild.id}, editable?: ${role.editable}}`;
 }
 
 export function memberStringify(member: GuildMember) {
-	return `{name: ${member.displayName}, id: ${member.id}`;
+	return `{name: ${member.displayName}, id: ${member.id}, guild: ${member.guild.id}}`;
 }
 
 export function promiseRetry(
@@ -104,11 +104,11 @@ export function promiseRetry(
 		console?: (msg: string) => void;
 	}
 ) {
-	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "Promise failed. Retrying...", console: console.log, ...opts };
+	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "generic promise", console: console.log, ...opts };
 	return new Promise((resolve, reject) => {
 		promise().then(
 			(success) => {
-				if (opts.delay > 0) opts.console(`Succeeded ${opts.warnMsg}`);
+				opts.console(`Succeeded ${opts.warnMsg}`);
 				resolve(success);
 			},
 			(reason) => {

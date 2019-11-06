@@ -13,11 +13,13 @@ export default class PresenceRoles extends Plugin {
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldMember, newMember) => {
 			if (
-				oldMember?.presence?.game?.name  == newMember?.presence?.game?.name || // they haven't changed games
+				oldMember?.presence?.game?.name === newMember?.presence?.game?.name || // they haven't changed games
 				oldMember.user.bot || // they're a bot
 				!oldMember.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
 			)
 				return;
+
+			context.console(ErrorLevels.Info, `Updating roles for member ${memberStringify(newMember)} (game switch from "${oldMember?.presence?.game?.name}" to "${newMember?.presence?.game?.name}")`);
 
 			let updatedMember = () => context.client.guilds.get(newMember.guild.id).members.get(newMember.user.id);
 			let updatedRole = (id: string) => updatedMember().guild.roles.get(id);
