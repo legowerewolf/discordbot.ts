@@ -4,7 +4,7 @@ WORKDIR /app/
 RUN npm ci              && \
     npm run build
 
-FROM node:13.0.0-slim
+FROM node:13.1.0-slim
 WORKDIR /app/
 COPY --from=builder /app/build/ /app/build/
 COPY ./config ./config
