@@ -54,13 +54,14 @@ export default class PresenceRoles extends Plugin {
 
 			if (newMember.presence.game != null) {
 				promiseRetry(() => {
-					return new Promise((resolve) => {
-							resolve(
-								updatedMember().guild.roles.filter((role) => role.name === this.config.role_prefix.concat(newMember.presence.game.name)).first() ??
-								updatedMember().guild.createRole({ name: this.config.role_prefix.concat(newMember.presence.game.name), mentionable: true })
-							);
-						}).then((role: Role) => newMember.addRole(role));
-					},
+					return new Promise((resolve, reject) => {
+						if (!(updatedMember().presence?.game?.name)) reject("Not playing game any longer");
+						resolve(
+							updatedMember().guild.roles.filter((role) => role.name === this.config.role_prefix.concat(updatedMember().presence.game.name)).first() ??
+							updatedMember().guild.createRole({ name: this.config.role_prefix.concat(updatedMember().presence.game.name), mentionable: true })
+						);
+					}).then((role: Role) => newMember.addRole(role), (reason) => { if (reason != "Not playing game any longer") return Promise.reject(reason) });
+				},
 					{
 						warnMsg: `adding role for game ${newMember.presence?.game?.name} to member ${memberStringify(newMember)}`,
 						console: (msg) => {
@@ -69,6 +70,7 @@ export default class PresenceRoles extends Plugin {
 					}
 				);
 			}
+
 		});
 
 		context.handlers["purge_gameroles"] = (eventData: CommunicationEvent) => {
