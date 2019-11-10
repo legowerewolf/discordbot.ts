@@ -55,10 +55,11 @@ export default class PresenceRoles extends Plugin {
 			if (newMember.presence.game != null) {
 				promiseRetry(() => {
 					return new Promise((resolve, reject) => {
-						if (!(updatedMember().presence?.game?.name)) reject("Not playing game any longer");
+						let member = updatedMember(); // Resolve the current version of the Member once.
+						if (!(member.presence?.game?.name)) reject("Not playing game any longer");
 						resolve(
-							updatedMember().guild.roles.filter((role) => role.name === this.config.role_prefix.concat(updatedMember().presence.game.name)).first() ??
-							updatedMember().guild.createRole({ name: this.config.role_prefix.concat(updatedMember().presence.game.name), mentionable: true })
+							member.guild.roles.filter((role) => role.name === this.config.role_prefix.concat(member.presence.game.name)).first() ??
+							member.guild.createRole({ name: this.config.role_prefix.concat(member.presence.game.name), mentionable: true })
 						);
 					}).then((role: Role) => newMember.addRole(role), (reason) => { if (reason != "Not playing game any longer") return Promise.reject(reason) });
 				},
