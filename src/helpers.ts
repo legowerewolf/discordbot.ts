@@ -41,21 +41,6 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 	});
 }
 
-/** Gets a value whose existence is questionable from an object.
- * From https://stackoverflow.com/a/23809123
- *
- * Soon to be replaced by Optional Chaining ( x?.y )
- *
- * @param obj - an object to get a value from
- * @param key - the path to look for the value
- * @returns the value if it exists, otherwise undefined
- */
-export function getPropertySafe(obj: any, key: Array<string>) {
-	return key.reduce(function(o, x) {
-		return typeof o == "undefined" || o === null ? null : o[x];
-	}, obj);
-}
-
 export function valuesOf(obj: any) {
 	return Object.keys(obj).map((prop: string) => obj[prop]);
 }
@@ -101,11 +86,11 @@ export function parseConfig(): Promise<ConfigElement> {
 }
 
 export function roleStringify(role: Role): string {
-	return `{name: ${role.name}, id: ${role.id}, editable?: ${role.editable}}`;
+	return `{name: ${role.name}, id: ${role.id}, guild: ${role.guild.id}, editable?: ${role.editable}}`;
 }
 
 export function memberStringify(member: GuildMember) {
-	return `{name: ${member.displayName}, id: ${member.id}`;
+	return `{name: ${member.displayName}, id: ${member.id}, guild: ${member.guild.id}}`;
 }
 
 export function promiseRetry(
@@ -119,15 +104,16 @@ export function promiseRetry(
 		console?: (msg: string) => void;
 	}
 ) {
-	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "Promise failed. Retrying...", console: console.log, ...opts };
+	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "generic promise", console: console.log, ...opts };
 	return new Promise((resolve, reject) => {
 		promise().then(
 			(success) => {
+				opts.console(`Succeeded ${opts.warnMsg}`);
 				resolve(success);
 			},
 			(reason) => {
 				let backoff = Math.min(opts.backoff(opts.delay, opts.factor), opts.maxDelay);
-				opts.console(`${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
+				opts.console(`Error ${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
 				setTimeout(() => {
 					resolve(promiseRetry(promise, { ...opts, delay: backoff }));
 				}, backoff);

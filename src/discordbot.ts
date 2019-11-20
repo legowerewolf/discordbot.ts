@@ -1,7 +1,7 @@
 import { Client, Guild, Message } from "discord.js";
 import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import { Brain } from "./brain";
-import { getPropertySafe, parseConfig, valuesOf } from "./helpers";
+import { parseConfig, valuesOf } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
 
 parseConfig().then((config) => {
@@ -69,6 +69,7 @@ export class DiscordBot {
 			this.client.on(element.event, element.handler);
 		});
 
+		this.handlers = {};
 		this.plugins = new Array<Plugin>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
 			import(`./plugins/${name}`).then(
@@ -101,8 +102,8 @@ export class DiscordBot {
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		let userPermissionLevel = getPropertySafe(this.config.users, [eventData.author.id, "permissionLevel"]);
-		if (!intent.permissionLevel || (userPermissionLevel ? userPermissionLevel : this.config.defaultPermissionLevel) >= intent.permissionLevel) {
+		let userPermissionLevel = this.config.users?.[eventData.author.id]?.permissionLevel;
+		if (!intent.permissionLevel || (userPermissionLevel ?? this.config.defaultPermissionLevel) >= intent.permissionLevel) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);

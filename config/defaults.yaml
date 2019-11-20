@@ -109,6 +109,15 @@ intents:
                 - "Here you go! Your new channel, fresh from the factory: "
             handlerSpecific:
                 bitrate: 16 # The default bitrate for newly created temporary voice channels.
+    purgeGameroles:
+        handler: purge_gameroles
+        permissionLevel: 5
+        models:
+            - purge game roles
+            - clean game roles
+            - clean roles
+            - cleanup roles
+            - role cleanup
     _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
         handler: basic_response
         data:
