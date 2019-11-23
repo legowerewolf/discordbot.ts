@@ -52,7 +52,7 @@ export default class PresenceRoles extends Plugin {
 					});
 				});
 
-			if (oldPresence.activity != null) {
+			if (oldPresence?.activity != null) {
 				promiseRetry(
 					() => {
 						return new Promise((resolve, reject) => {
