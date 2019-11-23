@@ -50,7 +50,7 @@ export class DiscordBot {
 					this.console(ErrorLevels.Info, `Shard ready. Connected to ${this.client.guilds.size} guilds.`);
 
 					// @ts-ignore - these values are filled in on build time
-					this.client.user.setPresence({ game: { name: `v${META_VERSION} / ${META_HASH}` } });
+					this.client.user.setActivity(`v${META_VERSION} / ${META_HASH}`);
 				},
 			},
 			{
