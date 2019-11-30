@@ -13,7 +13,7 @@ export default class PresenceRoles extends Plugin {
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldPresence, newPresence) => {
 			if (
-				oldPresence.activity?.applicationID === newPresence.activity?.applicationID || // they haven't changed games
+				oldPresence?.activity?.applicationID === newPresence.activity?.applicationID || // they haven't changed games
 				newPresence.user.bot || // they're a bot
 				!newPresence.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
 			)
@@ -21,38 +21,41 @@ export default class PresenceRoles extends Plugin {
 
 			context.console(ErrorLevels.Info, `Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`);
 
-			let updatedMember = () => context.client.guilds.get(newPresence.guild.id).members.get(newPresence.user.id);
+			let userID = newPresence.user.id ?? oldPresence.user.id;
+			let guildID = newPresence.guild.id ?? oldPresence.guild.id;
+			let updatedMember = () => context.client.guilds.get(guildID).members.get(userID);
 			let updatedRole = (id: string) => updatedMember().guild.roles.get(id);
 
-			oldPresence.member.roles
-				.filter((role) => role.name.startsWith(this.config.role_prefix))
-				.forEach((gameRole) => {
-					promiseRetry(
-						() => {
-							return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
-						},
-						{
-							warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
-							console: (msg) => {
-								context.console(ErrorLevels.Warn, msg);
-							},
-						}
-					).then(() => {
+			if (oldPresence != undefined)
+				oldPresence.member.roles
+					.filter((role) => role.name.startsWith(this.config.role_prefix))
+					.forEach((gameRole) => {
 						promiseRetry(
 							() => {
-								return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
+								return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
 							},
 							{
-								warnMsg: `deleting role ${roleStringify(gameRole)}.`,
+								warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
 								console: (msg) => {
 									context.console(ErrorLevels.Warn, msg);
 								},
 							}
-						);
+						).then(() => {
+							promiseRetry(
+								() => {
+									return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
+								},
+								{
+									warnMsg: `deleting role ${roleStringify(gameRole)}.`,
+									console: (msg) => {
+										context.console(ErrorLevels.Warn, msg);
+									},
+								}
+							);
+						});
 					});
-				});
 
-			if (oldPresence?.activity != null) {
+			if (newPresence?.activity != null) {
 				promiseRetry(
 					() => {
 						return new Promise((resolve, reject) => {
