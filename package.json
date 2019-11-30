@@ -24,7 +24,8 @@
 		"ffmpeg-static": "^2.7.0",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
-		"natural": "^0.6.3"
+		"natural": "^0.6.3",
+		"source-map-support": "^0.5.16"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.4",
