@@ -1,6 +1,7 @@
 ---
 APIKeys:
     discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
+    sentry: # Add a Sentry DSN here to log errors to Sentry.
 logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.
 defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
 users:
