@@ -5,6 +5,7 @@
 		"module": "esnext",
 		"target": "es6",
 		"noImplicitAny": true,
-		"allowJs": false
+		"allowJs": false,
+		"sourceMap": true
 	}
 }

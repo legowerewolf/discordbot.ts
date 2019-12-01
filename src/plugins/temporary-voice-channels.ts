@@ -1,4 +1,4 @@
-import { GuildMember, VoiceChannel } from "discord.js";
+import { VoiceChannel } from "discord.js";
 import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { responseToQuestion } from "../helpers";
@@ -17,19 +17,19 @@ export default class TemporaryVoiceChannel extends Plugin {
 	inject(context: DiscordBot) {
 		context.handlers["temporary_voice_channel"] = (eventData: CommunicationEvent) => {
 			responseToQuestion(eventData)
-				.then((chosenName: string) => eventData.guild.createChannel(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
+				.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
 				.then(
 					(channel: VoiceChannel) =>
 						channel.guild
 							.member(eventData.author)
-							.setVoiceChannel(channel)
+							.voice.setChannel(channel)
 							.catch((err) => context.console(ErrorLevels.Error, `${err} (Attempted to move user to temporary voice channel)`)) // Move the user
 				);
 		};
 
-		context.client.on("voiceStateUpdate", (memberOldStatus: GuildMember, memberNewStatus: GuildMember) => {
-			if (memberOldStatus.voiceChannel && memberOldStatus.voiceChannel.name.match(this.config.name_regex) != null && memberOldStatus.voiceChannel.members.size == 0 && memberOldStatus.voiceChannel.deletable) {
-				memberOldStatus.voiceChannel.delete();
+		context.client.on("voiceStateUpdate", (oldVoiceState) => {
+			if (oldVoiceState.channel && oldVoiceState.channel.name.match(this.config.name_regex) != null && oldVoiceState.channel.members.size == 0 && oldVoiceState.channel.deletable) {
+				oldVoiceState.channel.delete();
 			}
 		});
 	}

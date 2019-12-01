@@ -1,6 +1,6 @@
 {
 	"name": "discordbot",
-	"version": "1.9.0-dev0",
+	"version": "1.10.0-pre3",
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
@@ -20,10 +20,12 @@
 	"author": "legowerewolf",
 	"license": "GPL-3.0-only",
 	"dependencies": {
-		"discord.js": "^11.5.1",
+		"discord.js": "github:discordjs/discord.js",
+		"ffmpeg-static": "^2.7.0",
 		"js-yaml": "^3.13.1",
 		"legowerewolf-prefixer": "^2.2.0",
-		"natural": "^0.6.3"
+		"natural": "^0.6.3",
+		"source-map-support": "^0.5.16"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.5",

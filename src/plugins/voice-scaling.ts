@@ -1,4 +1,4 @@
-import { GuildMember, VoiceChannel } from "discord.js";
+import { VoiceChannel } from "discord.js";
 import { DiscordBot } from "../discordbot";
 import { Plugin } from "../types";
 
@@ -7,13 +7,13 @@ const indexableChannelRegex = /([\w ]+) (\d+)/;
 export default class VoiceScaling extends Plugin {
 	inject(context: DiscordBot) {
 		// Register a handler for guildmembers joining/leaving/switching voice channels.
-		context.client.on("voiceStateUpdate", (memberOldStatus: GuildMember, memberNewStatus: GuildMember) => {
+		context.client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => {
 			// Construct an array of the channels they joined and left, and iterate over it.
-			[memberOldStatus.voiceChannel, memberNewStatus.voiceChannel].forEach((channel) => {
+			[oldVoiceState.channel, newVoiceState.channel].forEach((channel) => {
 				if (!channel || channel.name.match(indexableChannelRegex) == null) return;
 
 				let emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
-				if (emptyChannelDuplicates.length == 0) channel.clone(this.newNameFromExisting(channel)).then((newChannel) => newChannel.setParent(channel.parentID));
+				if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel) }).then((newChannel) => newChannel.setParent(channel.parentID));
 				else
 					emptyChannelDuplicates.forEach((chan, index) => {
 						if (index > 0) chan.delete();
@@ -48,5 +48,5 @@ export default class VoiceScaling extends Plugin {
 		return `${channel.name.match(indexableChannelRegex)[1]} ${VoiceScaling.newIndex(this.getDuplicateChannelIDs(channel))}`;
 	}
 
-	extract(context: DiscordBot) {}
+	extract() {}
 }
