@@ -1,3 +1,4 @@
+import { init } from "@sentry/node";
 import { Client, Guild, Message } from "discord.js";
 import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import "source-map-support/register";
@@ -6,6 +7,13 @@ import { parseConfig, valuesOf } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
 
 parseConfig().then((config) => {
+	if (config.APIKeys.sentry)
+		init({
+			dsn: config.APIKeys.sentry,
+			// @ts-ignore - these values are filled in at build time.
+			release: `${META_VERSION} / ${META_HASH}`,
+		});
+
 	new DiscordBot(config).start();
 });
 
