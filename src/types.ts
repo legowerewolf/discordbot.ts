@@ -13,7 +13,8 @@ export interface ConfigElement {
 	defaultPermissionLevel: number;
 	APIKeys: {
 		discord: string;
-		chatbase?: string;
+		sentry: string;
+		[key: string]: string;
 	};
 	users?: {
 		[key: string]: {
