@@ -1,7 +1,5 @@
 name: Publish
 on: [push, pull_request]
-env:
-    docker_image_name: docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
 jobs:
     publish:
         name: Publish
@@ -14,7 +12,7 @@ jobs:
               run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
 
             - name: Docker Build
-              run: docker build -t ${{ env.docker_image_name }}
+              run: docker build -t docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
 
             - name: Publish
-              run: docker push ${{ env.docker_image_name }}
+              run: docker push docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
