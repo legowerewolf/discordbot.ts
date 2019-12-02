@@ -1,8 +1,10 @@
-name: Deploy
+name: Publish
 on: [push, pull_request]
+env:
+    docker_image_name: docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
 jobs:
-    deploy:
-        name: Deploy
+    publish:
+        name: Publish
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -10,3 +12,9 @@ jobs:
 
             - name: Authenticate Docker
               run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Docker Build
+              run: docker build -t ${{ env.docker_image_name }}
+
+            - name: Publish
+              run: docker push ${{ env.docker_image_name }}
