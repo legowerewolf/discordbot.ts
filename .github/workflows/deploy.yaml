@@ -5,12 +5,12 @@ jobs:
         name: Publish
         runs-on: ubuntu-latest
         steps:
-            - name: Set variables
-              run: |
-                  export IMAGE_NAME="docker.pkg.github.com/$GITHUB_REPOSITORY/discordbot-ts:$([ -z "$(git tag -l --points-at HEAD)" ] && echo "$(git branch --show-current)" || echo "$(git tag -l --points-at HEAD)")"
-
             - name: Checkout repository
               uses: actions/checkout@v1
+
+            - name: Set variables
+              run: |
+                  ::set-env name=IMAGE_NAME::"docker.pkg.github.com/$GITHUB_REPOSITORY/discordbot-ts:$([ -z "$(git tag -l --points-at HEAD)" ] && echo "$(git branch --show-current)" || echo "$(git tag -l --points-at HEAD)")"
 
             - name: Authenticate Docker
               run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
