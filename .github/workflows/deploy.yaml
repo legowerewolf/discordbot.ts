@@ -12,7 +12,7 @@ jobs:
               run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
 
             - name: Docker Build
-              run: docker build -t docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
+              run: docker build -t docker.pkg.github.com/$GITHUB_REPOSITORY/discordbot-ts:$GITHUB_REF
 
             - name: Publish
-              run: docker push docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/discordbot-ts:${{ env.GITHUB_REF }}
+              run: docker push docker.pkg.github.com/$GITHUB_REPOSITORY/discordbot-ts:$GITHUB_REF
