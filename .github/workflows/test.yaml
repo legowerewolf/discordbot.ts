@@ -2,7 +2,7 @@ name: Testing
 on: [push, pull_request]
 jobs:
     build:
-        name: Build
+        name: Builds
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -20,7 +20,7 @@ jobs:
               run: npm run build
 
     unit:
-        name: Unit
+        name: Unit Tests
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
