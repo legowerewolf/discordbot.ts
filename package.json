@@ -1,6 +1,6 @@
 {
 	"name": "discordbot",
-	"version": "1.11.0",
+	"version": "1.11.1",
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
@@ -28,7 +28,7 @@
 		"source-map-support": "^0.5.16"
 	},
 	"devDependencies": {
-		"@types/chai": "^4.2.5",
+		"@types/chai": "^4.2.6",
 		"@types/js-yaml": "^3.12.1",
 		"@types/mocha": "^5.2.7",
 		"@types/natural": "^0.6.1",
@@ -39,10 +39,10 @@
 		"cross-env": "^6.0.3",
 		"mocha": "^6.2.2",
 		"nyc": "^14.1.1",
-		"terser-webpack-plugin": "^2.2.1",
+		"terser-webpack-plugin": "^2.2.2",
 		"ts-loader": "^6.2.1",
 		"ts-node": "^8.5.4",
-		"typescript": "^3.7.2",
+		"typescript": "^3.7.3",
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.10",
 		"webpack-merge": "^4.2.2"
