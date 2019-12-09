@@ -1,5 +1,14 @@
 name: Testing
-on: [push, pull_request]
+on:
+  push:
+    paths: &build-deps
+      - "**.js"
+      - "**.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
+  pull_request:
+    paths: *build-deps
 jobs:
   build:
     name: Builds
