@@ -38,7 +38,7 @@ intents:
       - what can you do?
       - help
       - what can I say?
-    handler: basic_response
+    handler: help
     data:
       responses:
         - You can say "make a temporary channel" (or something similar), and I'll create a voice channel that only exists as long as someone's in it. I also manage the replication of numbered voice channels and roles assigned based on the
@@ -54,27 +54,27 @@ intents:
         - \*blushes\* # You can use any of Discord's standard text formatting.
   shardShutdown:
     handler: bot_shutdown
+    name: Shard Shutdown
     description: Shuts down the shard handling the current server. If shard is managed, it will restart automatically.
     permissionLevel: 5
     models:
       - shut down
       - shutdown
-      - go offline
-      - exit
       - stop
+      - halt
     data:
       responses:
         - Ok. Goodbye!
         - I'll be back.
       handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
         shutdownDelay: 3000
-  temporaryVoiceChannel: # If no handler is specified, the bot tries to load a handler named the same as the intent.
+  temporaryVoiceChannel:
     handler: temporary_voice_channel
+    name: Temporary Voice Channel
     description: Creates a voice channel with a given name and deletes it when empty.
     models:
       - make a temporary voice channel
       - create a channel
-      - make a vc
       - make a temporary channel
       - make a channel
       - create a temporary channel
@@ -113,6 +113,7 @@ intents:
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
     handler: purge_gameroles
+    name: Game Role Cleanup
     description: Deletes all roles created by this bot.
     permissionLevel: 5
     models:
@@ -134,3 +135,4 @@ plugins: # Plugins add additional functionality.
   standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
   temporary-voice-channels: # Spawn temporary voice channels on request.
     name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
+  advanced-help:
