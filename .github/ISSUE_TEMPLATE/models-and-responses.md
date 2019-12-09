@@ -17,6 +17,6 @@ What needs to change?
 Checklist:
 <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This model or response change...
-    [ ] is not profane
-    [ ] is not racist, homophobic, transphobic, etc.
-    [ ] is not an in-joke among you and your friends
+- [ ] is not profane
+- [ ] is not racist, homophobic, transphobic, etc.
+- [ ] is not an in-joke among you and your friends

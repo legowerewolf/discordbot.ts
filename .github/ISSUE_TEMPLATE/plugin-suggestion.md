@@ -21,6 +21,6 @@ Relevant information or resources?
 Checklist:
 <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This plugin suggestion...
-    [ ] is not profane
-    [ ] is not racist, homophobic, transphobic, etc.
-    [ ] is not an in-joke among you and your friends
+- [ ] is not profane
+- [ ] is not racist, homophobic, transphobic, etc.
+- [ ] is not an in-joke among you and your friends
