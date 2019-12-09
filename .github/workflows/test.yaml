@@ -1,14 +1,19 @@
 name: Testing
 on:
   push:
-    paths: &build-deps
+    paths: # Add anchor when available
       - "**.js"
       - "**.ts"
       - "package.json"
       - "package-lock.json"
       - "tsconfig.json"
   pull_request:
-    paths: *build-deps
+    paths: # Replace with alias to above anchor when available.
+      - "**.js"
+      - "**.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
 jobs:
   build:
     name: Builds
