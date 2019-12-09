@@ -18,8 +18,7 @@ assignees: ""
 <!-- example: There's an API that lets you search for cat imagery at https://thecatapi.com/ -->
 
 
-**Checklist:**
-<!-- Fill the [ ] with an 'x' when true (like [x]) -->
+**Checklist:** <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This plugin suggestion...
 - [ ] is not profane
 - [ ] is not racist, homophobic, transphobic, etc.
