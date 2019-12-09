@@ -55,7 +55,7 @@ intents:
   shardShutdown:
     handler: bot_shutdown
     name: Shard Shutdown
-    description: Shuts down the shard handling the current server. If shard is managed, it will restart automatically.
+    description: Shuts down the shard handling the current server. If the shard is managed, it will restart automatically.
     permissionLevel: 5
     models:
       - shut down
