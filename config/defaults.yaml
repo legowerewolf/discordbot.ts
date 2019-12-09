@@ -52,8 +52,9 @@ intents:
       responses:
         - Aww, I love you too!
         - \*blushes\* # You can use any of Discord's standard text formatting.
-  botShutdown:
+  shardShutdown:
     handler: bot_shutdown
+    description: Shuts down the shard handling the current server. If shard is managed, it will restart automatically.
     permissionLevel: 5
     models:
       - shut down
@@ -69,6 +70,7 @@ intents:
         shutdownDelay: 3000
   temporaryVoiceChannel: # If no handler is specified, the bot tries to load a handler named the same as the intent.
     handler: temporary_voice_channel
+    description: Creates a voice channel with a given name and deletes it when empty.
     models:
       - make a temporary voice channel
       - create a channel
@@ -111,6 +113,7 @@ intents:
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
     handler: purge_gameroles
+    description: Deletes all roles created by this bot.
     permissionLevel: 5
     models:
       - purge game roles
