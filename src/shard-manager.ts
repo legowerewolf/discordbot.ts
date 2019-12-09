@@ -1,6 +1,6 @@
 import { ShardingManager } from "discord.js";
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
-import 'source-map-support/register';
+import "source-map-support/register";
 import { parseConfig } from "./helpers";
 
 parseConfig().then((config) => {
