@@ -14,8 +14,7 @@ assignees: ""
 <!-- IE: Add "howdy" to the list of models -->
 
 
-**Checklist:**
-<!-- Fill the [ ] with an 'x' when true (like [x]) -->
+**Checklist:** <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This model or response change...
 - [ ] is not profane
 - [ ] is not racist, homophobic, transphobic, etc.
