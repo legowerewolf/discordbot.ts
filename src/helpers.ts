@@ -41,7 +41,7 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 	});
 }
 
-export function valuesOf(obj: any) {
+export function valuesOf<T>(obj: { [key: string]: T }): T[] {
 	return Object.keys(obj).map((prop: string) => obj[prop]);
 }
 
