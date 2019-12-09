@@ -6,15 +6,15 @@ labels: enhancement
 assignees: ""
 ---
 
-What _default_ intent is affected?
+**What _default_ intent is affected?**
 <!-- IE: greeting -->
 
 
-What needs to change?
+**What needs to change?**
 <!-- IE: Add "howdy" to the list of models -->
 
 
-Checklist:
+**Checklist:**
 <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This model or response change...
 - [ ] is not profane

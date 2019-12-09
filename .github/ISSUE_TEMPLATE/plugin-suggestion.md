@@ -6,19 +6,19 @@ labels: enhancement
 assignees: ""
 ---
 
-What plugin should be added or changed?
+**What plugin should be added or changed?**
 <!-- example: (new) cat-gifs -->
 
 
-What needs to change?
+**What needs to change?**
 <!-- example: "Make a plugin to send a cat gif or video to the current channel" -->
 
 
-Relevant information or resources?
+**Relevant information or resources?**
 <!-- example: There's an API that lets you search for cat imagery at https://thecatapi.com/ -->
 
 
-Checklist:
+**Checklist:**
 <!-- Fill the [ ] with an 'x' when true (like [x]) -->
 This plugin suggestion...
 - [ ] is not profane
