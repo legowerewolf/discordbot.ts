@@ -1,6 +1,8 @@
+import { stripIndents } from "common-tags";
 import { GuildMember, Message, Role } from "discord.js";
-import { readFile } from "fs";
+import { mkdirSync, readFile, writeFileSync } from "fs";
 import { safeLoad } from "js-yaml";
+import { dirname } from "path";
 import { promisify } from "util";
 import { CommunicationEvent, ConfigElement, IntentsMap, IntentsResolutionMethods } from "./types";
 
@@ -119,5 +121,25 @@ export function promiseRetry(
 				}, backoff);
 			}
 		);
+	});
+}
+
+export function injectErrorLogger() {
+	process.addListener("uncaughtException", (error) => {
+		let path = `./fatals/${Date.now()}.log`;
+
+		console.error(`Fatal error. See crash dump: ${path}`);
+
+		mkdirSync(dirname(path), { recursive: true });
+		writeFileSync(
+			path,
+			stripIndents`
+			${error.name}
+			${error.message}
+			${error.stack}
+		`
+		);
+
+		process.exit(1);
 	});
 }

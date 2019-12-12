@@ -1,7 +1,9 @@
 import { ShardingManager } from "discord.js";
 import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import "source-map-support/register";
-import { parseConfig } from "./helpers";
+import { injectErrorLogger, parseConfig } from "./helpers";
+
+injectErrorLogger();
 
 parseConfig().then((config) => {
 	let manager = new ShardingManager(`./build/shard.js`, {
