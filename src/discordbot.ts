@@ -2,9 +2,10 @@ import { Client, Guild, Message } from "discord.js";
 import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
 import "source-map-support/register";
 import { Brain } from "./brain";
-import { parseConfig, valuesOf } from "./helpers";
+import { injectErrorLogger, parseConfig, valuesOf } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
 
+injectErrorLogger();
 parseConfig().then((config) => {
 	new DiscordBot(config).start();
 });
