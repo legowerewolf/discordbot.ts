@@ -8,6 +8,13 @@ export enum IntentsResolutionMethods {
 	MergePreferCustom = "mergePreferCustom",
 }
 
+// Define a standard vocabulary for log output
+export enum Vocab {
+	Error = "error",
+	Warn = "warn",
+	Info = "info",
+}
+
 export interface ConfigElement {
 	logLevel: number;
 	defaultPermissionLevel: number;
