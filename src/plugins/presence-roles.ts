@@ -1,8 +1,7 @@
 import { Role } from "discord.js";
-import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
-import { CommunicationEvent, Plugin } from "../types";
+import { CommunicationEvent, Plugin, Vocab } from "../types";
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
@@ -19,7 +18,7 @@ export default class PresenceRoles extends Plugin {
 			)
 				return;
 
-			context.console(ErrorLevels.Info, `Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`);
+			context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`, Vocab.Info);
 
 			let userID = newPresence.user.id ?? oldPresence.user.id;
 			let guildID = newPresence.guild.id ?? oldPresence.guild.id;
@@ -37,7 +36,7 @@ export default class PresenceRoles extends Plugin {
 							{
 								warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
 								console: (msg) => {
-									context.console(ErrorLevels.Warn, msg);
+									context.console(msg, Vocab.Warn);
 								},
 							}
 						).then(() => {
@@ -48,7 +47,7 @@ export default class PresenceRoles extends Plugin {
 								{
 									warnMsg: `deleting role ${roleStringify(gameRole)}.`,
 									console: (msg) => {
-										context.console(ErrorLevels.Warn, msg);
+										context.console(msg, Vocab.Warn);
 									},
 								}
 							);
@@ -75,7 +74,7 @@ export default class PresenceRoles extends Plugin {
 					{
 						warnMsg: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
 						console: (msg) => {
-							context.console(ErrorLevels.Warn, msg);
+							context.console(msg, Vocab.Warn);
 						},
 					}
 				);
@@ -94,7 +93,7 @@ export default class PresenceRoles extends Plugin {
 						{
 							warnMsg: `deleting role ${roleStringify(gameRole)}.`,
 							console: (msg) => {
-								context.console(ErrorLevels.Warn, msg);
+								context.console(msg, Vocab.Warn);
 							},
 						}
 					);
