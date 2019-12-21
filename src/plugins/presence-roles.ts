@@ -34,10 +34,8 @@ export default class PresenceRoles extends Plugin {
 								return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
 							},
 							{
-								warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
-								console: (msg) => {
-									context.console(msg, Vocab.Warn);
-								},
+								description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
+								console: context.console,
 							}
 						).then(() => {
 							promiseRetry(
@@ -45,10 +43,8 @@ export default class PresenceRoles extends Plugin {
 									return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
 								},
 								{
-									warnMsg: `deleting role ${roleStringify(gameRole)}.`,
-									console: (msg) => {
-										context.console(msg, Vocab.Warn);
-									},
+									description: `deleting role ${roleStringify(gameRole)}.`,
+									console: context.console,
 								}
 							);
 						});
@@ -72,10 +68,8 @@ export default class PresenceRoles extends Plugin {
 						);
 					},
 					{
-						warnMsg: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
-						console: (msg) => {
-							context.console(msg, Vocab.Warn);
-						},
+						description: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
+						console: context.console,
 					}
 				);
 			}
@@ -91,10 +85,8 @@ export default class PresenceRoles extends Plugin {
 							return context.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve();
 						},
 						{
-							warnMsg: `deleting role ${roleStringify(gameRole)}.`,
-							console: (msg) => {
-								context.console(msg, Vocab.Warn);
-							},
+							description: `deleting role ${roleStringify(gameRole)}.`,
+							console: context.console,
 						}
 					);
 				});
