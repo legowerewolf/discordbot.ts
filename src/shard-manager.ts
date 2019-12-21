@@ -21,7 +21,7 @@ parseConfig().then((config) => {
 		log(`Launched shard...`, { shard_ID: shard.id }, "manager", "info");
 
 		shard.on("message", (message: RatlogData) => {
-			log.tag(`shard_${shard.id}`)(message.message, { ...message.fields }, message.tags);
+			log.tag(`shard_${shard.id}`)(message.message, { ...message.fields }, ...message.tags);
 		});
 	});
 });
