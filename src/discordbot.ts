@@ -81,7 +81,7 @@ export class DiscordBot {
 					this.plugins.push(instance);
 				},
 				(reason) => {
-					this.console(`Unable to load plugin ${name}: ${reason}`, Vocab.Error);
+					this.console(`Unable to load plugin`, { pluginName: name, reason: reason }, Vocab.Error);
 				}
 			);
 		}, this);
@@ -110,10 +110,10 @@ export class DiscordBot {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);
 			} else {
-				this.console(`You must use explicitly-named handlers for intents. (${intentName})`, Vocab.Error);
+				this.console(`You must use explicitly-named handlers for intents.`, { intent: intentName }, Vocab.Error);
 			}
 			if (intentName == "_unknown") {
-				this.console(`Unknown message: ${eventData.text}`, Vocab.Warn);
+				this.console(`Unknown message`, { message: eventData.text }, Vocab.Warn);
 			}
 		} else {
 			eventData.responseCallback("You don't have permission to ask that.");
