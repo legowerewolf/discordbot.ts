@@ -3,8 +3,9 @@ import { GuildMember, Message, Role } from "discord.js";
 import { mkdirSync, readFile, writeFileSync } from "fs";
 import { safeLoad } from "js-yaml";
 import { dirname } from "path";
+import ratlog, { Ratlogger } from "ratlog";
 import { promisify } from "util";
-import { CommunicationEvent, ConfigElement, IntentsMap, IntentsResolutionMethods } from "./types";
+import { CommunicationEvent, ConfigElement, IntentsMap, IntentsResolutionMethods, Vocab } from "./types";
 
 export function randomElementFromArray(array: Array<any>) {
 	return array[Math.floor(Math.random() * array.length)];
@@ -102,20 +103,20 @@ export function promiseRetry(
 		factor?: number;
 		maxDelay?: number;
 		delay?: number;
-		warnMsg?: string;
-		console?: (msg: string) => void;
+		description?: string;
+		console?: Ratlogger;
 	}
 ) {
-	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, warnMsg: "generic promise", console: console.log, ...opts };
+	opts = { backoff: (last, factor) => last + factor, factor: 5000, maxDelay: 30000, delay: 0, description: "unnamed promise", console: ratlog(console.log), ...opts };
 	return new Promise((resolve, reject) => {
 		promise().then(
 			(success) => {
-				opts.console(`Succeeded ${opts.warnMsg}`);
+				opts.console(`Succeeded ${opts.description}`, "promise retry", Vocab.Info);
 				resolve(success);
 			},
 			(reason) => {
 				let backoff = Math.min(opts.backoff(opts.delay, opts.factor), opts.maxDelay);
-				opts.console(`Error ${opts.warnMsg} (${reason}) (Retrying in ${backoff}ms.)`);
+				opts.console(`Failed ${opts.description} (${reason}) (Retrying in ${backoff}ms.)`, "promise retry", Vocab.Error);
 				setTimeout(() => {
 					resolve(promiseRetry(promise, { ...opts, delay: backoff }));
 				}, backoff);

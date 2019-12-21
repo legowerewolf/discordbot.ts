@@ -1,8 +1,9 @@
 import { ShardingManager } from "discord.js";
-import { defaultPrefixer, errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
+import ratlog, { RatlogData } from "ratlog";
 import "source-map-support/register";
 import { injectErrorLogger, parseConfig } from "./helpers";
 
+let log = ratlog(process.stdout);
 injectErrorLogger();
 
 parseConfig().then((config) => {
@@ -11,19 +12,16 @@ parseConfig().then((config) => {
 		token: config.APIKeys.discord,
 	});
 
-	defaultPrefixer.update("MANAGER");
-
 	// @ts-ignore - these values are filled in at build time.
-	console.log(defaultPrefixer.prefix("MANAGER", errorLevelPrefixer.prefix(ErrorLevels.Info, `Starting shard manager for v${META_VERSION} / ${META_HASH}`)));
+	log(`Starting shard manager...`, { version: META_VERSION, commit: META_HASH }, "manager", "info");
 
 	manager.spawn();
 
 	manager.on("shardCreate", (shard) => {
-		defaultPrefixer.update(`Shard ${shard.id}`);
-		console.log(defaultPrefixer.prefix("MANAGER", errorLevelPrefixer.prefix(ErrorLevels.Info, `Launched shard ${shard.id}...`)));
+		log(`Launched shard...`, { shard_ID: shard.id }, "manager", "info");
 
-		shard.on("message", (message) => {
-			console.log(defaultPrefixer.prefix(`Shard ${shard.id}`, message));
+		shard.on("message", (message: RatlogData) => {
+			log.tag(`shard_${shard.id}`)(message.message, { ...message.fields }, ...message.tags);
 		});
 	});
 });

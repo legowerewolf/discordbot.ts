@@ -23,7 +23,12 @@ module.exports = {
 		new CleanWebpackPlugin(), // Clean the build directory
 		new DefinePlugin({
 			META_VERSION: JSON.stringify(packagejson.version),
-			META_HASH: JSON.stringify(childprocess.execSync("git rev-parse --short HEAD").toString()),
+			META_HASH: JSON.stringify(
+				childprocess
+					.execSync("git rev-parse --short HEAD")
+					.toString()
+					.trim()
+			),
 		}),
 	],
 	resolve: {

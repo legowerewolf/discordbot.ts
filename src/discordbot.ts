@@ -1,9 +1,9 @@
 import { Client, Guild, Message } from "discord.js";
-import { errorLevelPrefixer, ErrorLevels } from "legowerewolf-prefixer";
+import ratlog from "ratlog";
 import "source-map-support/register";
 import { Brain } from "./brain";
-import { injectErrorLogger, parseConfig, valuesOf } from "./helpers";
-import { CommunicationEvent, ConfigElement, IntentHandler, Plugin } from "./types";
+import { injectErrorLogger, parseConfig } from "./helpers";
+import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, Vocab } from "./types";
 
 injectErrorLogger();
 parseConfig().then((config) => {
@@ -49,7 +49,7 @@ export class DiscordBot {
 			{
 				event: "ready",
 				handler: () => {
-					this.console(ErrorLevels.Info, `Shard ready. Connected to ${this.client.guilds.size} guilds.`);
+					this.console(`Shard ready. Connected to ${this.client.guilds.size} guilds.`, Vocab.Info);
 
 					// @ts-ignore - these values are filled in on build time
 					this.client.user.setActivity(`v${META_VERSION} / ${META_HASH}`);
@@ -57,15 +57,15 @@ export class DiscordBot {
 			},
 			{
 				event: "guildCreate",
-				handler: (newGuild: Guild) => this.console(ErrorLevels.Info, `Bot added to guild: ${newGuild.name}`),
+				handler: (newGuild: Guild) => this.console(`Bot added to guild: ${newGuild.name}`, Vocab.Info),
 			},
 			{
 				event: "error",
-				handler: (error: Error) => this.console(ErrorLevels.Error, error.message),
+				handler: (error: Error) => this.console(error.message, Vocab.Error),
 			},
 			{
 				event: "warn",
-				handler: (info: string) => this.console(ErrorLevels.Warn, info),
+				handler: (info: string) => this.console(info, Vocab.Warn),
 			},
 		].forEach((element) => {
 			this.client.on(element.event, element.handler);
@@ -81,7 +81,7 @@ export class DiscordBot {
 					this.plugins.push(instance);
 				},
 				(reason) => {
-					this.console(ErrorLevels.Error, `Unable to load plugin ${name}: ${reason}`);
+					this.console(`Unable to load plugin`, { pluginName: name, reason: reason }, Vocab.Error);
 				}
 			);
 		}, this);
@@ -110,19 +110,17 @@ export class DiscordBot {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);
 			} else {
-				this.console(ErrorLevels.Error, `You must use explicitly-named handlers for intents. (${intentName})`);
+				this.console(`You must use explicitly-named handlers for intents.`, { intent: intentName }, Vocab.Error);
 			}
 			if (intentName == "_unknown") {
-				this.console(ErrorLevels.Warn, `Unknown message: ${eventData.text}`);
+				this.console(`Unknown message`, { message: eventData.text }, Vocab.Warn);
 			}
 		} else {
 			eventData.responseCallback("You don't have permission to ask that.");
 		}
 	}
 
-	console(level: ErrorLevels, message: string) {
-		if (this.config.logLevel <= valuesOf(ErrorLevels).findIndex((l) => l == level)) {
-			this.client.shard.send(errorLevelPrefixer.prefix(level, message));
-		}
-	}
+	console = ratlog.logger((log) => {
+		this.client.shard.send(log);
+	});
 }

@@ -1,8 +1,7 @@
 import { VoiceChannel } from "discord.js";
-import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { responseToQuestion } from "../helpers";
-import { CommunicationEvent, Plugin } from "../types";
+import { CommunicationEvent, Plugin, Vocab } from "../types";
 
 export default class TemporaryVoiceChannel extends Plugin {
 	static defaultConfig = {
@@ -23,7 +22,7 @@ export default class TemporaryVoiceChannel extends Plugin {
 						channel.guild
 							.member(eventData.author)
 							.voice.setChannel(channel)
-							.catch((err) => context.console(ErrorLevels.Error, `${err} (Attempted to move user to temporary voice channel)`)) // Move the user
+							.catch((err) => context.console(`${err} (Attempted to move user to temporary voice channel)`, Vocab.Warn)) // Move the user
 				);
 		};
 

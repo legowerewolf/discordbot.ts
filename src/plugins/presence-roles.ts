@@ -1,8 +1,7 @@
 import { Role } from "discord.js";
-import { ErrorLevels } from "legowerewolf-prefixer";
 import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
-import { CommunicationEvent, Plugin } from "../types";
+import { CommunicationEvent, Plugin, Vocab } from "../types";
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
@@ -19,7 +18,7 @@ export default class PresenceRoles extends Plugin {
 			)
 				return;
 
-			context.console(ErrorLevels.Info, `Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`);
+			context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`, Vocab.Info);
 
 			let userID = newPresence.user.id ?? oldPresence.user.id;
 			let guildID = newPresence.guild.id ?? oldPresence.guild.id;
@@ -35,10 +34,8 @@ export default class PresenceRoles extends Plugin {
 								return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
 							},
 							{
-								warnMsg: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
-								console: (msg) => {
-									context.console(ErrorLevels.Warn, msg);
-								},
+								description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
+								console: context.console,
 							}
 						).then(() => {
 							promiseRetry(
@@ -46,10 +43,8 @@ export default class PresenceRoles extends Plugin {
 									return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
 								},
 								{
-									warnMsg: `deleting role ${roleStringify(gameRole)}.`,
-									console: (msg) => {
-										context.console(ErrorLevels.Warn, msg);
-									},
+									description: `deleting role ${roleStringify(gameRole)}.`,
+									console: context.console,
 								}
 							);
 						});
@@ -73,10 +68,8 @@ export default class PresenceRoles extends Plugin {
 						);
 					},
 					{
-						warnMsg: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
-						console: (msg) => {
-							context.console(ErrorLevels.Warn, msg);
-						},
+						description: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
+						console: context.console,
 					}
 				);
 			}
@@ -92,10 +85,8 @@ export default class PresenceRoles extends Plugin {
 							return context.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve();
 						},
 						{
-							warnMsg: `deleting role ${roleStringify(gameRole)}.`,
-							console: (msg) => {
-								context.console(ErrorLevels.Warn, msg);
-							},
+							description: `deleting role ${roleStringify(gameRole)}.`,
+							console: context.console,
 						}
 					);
 				});
