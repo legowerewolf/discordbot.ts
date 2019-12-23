@@ -8,7 +8,8 @@
 		"build": "webpack --config webpack.prod.js",
 		"build-dev": "webpack --config webpack.dev.js",
 		"start": "node build/manager.js",
-		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha"
+		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha",
+		"coverage": "nyc npm test"
 	},
 	"mocha": {
 		"require": [

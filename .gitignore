@@ -1,6 +1,17 @@
+# Dependencies
 node_modules
-config/config.yaml
-.vscode
+
+# Build Artifacts
 build
-backup
+
+# Test Artifacts
+.nyc_output
+
+# Secrets
+config/config.yaml
+
 deploy/AppEngine.json
+
+# Other
+.vscode
+backup
