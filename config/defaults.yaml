@@ -1,7 +1,6 @@
 ---
 APIKeys:
   discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
-logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.
 defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
 users:
 #   '[user's numerical id]': # enable dev mode, right click on a user, and select "Copy ID".
@@ -39,10 +38,6 @@ intents:
       - help
       - what can I say?
     handler: help
-    data:
-      responses:
-        - You can say "make a temporary channel" (or something similar), and I'll create a voice channel that only exists as long as someone's in it. I also manage the replication of numbered voice channels and roles assigned based on the
-          game you're currently playing.
   declarationOfLove:
     models:
       - I love you
@@ -66,8 +61,6 @@ intents:
       responses:
         - Ok. Goodbye!
         - I'll be back.
-      handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
-        shutdownDelay: 3000
   temporaryVoiceChannel:
     handler: temporary_voice_channel
     name: Temporary Voice Channel
@@ -109,7 +102,7 @@ intents:
       responses:
         - "Welcome to your new channel: "
         - "Here you go! Your new channel, fresh from the factory: "
-      handlerSpecific:
+      handlerSpecific: # The responses field must always be an array of strings. The handlerSpecific field allows for infinite variety, as needed by this specific handler.
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
     handler: purge_gameroles
@@ -135,4 +128,4 @@ plugins: # Plugins add additional functionality.
   standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
   temporary-voice-channels: # Spawn temporary voice channels on request.
     name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
-  advanced-help:
+  advanced-help: # Provide useful command help auto-generated on command based on intents' description fields

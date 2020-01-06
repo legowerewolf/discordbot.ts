@@ -11,9 +11,7 @@ export default class StandardHandlers extends Plugin {
 			},
 			bot_shutdown: (eventData: CommunicationEvent) => {
 				eventData.responseCallback(randomElementFromArray(eventData.config.responses));
-				setTimeout(() => {
-					eventData.bot.stop();
-				}, eventData.config.handlerSpecific.shutdownDelay);
+				eventData.bot.stop();
 			},
 		};
 	}
