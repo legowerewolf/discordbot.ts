@@ -1,7 +1,9 @@
-import { Role } from "discord.js";
+import { Activity, Role } from "discord.js";
 import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
 import { CommunicationEvent, Plugin, Vocab } from "../types";
+
+export const getGame = (activities: Activity[]) => activities?.filter((activity) => activity.type === "PLAYING")[0];
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
@@ -12,13 +14,13 @@ export default class PresenceRoles extends Plugin {
 	inject(context: DiscordBot) {
 		context.client.on("presenceUpdate", (oldPresence, newPresence) => {
 			if (
-				oldPresence?.activity?.applicationID === newPresence.activity?.applicationID || // they haven't changed games
+				getGame(oldPresence?.activities)?.applicationID === getGame(newPresence.activities)?.applicationID || // they haven't changed games
 				newPresence.user.bot || // they're a bot
 				!newPresence.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
 			)
 				return;
 
-			context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${oldPresence?.activity?.name}" to "${newPresence?.activity?.name}")`, Vocab.Info);
+			context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${getGame(oldPresence?.activities)?.name}" to "${getGame(newPresence?.activities)?.name}")`, Vocab.Info);
 
 			let userID = newPresence.user.id ?? oldPresence.user.id;
 			let guildID = newPresence.guild.id ?? oldPresence.guild.id;
@@ -50,15 +52,15 @@ export default class PresenceRoles extends Plugin {
 						});
 					});
 
-			if (newPresence?.activity != null) {
+			if (getGame(newPresence?.activities) != null) {
 				promiseRetry(
 					() => {
 						return new Promise((resolve, reject) => {
 							let member = updatedMember(); // Resolve the current version of the Member once.
-							if (!member.presence?.activity) reject("Not playing game any longer");
+							if (!getGame(member.presence?.activities)) reject("Not playing game any longer");
 							resolve(
-								member.guild.roles.filter((role) => role.name === this.config.role_prefix.concat(member.presence.activity.name)).first() ??
-									member.guild.roles.create({ data: { name: this.config.role_prefix.concat(member.presence.activity.name), mentionable: true } })
+								member.guild.roles.filter((role) => role.name === this.config.role_prefix.concat(getGame(member.presence?.activities).name)).first() ??
+									member.guild.roles.create({ data: { name: this.config.role_prefix.concat(getGame(member.presence?.activities).name), mentionable: true } })
 							);
 						}).then(
 							(role: Role) => newPresence.member.roles.add(role),
@@ -68,7 +70,7 @@ export default class PresenceRoles extends Plugin {
 						);
 					},
 					{
-						description: `adding role for game ${newPresence?.activity?.name} to member ${memberStringify(newPresence.member)}`,
+						description: `adding role for game ${getGame(newPresence?.activities)?.name} to member ${memberStringify(newPresence.member)}`,
 						console: context.console,
 					}
 				);
