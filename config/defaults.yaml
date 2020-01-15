@@ -129,3 +129,6 @@ plugins: # Plugins add additional functionality.
   temporary-voice-channels: # Spawn temporary voice channels on request.
     name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
   advanced-help: # Provide useful command help auto-generated on command based on intents' description fields
+  channel-archiver:
+    age: 30d
+    cycle: 1h
