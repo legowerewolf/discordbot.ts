@@ -1,4 +1,4 @@
-import { VoiceChannel } from "discord.js";
+import { VoiceChannel, VoiceState } from "discord.js";
 import { DiscordBot } from "../discordbot";
 import { Plugin } from "../types";
 
@@ -7,18 +7,20 @@ const indexableChannelRegex = /([\w ]+) (\d+)/;
 export default class VoiceScaling extends Plugin {
 	inject(context: DiscordBot): void {
 		// Register a handler for guildmembers joining/leaving/switching voice channels.
-		context.client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => {
-			// Construct an array of the channels they joined and left, and iterate over it.
-			[oldVoiceState.channel, newVoiceState.channel].forEach((channel) => {
-				if (!channel || channel.name.match(indexableChannelRegex) == null) return;
+		context.client.on("voiceStateUpdate", this.updateChannels);
+	}
 
-				const emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
-				if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel) }).then((newChannel) => newChannel.setParent(channel.parentID));
-				else
-					emptyChannelDuplicates.forEach((chan, index) => {
-						if (index > 0) chan.delete();
-					});
-			});
+	updateChannels(oldVoiceState: VoiceState, newVoiceState: VoiceState): void {
+		// Construct an array of the channels they joined and left, and iterate over it.
+		[oldVoiceState.channel, newVoiceState.channel].forEach((channel) => {
+			if (!channel || channel.name.match(indexableChannelRegex) == null) return;
+
+			const emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
+			if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel) }).then((newChannel) => newChannel.setParent(channel.parentID));
+			else
+				emptyChannelDuplicates.forEach((chan, index) => {
+					if (index > 0) chan.delete();
+				});
 		});
 	}
 
@@ -48,5 +50,7 @@ export default class VoiceScaling extends Plugin {
 		return `${channel.name.match(indexableChannelRegex)[1]} ${VoiceScaling.newIndex(this.getDuplicateChannelIDs(channel))}`;
 	}
 
-	extract(): void {}
+	extract(context: DiscordBot): void {
+		context.client.off("voiceStateUpdate", this.updateChannels);
+	}
 }

@@ -28,6 +28,6 @@ export default class HelpPlugin extends Plugin {
 	}
 
 	extract(context: DiscordBot): void {
-		context.handlers["help"] = null;
+		delete context.handlers.help;
 	}
 }

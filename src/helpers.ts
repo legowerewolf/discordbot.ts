@@ -19,13 +19,8 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 			// Only allow the question/response flow on text chats
 			eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
 
-			const timeout = setTimeout(() => {
-				// Set up a timeout for when to stop listening
-				eventData.bot.client.off("message", eventFunc); // Clear the event listener
-
-				eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
-				resolve(response);
-			}, eventData.config.questionData.timeout);
+			// eslint-disable-next-line prefer-const
+			let timeout: NodeJS.Timeout;
 
 			const eventFunc = function(message: Message): void {
 				if (message.author.id == eventData.author.id) {
@@ -37,6 +32,15 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 					resolve(message.cleanContent); // Resolve the promise
 				}
 			};
+
+			timeout = setTimeout(() => {
+				// Set up a timeout for when to stop listening
+				eventData.bot.client.off("message", eventFunc); // Clear the event listener
+
+				eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
+				resolve(response);
+			}, eventData.config.questionData.timeout);
+
 			eventData.bot.client.on("message", eventFunc);
 		} else {
 			resolve(response);

@@ -15,5 +15,8 @@ export default class StandardHandlers extends Plugin {
 			},
 		};
 	}
-	extract(): void {}
+	extract(context: DiscordBot): void {
+		delete context.handlers.basic_response;
+		delete context.handlers.bot_shutdown;
+	}
 }
