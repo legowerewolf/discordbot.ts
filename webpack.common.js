@@ -3,11 +3,10 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const packagejson = require("./package.json");
 const childprocess = require("child_process");
-const webpack = require("webpack");
 
 module.exports = {
 	entry: {
-		shard: "./src/discordbot.ts",
+		shard: "./src/shard.ts",
 		manager: "./src/shard-manager.ts",
 	},
 	module: {
