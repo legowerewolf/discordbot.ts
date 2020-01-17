@@ -3,11 +3,11 @@ import ratlog, { RatlogData } from "ratlog";
 import "source-map-support/register";
 import { injectErrorLogger, parseConfig } from "./helpers";
 
-let log = ratlog(process.stdout);
+const log = ratlog(process.stdout);
 injectErrorLogger();
 
 parseConfig().then((config) => {
-	let manager = new ShardingManager(`./build/shard.js`, {
+	const manager = new ShardingManager(`./build/shard.js`, {
 		totalShards: "auto",
 		token: config.APIKeys.discord,
 	});
@@ -18,7 +18,7 @@ parseConfig().then((config) => {
 	manager.spawn();
 
 	manager.on("shardCreate", (shard) => {
-		log(`Launched shard...`, { shard_ID: shard.id }, "manager", "info");
+		log(`Launched shard...`, { shardID: shard.id }, "manager", "info");
 
 		shard.on("message", (message: RatlogData) => {
 			log.tag(`shard_${shard.id}`)(message.message, { ...message.fields }, ...message.tags);

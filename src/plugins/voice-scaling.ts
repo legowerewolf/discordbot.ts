@@ -5,14 +5,14 @@ import { Plugin } from "../types";
 const indexableChannelRegex = /([\w ]+) (\d+)/;
 
 export default class VoiceScaling extends Plugin {
-	inject(context: DiscordBot) {
+	inject(context: DiscordBot): void {
 		// Register a handler for guildmembers joining/leaving/switching voice channels.
 		context.client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => {
 			// Construct an array of the channels they joined and left, and iterate over it.
 			[oldVoiceState.channel, newVoiceState.channel].forEach((channel) => {
 				if (!channel || channel.name.match(indexableChannelRegex) == null) return;
 
-				let emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
+				const emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
 				if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel) }).then((newChannel) => newChannel.setParent(channel.parentID));
 				else
 					emptyChannelDuplicates.forEach((chan, index) => {
@@ -37,16 +37,16 @@ export default class VoiceScaling extends Plugin {
 
 	// Get a new channel number suffix
 	static newIndex(primaryKeys: Array<number>): number {
-		let key: number = 1;
-		let index: number = 0;
+		let key = 1;
+		let index = 0;
 		while (key++ == primaryKeys[index++]);
 		return --key;
 	}
 
 	// Generate a new name from the name of an existing channel.
-	newNameFromExisting(channel: VoiceChannel) {
+	newNameFromExisting(channel: VoiceChannel): string {
 		return `${channel.name.match(indexableChannelRegex)[1]} ${VoiceScaling.newIndex(this.getDuplicateChannelIDs(channel))}`;
 	}
 
-	extract() {}
+	extract(): void {}
 }

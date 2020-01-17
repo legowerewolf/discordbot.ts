@@ -13,8 +13,8 @@ export default class TemporaryVoiceChannel extends Plugin {
 		this.config.name_regex = new RegExp(`[\\w ]* ${this.config.name_suffix}$`, "g");
 	}
 
-	inject(context: DiscordBot) {
-		context.handlers["temporary_voice_channel"] = (eventData: CommunicationEvent) => {
+	inject(context: DiscordBot): void {
+		context.handlers["temporary_voice_channel"] = (eventData: CommunicationEvent): void => {
 			responseToQuestion(eventData)
 				.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
 				.then(
@@ -33,5 +33,5 @@ export default class TemporaryVoiceChannel extends Plugin {
 		});
 	}
 
-	extract(context: DiscordBot) {}
+	extract(): void {}
 }
