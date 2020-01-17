@@ -9,3 +9,4 @@ extends:
   - "prettier/@typescript-eslint"
 rules:
   "@typescript-eslint/ban-ts-ignore": warn
+  "@typescript-eslint/camelcase": warn
