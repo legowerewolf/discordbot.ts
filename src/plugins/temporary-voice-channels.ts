@@ -1,4 +1,4 @@
-import { VoiceChannel } from "discord.js";
+import { VoiceChannel, VoiceState } from "discord.js";
 import { DiscordBot } from "../discordbot";
 import { responseToQuestion } from "../helpers";
 import { CommunicationEvent, Plugin, Vocab } from "../types";
@@ -13,25 +13,36 @@ export default class TemporaryVoiceChannel extends Plugin {
 		this.config.name_regex = new RegExp(`[\\w ]* ${this.config.name_suffix}$`, "g");
 	}
 
-	inject(context: DiscordBot) {
-		context.handlers["temporary_voice_channel"] = (eventData: CommunicationEvent) => {
-			responseToQuestion(eventData)
-				.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
-				.then(
-					(channel: VoiceChannel) =>
-						channel.guild
-							.member(eventData.author)
-							.voice.setChannel(channel)
-							.catch((err) => context.console(`${err} (Attempted to move user to temporary voice channel)`, Vocab.Warn)) // Move the user
-				);
-		};
+	context: DiscordBot;
 
-		context.client.on("voiceStateUpdate", (oldVoiceState) => {
-			if (oldVoiceState.channel && oldVoiceState.channel.name.match(this.config.name_regex) != null && oldVoiceState.channel.members.size == 0 && oldVoiceState.channel.deletable) {
-				oldVoiceState.channel.delete();
-			}
-		});
+	inject(context: DiscordBot): void {
+		this.context = context;
+
+		context.handlers["temporary_voice_channel"] = this.spawnTemporaryChannel;
+
+		context.client.on("voiceStateUpdate", this.deleteEmptyChannel);
 	}
 
-	extract(context: DiscordBot) {}
+	deleteEmptyChannel(oldVoiceState: VoiceState): void {
+		if (oldVoiceState.channel && oldVoiceState.channel.name.match(this.config.name_regex) != null && oldVoiceState.channel.members.size == 0 && oldVoiceState.channel.deletable) {
+			oldVoiceState.channel.delete();
+		}
+	}
+
+	spawnTemporaryChannel(eventData: CommunicationEvent): void {
+		responseToQuestion(eventData)
+			.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
+			.then(
+				(channel: VoiceChannel) =>
+					channel.guild
+						.member(eventData.author)
+						.voice.setChannel(channel)
+						.catch((err) => this.context.console(`${err} (Attempted to move user to temporary voice channel)`, Vocab.Warn)) // Move the user
+			);
+	}
+
+	extract(context: DiscordBot): void {
+		delete context.handlers.temporary_voice_channel;
+		context.client.off("voiceStateUpdate", this.deleteEmptyChannel);
+	}
 }

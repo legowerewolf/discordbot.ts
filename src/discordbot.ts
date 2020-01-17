@@ -2,13 +2,7 @@ import { Client, Guild, Message } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
 import { Brain } from "./brain";
-import { injectErrorLogger, parseConfig } from "./helpers";
 import { CommunicationEvent, ConfigElement, IntentHandler, Plugin, Vocab } from "./types";
-
-injectErrorLogger();
-parseConfig().then((config) => {
-	new DiscordBot(config).start();
-});
 
 export class DiscordBot {
 	config: ConfigElement;
@@ -31,7 +25,7 @@ export class DiscordBot {
 		[
 			{
 				event: "message",
-				handler: (msg: Message) => {
+				handler: (msg: Message): void => {
 					if (!msg.author.bot && msg.mentions.users.has(this.client.user.id)) {
 						this.handleInput({
 							text: msg.cleanContent,
@@ -48,7 +42,7 @@ export class DiscordBot {
 			},
 			{
 				event: "ready",
-				handler: () => {
+				handler: (): void => {
 					this.console(`Shard ready. Connected to ${this.client.guilds.size} guilds.`, Vocab.Info);
 
 					// @ts-ignore - these values are filled in on build time
@@ -57,15 +51,15 @@ export class DiscordBot {
 			},
 			{
 				event: "guildCreate",
-				handler: (newGuild: Guild) => this.console(`Bot added to guild: ${newGuild.name}`, Vocab.Info),
+				handler: (newGuild: Guild): void => this.console(`Bot added to guild: ${newGuild.name}`, Vocab.Info),
 			},
 			{
 				event: "error",
-				handler: (error: Error) => this.console(error.message, Vocab.Error),
+				handler: (error: Error): void => this.console(error.message, Vocab.Error),
 			},
 			{
 				event: "warn",
-				handler: (info: string) => this.console(info, Vocab.Warn),
+				handler: (info: string): void => this.console(info, Vocab.Warn),
 			},
 		].forEach((element) => {
 			this.client.on(element.event, element.handler);
@@ -76,7 +70,7 @@ export class DiscordBot {
 		Object.keys(this.config.plugins).map(async (name: string) => {
 			import(`./plugins/${name}`).then(
 				({ default: pluginClass }) => {
-					let instance: Plugin = new pluginClass(this.config.plugins[name]);
+					const instance: Plugin = new pluginClass(this.config.plugins[name]);
 					instance.inject(this);
 					this.plugins.push(instance);
 				},
@@ -87,24 +81,24 @@ export class DiscordBot {
 		}, this);
 	}
 
-	start() {
+	start(): void {
 		this.client.login(this.config.APIKeys.discord);
 	}
 
-	stop() {
+	stop(): void {
 		this.plugins.map((plugin) => plugin.extract(this));
 		this.client.destroy();
 		process.exit();
 	}
 
-	handleInput(eventData: CommunicationEvent) {
-		let intentName = this.brain.interpret(eventData.text).label;
-		let intent = this.config.intents[intentName];
+	handleInput(eventData: CommunicationEvent): void {
+		const intentName = this.brain.interpret(eventData.text).label;
+		const intent = this.config.intents[intentName];
 
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		let userPermissionLevel = this.config.users?.[eventData.author.id]?.permissionLevel;
+		const userPermissionLevel = this.config.users?.[eventData.author.id]?.permissionLevel;
 		if (!intent.permissionLevel || (userPermissionLevel ?? this.config.defaultPermissionLevel) >= intent.permissionLevel) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided

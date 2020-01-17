@@ -1,9 +1,9 @@
-import { Activity, Role } from "discord.js";
+import { Activity, GuildMember, Presence, Role } from "discord.js";
 import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
 import { CommunicationEvent, Plugin, Vocab } from "../types";
 
-export const getGame = (activities: Activity[]) => activities?.filter((activity) => activity.type === "PLAYING")[0];
+export const getGame = (activities: Activity[]): Activity => activities?.filter((activity) => activity.type === "PLAYING")[0];
 
 export default class PresenceRoles extends Plugin {
 	// Built-in defaults - the minimum needed for the plugin to work.
@@ -11,91 +11,105 @@ export default class PresenceRoles extends Plugin {
 		role_prefix: "in:",
 	};
 
-	inject(context: DiscordBot) {
-		context.client.on("presenceUpdate", (oldPresence, newPresence) => {
-			if (
-				getGame(oldPresence?.activities)?.applicationID === getGame(newPresence.activities)?.applicationID || // they haven't changed games
-				newPresence.user.bot || // they're a bot
-				!newPresence.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
-			)
-				return;
+	context: DiscordBot;
 
-			context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${getGame(oldPresence?.activities)?.name}" to "${getGame(newPresence?.activities)?.name}")`, Vocab.Info);
+	inject(context: DiscordBot): void {
+		this.context = context;
 
-			let userID = newPresence.user.id ?? oldPresence.user.id;
-			let guildID = newPresence.guild.id ?? oldPresence.guild.id;
-			let updatedMember = () => context.client.guilds.get(guildID).members.get(userID);
-			let updatedRole = (id: string) => updatedMember().guild.roles.get(id);
+		context.client.on("presenceUpdate", this.fixPresences);
 
-			if (oldPresence != undefined)
-				oldPresence.member.roles
-					.filter((role) => role.name.startsWith(this.config.role_prefix))
-					.forEach((gameRole) => {
-						promiseRetry(
-							() => {
-								return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve();
-							},
-							{
-								description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
-								console: context.console,
-							}
-						).then(() => {
-							promiseRetry(
-								() => {
-									return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve();
-								},
-								{
-									description: `deleting role ${roleStringify(gameRole)}.`,
-									console: context.console,
-								}
-							);
-						});
-					});
+		context.handlers["purge_gameroles"] = this.removeRolesFromServer;
+	}
 
-			if (getGame(newPresence?.activities) != null) {
-				promiseRetry(
-					() => {
-						return new Promise((resolve, reject) => {
-							let member = updatedMember(); // Resolve the current version of the Member once.
-							if (!getGame(member.presence?.activities)) reject("Not playing game any longer");
-							resolve(
-								member.guild.roles.filter((role) => role.name === this.config.role_prefix.concat(getGame(member.presence?.activities).name)).first() ??
-									member.guild.roles.create({ data: { name: this.config.role_prefix.concat(getGame(member.presence?.activities).name), mentionable: true } })
-							);
-						}).then(
-							(role: Role) => newPresence.member.roles.add(role),
-							(reason) => {
-								if (reason != "Not playing game any longer") return Promise.reject(reason);
-							}
-						);
-					},
-					{
-						description: `adding role for game ${getGame(newPresence?.activities)?.name} to member ${memberStringify(newPresence.member)}`,
-						console: context.console,
-					}
-				);
-			}
-		});
+	fixPresences(oldPresence: Presence, newPresence: Presence): void {
+		if (
+			getGame(oldPresence?.activities)?.applicationID === getGame(newPresence.activities)?.applicationID || // they haven't changed games
+			newPresence.user.bot || // they're a bot
+			!newPresence.guild.me.hasPermission("MANAGE_ROLES") // I can't mess with roles on this server
+		)
+			return;
 
-		context.handlers["purge_gameroles"] = (eventData: CommunicationEvent) => {
-			eventData.responseCallback(`Purging game roles from this server.`);
-			eventData.guild.roles
+		this.context.console(`Updating roles for member ${memberStringify(newPresence.member)} (game switch from "${getGame(oldPresence?.activities)?.name}" to "${getGame(newPresence?.activities)?.name}")`, Vocab.Info);
+
+		const userID = newPresence.user.id ?? oldPresence.user.id;
+		const guildID = newPresence.guild.id ?? oldPresence.guild.id;
+		const updatedMember = (): GuildMember => this.context.client.guilds.get(guildID).members.get(userID);
+		const updatedRole = (id: string): Role => updatedMember().guild.roles.get(id);
+
+		if (oldPresence != undefined)
+			oldPresence.member.roles
 				.filter((role) => role.name.startsWith(this.config.role_prefix))
 				.forEach((gameRole) => {
 					promiseRetry(
 						() => {
-							return context.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve();
+							return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve(updatedMember());
 						},
 						{
-							description: `deleting role ${roleStringify(gameRole)}.`,
-							console: context.console,
+							description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
+							console: this.context.console,
+						}
+					).then(() => {
+						promiseRetry(
+							() => {
+								return updatedRole(gameRole.id) != undefined && updatedRole(gameRole.id).members.size == 0 ? updatedRole(gameRole.id).delete() : Promise.resolve(updatedRole(gameRole.id));
+							},
+							{
+								description: `deleting role ${roleStringify(gameRole)}.`,
+								console: this.context.console,
+							}
+						);
+					});
+				});
+
+		if (getGame(newPresence?.activities) != null) {
+			promiseRetry(
+				() => {
+					return new Promise((resolve, reject) => {
+						const member = updatedMember(); // Resolve the current version of the Member once.
+						if (!getGame(member.presence?.activities)) reject("Not playing game any longer");
+						resolve(
+							member.guild.roles.filter((role) => role.name === this.config.role_prefix.concat(getGame(member.presence?.activities).name)).first() ??
+								member.guild.roles.create({ data: { name: this.config.role_prefix.concat(getGame(member.presence?.activities).name), mentionable: true } })
+						);
+					}).then(
+						(role: Role) => newPresence.member.roles.add(role),
+						(reason) => {
+							if (reason != "Not playing game any longer") return Promise.reject(reason);
 						}
 					);
-				});
-		};
+				},
+				{
+					description: `adding role for game ${getGame(newPresence?.activities)?.name} to member ${memberStringify(newPresence.member)}`,
+					console: this.context.console,
+				}
+			);
+		}
 	}
 
-	extract(context: DiscordBot) {
-		context.client.guilds.forEach((guild) => guild.roles.filter((role) => role.name.startsWith(this.config.role_prefix)).forEach((role) => role.delete()));
+	removeRolesFromServer(eventData: CommunicationEvent): void {
+		eventData.responseCallback(`Purging game roles from this server.`);
+		eventData.guild.roles
+			.filter((role) => role.name.startsWith(this.config.role_prefix))
+			.forEach((gameRole) => {
+				promiseRetry(
+					() => {
+						return eventData.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve(gameRole);
+					},
+					{
+						description: `deleting role ${roleStringify(gameRole)}.`,
+						console: eventData.bot.console,
+					}
+				);
+			});
+	}
+
+	extract(): void {
+		this.context.client.off("presenceUpdate", this.fixPresences);
+
+		delete this.context.handlers.purge_gameroles;
+
+		this.context.client.guilds.forEach((guild) => guild.roles.filter((role) => role.name.startsWith(this.config.role_prefix)).forEach((role) => role.delete()));
+
+		this.context = undefined;
 	}
 }

@@ -91,7 +91,7 @@ export abstract class Plugin {
 	static defaultConfig: any;
 
 	constructor(_config?: any) {
-		this.config = { ...(<typeof Plugin>this.constructor).defaultConfig, ..._config };
+		this.config = { ...(this.constructor as typeof Plugin).defaultConfig, ..._config };
 	}
 
 	/** Injects the plugin's hooks into the bot.

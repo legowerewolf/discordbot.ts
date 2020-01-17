@@ -4,8 +4,8 @@ import { randomElementFromArray, valuesOf } from "../helpers";
 import { CommunicationEvent, Plugin } from "../types";
 
 export default class HelpPlugin extends Plugin {
-	inject(context: DiscordBot) {
-		context.handlers["help"] = (event: CommunicationEvent) => {
+	inject(context: DiscordBot): void {
+		context.handlers["help"] = (event: CommunicationEvent): void => {
 			event.responseCallback(
 				stripIndents`
                     Here's what I can do for you on request:
@@ -27,5 +27,7 @@ export default class HelpPlugin extends Plugin {
 		};
 	}
 
-	extract() {}
+	extract(context: DiscordBot): void {
+		delete context.handlers.help;
+	}
 }
