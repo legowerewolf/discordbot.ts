@@ -2,6 +2,7 @@ import { Client, Guild, Message } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
 import { Brain } from "./Brain";
+import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
 import { IntentHandler } from "./IntentHandler";
 import { ModuleWithClassDefault } from "./ModuleWithClassDefault";
@@ -12,7 +13,7 @@ export class DiscordBot {
 	config: ConfigElement;
 	brain: Brain;
 	client: Client;
-	plugins: Array<Plugin>;
+	plugins: Array<Plugin<{}>>;
 	handlers: { [key: string]: IntentHandler };
 	prefix: (msg: string) => string;
 
@@ -72,11 +73,11 @@ export class DiscordBot {
 		});
 
 		this.handlers = {};
-		this.plugins = new Array<Plugin>();
+		this.plugins = new Array<Plugin<{}>>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
-			import(`./plugins/${name}`).then(
-				(module: ModuleWithClassDefault<Plugin>) => {
-					const instance: Plugin = new module.default(this.config.plugins[name]);
+			import(`../plugins/${name}`).then(
+				(module: ModuleWithClassDefault<Plugin<{}>>) => {
+					const instance: Plugin<{}> = new module.default(this.config.plugins[name]);
 					instance.inject(this);
 					this.plugins.push(instance);
 				},
