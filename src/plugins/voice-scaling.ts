@@ -16,11 +16,10 @@ export default class VoiceScaling extends Plugin<{}> {
 			if (!channel || channel.name.match(indexableChannelRegex) == null) return;
 
 			const emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
-			if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel) }).then((newChannel) => newChannel.setParent(channel.parentID));
-			else
-				emptyChannelDuplicates.forEach((chan, index) => {
-					if (index > 0) chan.delete();
-				});
+			if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel), parent: channel.parentID });
+			else {
+				return emptyChannelDuplicates.slice(1).map((chan) => chan.delete());
+			}
 		});
 	}
 
