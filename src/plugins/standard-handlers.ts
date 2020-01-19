@@ -11,8 +11,9 @@ export default class StandardHandlers extends Plugin<{}> {
 				eventData.responseCallback(randomElementFromArray(eventData.config.responses));
 			},
 			bot_shutdown: (eventData: CommunicationEvent): void => {
-				eventData.responseCallback(randomElementFromArray(eventData.config.responses));
-				eventData.bot.stop();
+				eventData.responseCallback(randomElementFromArray(eventData.config.responses)).finally(() => {
+					eventData.bot.stop();
+				});
 			},
 		};
 	}

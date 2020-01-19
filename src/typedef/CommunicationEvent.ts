@@ -3,7 +3,7 @@ import { DiscordBot } from "./DiscordBot";
 import { IntentData } from "./IntentData";
 export interface CommunicationEvent {
 	text: string;
-	responseCallback: (response: string) => void;
+	responseCallback: (response: string) => Promise<{}>;
 	author: User;
 	guild: Guild;
 	client: Client;
