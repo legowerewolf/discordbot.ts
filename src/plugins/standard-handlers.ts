@@ -1,6 +1,7 @@
-import { DiscordBot } from "../discordbot";
 import { randomElementFromArray } from "../helpers";
-import { CommunicationEvent, Plugin } from "../types";
+import { CommunicationEvent } from "../typedef/CommunicationEvent";
+import { DiscordBot } from "../typedef/DiscordBot";
+import { Plugin } from "../typedef/Plugin";
 
 export default class StandardHandlers extends Plugin {
 	inject(context: DiscordBot): void {

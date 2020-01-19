@@ -1,7 +1,7 @@
 // Brain is based on https://github.com/andrew-templeton/bottie
 
 import { LogisticRegressionClassifier } from "natural";
-import { NaturalGuess } from "./types";
+import { NaturalGuess } from "./NaturalGuess";
 
 export class Brain {
 	classifier: LogisticRegressionClassifier;

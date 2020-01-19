@@ -1,6 +1,6 @@
 import { VoiceChannel, VoiceState } from "discord.js";
-import { DiscordBot } from "../discordbot";
-import { Plugin } from "../types";
+import { DiscordBot } from "../typedef/DiscordBot";
+import { Plugin } from "../typedef/Plugin";
 
 const indexableChannelRegex = /([\w ]+) (\d+)/;
 

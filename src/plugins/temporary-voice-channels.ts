@@ -1,7 +1,9 @@
 import { VoiceChannel, VoiceState } from "discord.js";
-import { DiscordBot } from "../discordbot";
 import { responseToQuestion } from "../helpers";
-import { CommunicationEvent, Plugin, Vocab } from "../types";
+import { CommunicationEvent } from "../typedef/CommunicationEvent";
+import { DiscordBot } from "../typedef/DiscordBot";
+import { Plugin } from "../typedef/Plugin";
+import { Vocab } from "../typedef/Vocab";
 
 export default class TemporaryVoiceChannel extends Plugin {
 	static defaultConfig = {

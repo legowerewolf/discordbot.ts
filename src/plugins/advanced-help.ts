@@ -1,7 +1,8 @@
 import { stripIndents } from "common-tags";
-import { DiscordBot } from "../discordbot";
 import { randomElementFromArray, valuesOf } from "../helpers";
-import { CommunicationEvent, Plugin } from "../types";
+import { CommunicationEvent } from "../typedef/CommunicationEvent";
+import { DiscordBot } from "../typedef/DiscordBot";
+import { Plugin } from "../typedef/Plugin";
 
 export default class HelpPlugin extends Plugin {
 	inject(context: DiscordBot): void {

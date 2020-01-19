@@ -1,7 +1,9 @@
 import { Activity, GuildMember, Presence, Role } from "discord.js";
-import { DiscordBot } from "../discordbot";
 import { memberStringify, promiseRetry, roleStringify } from "../helpers";
-import { CommunicationEvent, Plugin, Vocab } from "../types";
+import { CommunicationEvent } from "../typedef/CommunicationEvent";
+import { DiscordBot } from "../typedef/DiscordBot";
+import { Plugin } from "../typedef/Plugin";
+import { Vocab } from "../typedef/Vocab";
 
 export const getGame = (activities: Activity[]): Activity => activities?.filter((activity) => activity.type === "PLAYING")[0];
 

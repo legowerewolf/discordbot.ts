@@ -5,7 +5,11 @@ import { safeLoad } from "js-yaml";
 import { dirname } from "path";
 import ratlog, { Ratlogger } from "ratlog";
 import { promisify } from "util";
-import { CommunicationEvent, ConfigElement, IntentsMap, IntentsResolutionMethods, Vocab } from "./types";
+import { CommunicationEvent } from "./typedef/CommunicationEvent";
+import { ConfigElement } from "./typedef/ConfigElement";
+import { IntentsMap } from "./typedef/IntentsMap";
+import { IntentsResolutionMethods } from "./typedef/IntentsResolutionMethods";
+import { Vocab } from "./typedef/Vocab";
 
 export function randomElementFromArray<T>(array: Array<T>): T {
 	return array[Math.floor(Math.random() * array.length)];
