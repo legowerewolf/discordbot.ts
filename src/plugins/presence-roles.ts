@@ -22,7 +22,7 @@ export default class PresenceRoles extends Plugin<Config> {
 	inject(context: DiscordBot): void {
 		this.context = context;
 
-		context.client.on("presenceUpdate", this.fixPresences);
+		context.client.on("presenceUpdate", (o, n) => this.fixPresences(o, n));
 
 		context.handlers["purge_gameroles"] = this.removeRolesFromServer;
 	}

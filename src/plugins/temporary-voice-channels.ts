@@ -28,7 +28,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 
 		context.handlers["temporary_voice_channel"] = this.spawnTemporaryChannel;
 
-		context.client.on("voiceStateUpdate", this.deleteEmptyChannel);
+		context.client.on("voiceStateUpdate", (o) => this.deleteEmptyChannel(o));
 	}
 
 	deleteEmptyChannel(oldVoiceState: VoiceState): void {

@@ -7,7 +7,7 @@ const indexableChannelRegex = /([\w ]+) (\d+)/;
 export default class VoiceScaling extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		// Register a handler for guildmembers joining/leaving/switching voice channels.
-		context.client.on("voiceStateUpdate", this.updateChannels);
+		context.client.on("voiceStateUpdate", (o, n) => this.updateChannels(o, n));
 	}
 
 	updateChannels(oldVoiceState: VoiceState, newVoiceState: VoiceState): void {
