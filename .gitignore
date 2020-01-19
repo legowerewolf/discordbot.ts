@@ -13,5 +13,4 @@ config/config.yaml
 deploy/AppEngine.json
 
 # Other
-.vscode
 backup
