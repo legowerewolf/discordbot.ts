@@ -4,7 +4,7 @@ import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
-export default class HelpPlugin extends Plugin {
+export default class HelpPlugin extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		context.handlers["help"] = (event: CommunicationEvent): void => {
 			event.responseCallback(

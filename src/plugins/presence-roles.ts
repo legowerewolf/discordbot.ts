@@ -7,9 +7,13 @@ import { Vocab } from "../typedef/Vocab";
 
 export const getGame = (activities: Activity[]): Activity => activities?.filter((activity) => activity.type === "PLAYING")[0];
 
-export default class PresenceRoles extends Plugin {
+interface Config {
+	role_prefix: string;
+}
+
+export default class PresenceRoles extends Plugin<Config> {
 	// Built-in defaults - the minimum needed for the plugin to work.
-	static defaultConfig = {
+	static defaultConfig: Config = {
 		role_prefix: "in:",
 	};
 

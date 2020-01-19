@@ -5,14 +5,20 @@ import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 import { Vocab } from "../typedef/Vocab";
 
-export default class TemporaryVoiceChannel extends Plugin {
-	static defaultConfig = {
+interface Config {
+	name_suffix: string;
+}
+
+export default class TemporaryVoiceChannel extends Plugin<Config> {
+	nameRegex: RegExp;
+
+	static defaultConfig: Config = {
 		name_suffix: "🤖",
 	};
 
-	constructor(_config?: any) {
+	constructor(_config?: Config) {
 		super(_config);
-		this.config.name_regex = new RegExp(`[\\w ]* ${this.config.name_suffix}$`, "g");
+		this.nameRegex = new RegExp(`[\\w ]* ${this.config.name_suffix}$`, "g");
 	}
 
 	context: DiscordBot;
@@ -26,7 +32,7 @@ export default class TemporaryVoiceChannel extends Plugin {
 	}
 
 	deleteEmptyChannel(oldVoiceState: VoiceState): void {
-		if (oldVoiceState.channel && oldVoiceState.channel.name.match(this.config.name_regex) != null && oldVoiceState.channel.members.size == 0 && oldVoiceState.channel.deletable) {
+		if (oldVoiceState.channel && oldVoiceState.channel.name.match(this.nameRegex) != null && oldVoiceState.channel.members.size == 0 && oldVoiceState.channel.deletable) {
 			oldVoiceState.channel.delete();
 		}
 	}

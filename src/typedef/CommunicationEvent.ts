@@ -1,10 +1,9 @@
 import { Client, Guild, Message, User } from "discord.js";
 import { DiscordBot } from "./DiscordBot";
 import { IntentData } from "./IntentData";
-import { ResponseCallback } from "./ResponseCallback";
 export interface CommunicationEvent {
 	text: string;
-	responseCallback: ResponseCallback;
+	responseCallback: (response: string) => void;
 	author: User;
 	guild: Guild;
 	client: Client;

@@ -2,9 +2,9 @@ import { Client, Guild, Message } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
 import { Brain } from "./Brain";
-import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
 import { IntentHandler } from "./IntentHandler";
+import { ModuleWithClassDefault } from "./ModuleWithClassDefault";
 import { Plugin } from "./Plugin";
 import { Vocab } from "./Vocab";
 
@@ -49,7 +49,9 @@ export class DiscordBot {
 				handler: (): void => {
 					this.console(`Shard ready. Connected to ${this.client.guilds.size} guilds.`, Vocab.Info);
 
-					// @ts-ignore - these values are filled in on build time
+					// The values for "META_VERSION" and "META_HASH" are filled in at build time.
+					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+					// @ts-ignore
 					this.client.user.setActivity(`v${META_VERSION} / ${META_HASH}`);
 				},
 			},
@@ -73,8 +75,8 @@ export class DiscordBot {
 		this.plugins = new Array<Plugin>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
 			import(`./plugins/${name}`).then(
-				({ default: pluginClass }) => {
-					const instance: Plugin = new pluginClass(this.config.plugins[name]);
+				(module: ModuleWithClassDefault<Plugin>) => {
+					const instance: Plugin = new module.default(this.config.plugins[name]);
 					instance.inject(this);
 					this.plugins.push(instance);
 				},

@@ -3,7 +3,7 @@ import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
-export default class StandardHandlers extends Plugin {
+export default class StandardHandlers extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		context.handlers = {
 			...context.handlers,
