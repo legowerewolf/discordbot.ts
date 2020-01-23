@@ -2,9 +2,8 @@
 APIKeys:
   discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
 defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
-users:
-#   '[user's numerical id]': # enable dev mode, right click on a user, and select "Copy ID".
-#       permissionLevel: 5 # A user's permission level must meet or exceed that of a command's permission level to execute that command.
+admins:
+#  - "user snowflake id" # enable dev mode, right click on a user, and select "Copy ID".
 intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Available options are "useDefault" (uses only default intents), "useCustom" (uses only custom intents), "mergePreferDefault" (uses both default and custom, but chooses default in the event of a name collision), and "mergePreferCustom" (same as "mergePreferDefault", but chooses custom over defaults).
 intents:
   greeting: # intent names must be unique in the config file
@@ -51,7 +50,9 @@ intents:
     handler: bot_shutdown
     name: Shard Shutdown
     description: Shuts down the shard handling the current server. If the shard is managed, it will restart automatically.
-    permissionLevel: 5
+    accessPermissions:
+      - ADMININSTRATOR
+      - MANAGE_GUILD
     models:
       - shut down
       - shutdown
@@ -108,7 +109,8 @@ intents:
     handler: purge_gameroles
     name: Game Role Cleanup
     description: Deletes all roles created by this bot.
-    permissionLevel: 5
+    accessPermissions:
+      - MANAGE_ROLES
     models:
       - purge game roles
       - clean game roles

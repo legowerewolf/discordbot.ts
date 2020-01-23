@@ -36,6 +36,7 @@ export class DiscordBot {
 							text: msg.cleanContent,
 							responseCallback: (response: string) => msg.reply(response),
 							author: msg.author,
+							member: msg.member,
 							guild: msg.guild,
 							client: this.client,
 							source: "text",
@@ -105,8 +106,8 @@ export class DiscordBot {
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		const userPermissionLevel = this.config.users?.[eventData.author.id]?.permissionLevel;
-		if (!intent.permissionLevel || (userPermissionLevel ?? this.config.defaultPermissionLevel) >= intent.permissionLevel) {
+		const userPermissions = eventData.member?.permissions?.toArray() ?? [];
+		if (intent.accessPermissions.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) || this.config.admins?.findIndex((admin) => admin === eventData.author.id) != -1) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);

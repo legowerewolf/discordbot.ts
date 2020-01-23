@@ -1,4 +1,4 @@
-import { Client, Guild, Message, User } from "discord.js";
+import { Client, Guild, GuildMember, Message, User } from "discord.js";
 import { DiscordBot } from "./DiscordBot";
 import { IntentData } from "./IntentData";
 export interface CommunicationEvent {
@@ -11,4 +11,5 @@ export interface CommunicationEvent {
 	messageObject?: Message;
 	config?: IntentData;
 	bot?: DiscordBot;
+	member?: GuildMember;
 }
