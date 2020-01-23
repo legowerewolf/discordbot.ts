@@ -24,7 +24,7 @@ export default class PresenceRoles extends Plugin<Config> {
 
 		context.client.on("presenceUpdate", (o, n) => this.fixPresences(o, n));
 
-		context.handlers["purge_gameroles"] = this.removeRolesFromServer;
+		context.handlers["purge_gameroles"] = (e): void => this.removeRolesFromServer(e);
 	}
 
 	fixPresences(oldPresence: Presence, newPresence: Presence): void {
