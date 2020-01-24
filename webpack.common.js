@@ -4,6 +4,12 @@ const { DefinePlugin } = require("webpack");
 const packagejson = require("./package.json");
 const childprocess = require("child_process");
 
+const identifierHash = (identifier, short = true) =>
+	childprocess
+		.execSync(`git rev-parse ${short ? "--short" : ""} ${identifier}`)
+		.toString()
+		.trim();
+
 module.exports = {
 	entry: {
 		shard: "./src/shard.ts",
@@ -21,13 +27,8 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(), // Clean the build directory
 		new DefinePlugin({
-			META_VERSION: JSON.stringify(packagejson.version),
-			META_HASH: JSON.stringify(
-				childprocess
-					.execSync("git rev-parse --short HEAD")
-					.toString()
-					.trim()
-			),
+			META_VERSION: JSON.stringify(`${packagejson.version}${identifierHash("HEAD") === identifierHash(`v${packagejson.version}`) ? "" : "+"}`),
+			META_HASH: JSON.stringify(identifierHash("HEAD", true)),
 		}),
 	],
 	resolve: {
