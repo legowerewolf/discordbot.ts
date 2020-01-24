@@ -6,7 +6,7 @@ const childprocess = require("child_process");
 
 const identifierHash = (identifier, short = true) =>
 	childprocess
-		.execSync(`git rev-parse ${short ? "--short" : ""} ${identifier}`)
+		.execSync(`git log -1 --pretty=tformat:%${short ? "h" : "H"} ${identifier}`)
 		.toString()
 		.trim();
 
