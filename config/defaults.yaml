@@ -62,6 +62,15 @@ intents:
       responses:
         - Ok. Goodbye!
         - I'll be back.
+  crashTest:
+    handler: crash
+    name: Shard Crash
+    description: Throws an unhandled error, causing the shard to crash. (Debug)
+    models:
+      - crash
+    data:
+      responses:
+        - Adios.
   temporaryVoiceChannel:
     handler: temporary_voice_channel
     name: Temporary Voice Channel

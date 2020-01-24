@@ -15,6 +15,13 @@ export default class StandardHandlers extends Plugin<{}> {
 					eventData.bot.stop();
 				});
 			},
+			crash: (eventData: CommunicationEvent): void => {
+				eventData.responseCallback(randomElementFromArray(eventData.config.responses)).finally(() => {
+					setTimeout(() => {
+						throw new Error("Manual crash!");
+					}, 10);
+				});
+			},
 		};
 	}
 	extract(context: DiscordBot): void {

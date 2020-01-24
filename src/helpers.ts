@@ -147,12 +147,13 @@ export function injectErrorLogger(): void {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 				// @ts-ignore
 				`Version: v${META_VERSION} / ${META_HASH}`,
-				`${error.name}: ${error.message}`,
+				`Error: ${error.name}: ${error.message}`,
 				stripIndents`
+					Trace:
 					${error.message}
 					${error.stack}
 				`,
-			].join("\n")
+			].join("\n\n")
 		);
 
 		process.exit(1);
