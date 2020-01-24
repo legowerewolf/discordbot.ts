@@ -107,7 +107,7 @@ export class DiscordBot {
 		eventData.bot = this;
 
 		const userPermissions = eventData.member?.permissions?.toArray() ?? [];
-		if (intent.accessPermissions.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) || this.config.admins?.findIndex((admin) => admin === eventData.author.id) != -1) {
+		if (intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) || this.config.admins?.findIndex((admin) => admin === eventData.author.id) != -1) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);
