@@ -1,9 +1,10 @@
-import { Client, Guild, Message } from "discord.js";
+import { Client, Guild, GuildMember, Message } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
 import { Brain } from "./Brain";
 import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
+import { Intent } from "./Intent";
 import { IntentHandler } from "./IntentHandler";
 import { ModuleWithClassDefault } from "./ModuleWithClassDefault";
 import { Plugin } from "./Plugin";
@@ -99,6 +100,13 @@ export class DiscordBot {
 		process.exit();
 	}
 
+	checkPermission(member: GuildMember, intent: Intent): boolean {
+		const userPermissions = member?.permissions?.toArray() ?? [];
+		return (
+			(intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) ?? true) || this.config.admins?.findIndex((admin) => admin === member.id) != -1
+		);
+	}
+
 	handleInput(eventData: CommunicationEvent): void {
 		const intentName = this.brain.interpret(eventData.text).label;
 		const intent = this.config.intents[intentName];
@@ -106,8 +114,7 @@ export class DiscordBot {
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		const userPermissions = eventData.member?.permissions?.toArray() ?? [];
-		if (intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) || this.config.admins?.findIndex((admin) => admin === eventData.author.id) != -1) {
+		if (this.checkPermission(eventData.member, intent)) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);

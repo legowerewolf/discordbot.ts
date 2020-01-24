@@ -66,6 +66,8 @@ intents:
     handler: crash
     name: Shard Crash
     description: Throws an unhandled error, causing the shard to crash. (Debug)
+    accessPermissions:
+      - BOT_ADMIN
     models:
       - crash
     data:

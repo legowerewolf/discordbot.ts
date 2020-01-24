@@ -12,11 +12,11 @@ export default class HelpPlugin extends Plugin<{}> {
                     Here's what I can do for you on request:
 
                     ${valuesOf(event.bot.config.intents)
-						.filter((intent) => intent.models && intent.description && intent.name)
+						.filter((intent) => intent.models && intent.description && intent.name && event.bot.checkPermission(event.member, intent))
 						.map(
 							(intent) => stripIndents`
                                 **${intent.name}**
-                                Invocation example: \`${randomElementFromArray(intent.models)}\`
+                                Invocation example: \`@${event.guild.me.nickname} ${randomElementFromArray(intent.models)}\`
                                 ${intent.description}
                             `
 						)
