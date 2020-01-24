@@ -142,11 +142,17 @@ export function injectErrorLogger(): void {
 		mkdirSync(dirname(path), { recursive: true });
 		writeFileSync(
 			path,
-			stripIndents`
-			${error.name}
-			${error.message}
-			${error.stack}
-		`
+			[
+				// The values for "META_VERSION" and "META_HASH" are filled in at build time.
+				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+				// @ts-ignore
+				`Version: v${META_VERSION} / ${META_HASH}`,
+				`${error.name}: ${error.message}`,
+				stripIndents`
+					${error.message}
+					${error.stack}
+				`,
+			].join("\n")
 		);
 
 		process.exit(1);
