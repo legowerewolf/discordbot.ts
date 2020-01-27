@@ -26,7 +26,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 	inject(context: DiscordBot): void {
 		this.context = context;
 
-		context.handlers["temporary_voice_channel"] = this.spawnTemporaryChannel;
+		context.handlers["temporary_voice_channel"] = (e): void => this.spawnTemporaryChannel(e);
 
 		context.client.on("voiceStateUpdate", (o) => this.deleteEmptyChannel(o));
 	}
