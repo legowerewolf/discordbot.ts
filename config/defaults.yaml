@@ -77,6 +77,8 @@ intents:
     handler: temporary_voice_channel
     name: Temporary Voice Channel
     description: Creates a voice channel with a given name and deletes it when empty.
+    accessPermissions:
+      - CONNECT
     models:
       - make a temporary voice channel
       - create a channel
