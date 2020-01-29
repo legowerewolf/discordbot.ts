@@ -34,7 +34,7 @@
 		"@types/chai": "^4.2.8",
 		"@types/common-tags": "^1.8.0",
 		"@types/js-yaml": "^3.12.2",
-		"@types/mocha": "^5.2.7",
+		"@types/mocha": "^7.0.0",
 		"@types/natural": "^0.6.3",
 		"@types/node": "^13.5.1",
 		"@types/node-fetch": "^2.5.4",
