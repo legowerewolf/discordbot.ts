@@ -7,10 +7,10 @@ export default class StandardHandlers extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		context.handlers = {
 			...context.handlers,
-			basic_response: (eventData: CommunicationEvent): void => {
+			basicResponse: (eventData: CommunicationEvent): void => {
 				eventData.responseCallback(randomElementFromArray(eventData.config.responses));
 			},
-			bot_shutdown: (eventData: CommunicationEvent): void => {
+			botShutdown: (eventData: CommunicationEvent): void => {
 				eventData.responseCallback(randomElementFromArray(eventData.config.responses)).finally(() => {
 					eventData.bot.stop();
 				});

@@ -12,7 +12,7 @@ intents:
       - hi
       - greetings
       - welcome
-    handler: basic_response # Handler that picks a random response from the provided list.
+    handler: basicResponse # Handler that picks a random response from the provided list.
     data:
       responses: # Provide responses to be randomly replied with for the provided models.
         - Hello!
@@ -25,7 +25,7 @@ intents:
       - goodnight
       - good night
       - buenos noches
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - Goodnight!
@@ -41,13 +41,13 @@ intents:
     models:
       - I love you
       - ily
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - Aww, I love you too!
         - \*blushes\* # You can use any of Discord's standard text formatting.
   shardShutdown:
-    handler: bot_shutdown
+    handler: botShutdown
     name: Shard Shutdown
     description: Shuts down the shard handling the current server. If the shard is managed, it will restart automatically.
     accessPermissions:
@@ -74,7 +74,7 @@ intents:
       responses:
         - Adios.
   temporaryVoiceChannel:
-    handler: temporary_voice_channel
+    handler: temporaryVoiceChannel
     name: Temporary Voice Channel
     description: Creates a voice channel with a given name and deletes it when empty.
     accessPermissions:
@@ -119,7 +119,7 @@ intents:
       handlerSpecific: # The responses field must always be an array of strings. The handlerSpecific field allows for infinite variety, as needed by this specific handler.
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
-    handler: purge_gameroles
+    handler: purgeGameroles
     name: Game Role Cleanup
     description: Deletes all roles created by this bot.
     accessPermissions:
@@ -131,16 +131,16 @@ intents:
       - cleanup roles
       - role cleanup
   _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - I'm sorry, what was that?
         - I didn't understand. Could you rephrase that?
 plugins: # Plugins add additional functionality.
-  presence-roles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-    role_prefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
-  voice-scaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
-  standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
-  temporary-voice-channels: # Spawn temporary voice channels on request.
-    name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
-  advanced-help: # Provide useful command help auto-generated on command based on intents' description fields
+  presenceRoles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
+    rolePrefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
+  voiceScaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
+  standardHandlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
+  temporaryVoiceChannels: # Spawn temporary voice channels on request.
+    nameSuffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
+  advancedHelp: # Provide useful command help auto-generated on command based on intents' description fields

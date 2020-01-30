@@ -6,19 +6,19 @@ import { Plugin } from "../typedef/Plugin";
 import { Vocab } from "../typedef/Vocab";
 
 interface Config {
-	name_suffix: string;
+	nameSuffix: string;
 }
 
 export default class TemporaryVoiceChannel extends Plugin<Config> {
 	nameRegex: RegExp;
 
 	static defaultConfig: Config = {
-		name_suffix: "🤖",
+		nameSuffix: "🤖",
 	};
 
 	constructor(_config?: Config) {
 		super(_config);
-		this.nameRegex = new RegExp(`[\\w ]* ${this.config.name_suffix}$`, "g");
+		this.nameRegex = new RegExp(`[\\w ]* ${this.config.nameSuffix}$`, "g");
 	}
 
 	context: DiscordBot;
@@ -26,7 +26,10 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 	inject(context: DiscordBot): void {
 		this.context = context;
 
-		context.handlers["temporary_voice_channel"] = (e): void => this.spawnTemporaryChannel(e);
+		context.handlers = {
+			...context.handlers,
+			temporaryVoiceChannel: (e): void => this.spawnTemporaryChannel(e),
+		};
 
 		context.client.on("voiceStateUpdate", (o) => this.deleteEmptyChannel(o));
 	}
@@ -39,7 +42,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 
 	spawnTemporaryChannel(eventData: CommunicationEvent): void {
 		responseToQuestion(eventData)
-			.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.name_suffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
+			.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.nameSuffix}`, { type: "voice", bitrate: eventData.config.handlerSpecific.bitrate * 1000 })) // Make the voice channel
 			.then(
 				(channel: VoiceChannel) =>
 					channel.guild
