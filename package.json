@@ -31,12 +31,12 @@
 		"source-map-support": "^0.5.16"
 	},
 	"devDependencies": {
-		"@types/chai": "^4.2.7",
+		"@types/chai": "^4.2.8",
 		"@types/common-tags": "^1.8.0",
 		"@types/js-yaml": "^3.12.2",
-		"@types/mocha": "^5.2.7",
+		"@types/mocha": "^7.0.1",
 		"@types/natural": "^0.6.3",
-		"@types/node": "^13.5.1",
+		"@types/node": "^13.5.2",
 		"@types/node-fetch": "^2.5.4",
 		"@typescript-eslint/eslint-plugin": "^2.18.0",
 		"@typescript-eslint/parser": "^2.18.0",
