@@ -24,7 +24,7 @@
 	"dependencies": {
 		"common-tags": "^1.8.0",
 		"discord.js": "github:discordjs/discord.js",
-		"ffmpeg-static": "^4.0.0",
+		"ffmpeg-static": "^4.0.1",
 		"js-yaml": "^3.13.1",
 		"natural": "^0.6.3",
 		"ratlog": "^1.0.2",
