@@ -45,7 +45,7 @@ export default class PresenceRoles extends Plugin<Config> {
 		const updatedMember = (): GuildMember => this.context.client.guilds.get(guildID).members.get(userID);
 		const updatedRole = (id: string): Role => updatedMember().guild.roles.get(id);
 
-		if (oldPresence != undefined)
+		if (getGame(oldPresence?.activities) != null)
 			oldPresence.member.roles
 				.filter((role) => role.name.startsWith(this.config.rolePrefix))
 				.forEach((gameRole) => {
