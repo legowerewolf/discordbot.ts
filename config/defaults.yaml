@@ -90,6 +90,8 @@ intents:
       - make a new channel
       - make a new channel please
       - new channel please
+      - new room
+      - new room please
     data:
       questionData: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
         question: # This is the question the user is asked. Multiple possibilities are encouraged.
