@@ -22,7 +22,7 @@ export default class HelpPlugin extends Plugin<{}> {
 					.map(
 						(intent) => stripIndents`
 							**${intent.name}**
-							Invocation example: \`@${event.guild.me.nickname} ${randomElementFromArray(intent.models)}\`
+							Invocation example: \`@${event.guild.me.nickname ?? event.client.user.username} ${randomElementFromArray(intent.models)}\`
 							${intent.description}
 						`
 					)
