@@ -9,13 +9,26 @@ A simple way to add natural-language-powered Discord bots to your server.
 
 ## Implementation
 
-[Luna](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot) is this repository's official Discord bot.
+[![Install official bot](https://img.shields.io/badge/Luna-install-7289DA)](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot)
+
+Luna is this repository's official Discord bot. She's configured with all the default options as specified in this repository, and is nearly always online.
 
 ## Setup
 
-1. `npm i` to install all dependencies.
+If you want to build from source:
+
+1. `git clone` the repo.
+1. `npm i` to install all dependencies, and `npm run build` to build.
 1. Configure (see below)
 1. `npm start` to start up your bot(s)!
+
+Alternately, compose a Dockerfile depending on the [official images](https://hub.docker.com/r/legowerewolf/discordbot.ts). It's not recommended to use `:latest`.
+
+```dockerfile
+FROM legowerewolf/discordbot.ts:latest
+COPY ./config.yaml ./config/
+ENTRYPOINT [ "node", "build/manager.js" ]
+```
 
 ### Configuration
 
