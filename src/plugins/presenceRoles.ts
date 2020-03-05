@@ -42,16 +42,16 @@ export default class PresenceRoles extends Plugin<Config> {
 
 		const userID = newPresence.user.id ?? oldPresence.user.id;
 		const guildID = newPresence.guild.id ?? oldPresence.guild.id;
-		const updatedMember = (): GuildMember => this.context.client.guilds.get(guildID).members.get(userID);
-		const updatedRole = (id: string): Role => updatedMember().guild.roles.get(id);
+		const updatedMember = (): GuildMember => this.context.client.guilds.resolve(guildID).members.resolve(userID);
+		const updatedRole = (id: string): Role => updatedMember().guild.roles.resolve(id);
 
 		if (getGame(oldPresence?.activities) != null)
-			oldPresence.member.roles
+			oldPresence.member.roles.cache
 				.filter((role) => role.name.startsWith(this.config.rolePrefix))
 				.forEach((gameRole) => {
 					promiseRetry(
 						() => {
-							return updatedMember().roles.get(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve(updatedMember());
+							return updatedMember().roles.resolve(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve(updatedMember());
 						},
 						{
 							description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
@@ -77,7 +77,7 @@ export default class PresenceRoles extends Plugin<Config> {
 						const member = updatedMember(); // Resolve the current version of the Member once.
 						if (!getGame(member.presence?.activities)) reject("Not playing game any longer");
 						resolve(
-							member.guild.roles.filter((role) => role.name === this.config.rolePrefix.concat(getGame(member.presence?.activities).name)).first() ??
+							member.guild.roles.cache.filter((role) => role.name === this.config.rolePrefix.concat(getGame(member.presence?.activities).name)).first() ??
 								member.guild.roles.create({ data: { name: this.config.rolePrefix.concat(getGame(member.presence?.activities).name), mentionable: true } })
 						);
 					}).then(
@@ -97,12 +97,12 @@ export default class PresenceRoles extends Plugin<Config> {
 
 	removeRolesFromServer(eventData: CommunicationEvent): void {
 		eventData.responseCallback(`Purging game roles from this server.`);
-		eventData.guild.roles
+		eventData.guild.roles.cache
 			.filter((role) => role.name.startsWith(this.config.rolePrefix))
 			.forEach((gameRole) => {
 				promiseRetry(
 					() => {
-						return eventData.client.guilds.get(eventData.guild.id).roles.get(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve(gameRole);
+						return eventData.client.guilds.resolve(eventData.guild.id).roles.resolve(gameRole.id) != undefined ? gameRole.delete() : Promise.resolve(gameRole);
 					},
 					{
 						description: `deleting role ${roleStringify(gameRole)}.`,
@@ -117,7 +117,7 @@ export default class PresenceRoles extends Plugin<Config> {
 
 		delete this.context.handlers.purge_gameroles;
 
-		this.context.client.guilds.forEach((guild) => guild.roles.filter((role) => role.name.startsWith(this.config.rolePrefix)).forEach((role) => role.delete()));
+		this.context.client.guilds.cache.forEach((guild) => guild.roles.cache.filter((role) => role.name.startsWith(this.config.rolePrefix)).forEach((role) => role.delete()));
 
 		this.context = undefined;
 	}

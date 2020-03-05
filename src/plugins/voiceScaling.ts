@@ -1,4 +1,4 @@
-import { VoiceChannel, VoiceState } from "discord.js";
+import { Collection, GuildChannel, Snowflake, VoiceChannel, VoiceState } from "discord.js";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
@@ -16,16 +16,20 @@ export default class VoiceScaling extends Plugin<{}> {
 			if (!channel || channel.name.match(indexableChannelRegex) == null) return;
 
 			const emptyChannelDuplicates = this.findDuplicateChannels(channel).filter((x) => x.members.size == 0);
-			if (emptyChannelDuplicates.length == 0) channel.clone({ name: this.newNameFromExisting(channel), parent: channel.parentID });
+			if (emptyChannelDuplicates.size == 0) channel.clone({ name: this.newNameFromExisting(channel), parent: channel.parentID });
 			else {
-				return emptyChannelDuplicates.slice(1).map((chan) => chan.delete());
+				return emptyChannelDuplicates
+					.array()
+					.slice(1)
+					.map((chan) => chan.delete());
 			}
 		});
 	}
 
 	// Identify all voice channels in the same category (or the root) with the same name.
-	findDuplicateChannels(channel: VoiceChannel): Array<VoiceChannel> {
-		return (channel.guild.channels.array().filter((x) => x.type == "voice" && x.parentID == channel.parentID) as Array<VoiceChannel>)
+	findDuplicateChannels(channel: GuildChannel): Collection<Snowflake, GuildChannel> {
+		return channel.guild.channels.cache
+			.filter((x) => x.type == "voice" && x.parentID == channel.parentID)
 			.filter((x) => x.name.match(indexableChannelRegex) != null) // Filter out channels that aren't indexable
 			.filter((x) => x.name.match(indexableChannelRegex)[1] == channel.name.match(indexableChannelRegex)[1]) // Filter out channels that aren't part of the same group
 			.sort((a, b) => a.name.localeCompare(b.name));

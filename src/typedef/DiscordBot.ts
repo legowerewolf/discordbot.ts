@@ -50,7 +50,7 @@ export class DiscordBot {
 			{
 				event: "ready",
 				handler: (): void => {
-					this.console(`Shard ready. Connected to ${this.client.guilds.size} guilds.`, Vocab.Info);
+					this.console(`Shard ready. Connected to ${this.client.guilds.cache.size} guilds.`, Vocab.Info);
 
 					// The values for "META_VERSION" and "META_HASH" are filled in at build time.
 					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
