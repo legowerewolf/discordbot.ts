@@ -1,6 +1,7 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
+const NodemonPlugin = require("nodemon-webpack-plugin");
 const packagejson = require("./package.json");
 const childprocess = require("child_process");
 
@@ -29,6 +30,10 @@ module.exports = {
 		new DefinePlugin({
 			META_VERSION: JSON.stringify(`${packagejson.version}${identifierHash("HEAD") === identifierHash(`v${packagejson.version}`) ? "" : "+"}`),
 			META_HASH: JSON.stringify(identifierHash("HEAD", true)),
+		}),
+		new NodemonPlugin({
+			script: "./build/manager.js",
+			watch: path.resolve("./build"),
 		}),
 	],
 	resolve: {

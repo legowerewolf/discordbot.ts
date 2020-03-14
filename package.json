@@ -8,6 +8,7 @@
 		"build": "webpack --config webpack.prod.js",
 		"build-dev": "webpack --config webpack.dev.js",
 		"start": "node build/manager.js",
+		"dev": "npm run build-dev -- --watch",
 		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha",
 		"coverage": "nyc npm test",
 		"lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
@@ -46,6 +47,7 @@
 		"eslint": "^6.8.0",
 		"eslint-config-prettier": "^6.10.0",
 		"mocha": "^7.1.0",
+		"nodemon-webpack-plugin": "^4.3.1",
 		"nyc": "^15.0.0",
 		"terser-webpack-plugin": "^2.3.5",
 		"ts-loader": "^6.2.1",
