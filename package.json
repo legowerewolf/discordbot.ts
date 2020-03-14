@@ -6,9 +6,8 @@
 	"repository": "github:legowerewolf/discordbot.js",
 	"scripts": {
 		"build": "webpack --config webpack.prod.js",
-		"build-dev": "webpack --config webpack.dev.js",
 		"start": "node build/manager.js",
-		"dev": "npm run build-dev -- --watch",
+		"dev": "webpack --config webpack.dev.js --watch",
 		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha",
 		"coverage": "nyc npm test",
 		"lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
