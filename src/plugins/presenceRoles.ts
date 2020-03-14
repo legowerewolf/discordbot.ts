@@ -51,7 +51,7 @@ export default class PresenceRoles extends Plugin<Config> {
 				.forEach((gameRole) => {
 					promiseRetry(
 						() => {
-							return updatedMember().roles.resolve(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve(updatedMember());
+							return updatedMember().roles.cache.has(gameRole.id) ? updatedMember().roles.remove(gameRole) : Promise.resolve(updatedMember());
 						},
 						{
 							description: `removing role ${roleStringify(gameRole)} from user ${memberStringify(newPresence.member)}.`,
