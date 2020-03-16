@@ -1,5 +1,5 @@
 import { VoiceChannel, VoiceState } from "discord.js";
-import { responseToQuestion } from "../helpers";
+import { responseToQuestion } from "../helpers/helpers";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";

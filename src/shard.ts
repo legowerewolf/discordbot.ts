@@ -1,4 +1,4 @@
-import { injectErrorLogger, parseConfig } from "./helpers";
+import { injectErrorLogger, parseConfig } from "./helpers/helpers";
 import { DiscordBot } from "./typedef/DiscordBot";
 
 injectErrorLogger();

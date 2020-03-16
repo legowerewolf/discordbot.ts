@@ -3,13 +3,11 @@ import { GuildMember, Message, Role } from "discord.js";
 import { mkdirSync, readFile, writeFileSync } from "fs";
 import { safeLoad } from "js-yaml";
 import { dirname } from "path";
-import ratlog, { Ratlogger } from "ratlog";
 import { promisify } from "util";
-import { CommunicationEvent } from "./typedef/CommunicationEvent";
-import { ConfigElement } from "./typedef/ConfigElement";
-import { IntentsMap } from "./typedef/IntentsMap";
-import { IntentsResolutionMethods } from "./typedef/IntentsResolutionMethods";
-import { Vocab } from "./typedef/Vocab";
+import { CommunicationEvent } from "../typedef/CommunicationEvent";
+import { ConfigElement } from "../typedef/ConfigElement";
+import { IntentsMap } from "../typedef/IntentsMap";
+import { IntentsResolutionMethods } from "../typedef/IntentsResolutionMethods";
 
 export function randomElementFromArray<T>(array: Array<T>): T {
 	return array[Math.floor(Math.random() * array.length)];
@@ -102,35 +100,6 @@ export function roleStringify(role: Role): string {
 
 export function memberStringify(member: GuildMember): string {
 	return `{name: ${member.displayName}, id: ${member.id}, guild: ${member.guild.id}}`;
-}
-
-export function promiseRetry<T>(
-	promise: () => Promise<T>,
-	opts?: {
-		backoff?: (last: number, factor: number) => number;
-		factor?: number;
-		maxDelay?: number;
-		delay?: number;
-		description?: string;
-		console?: Ratlogger;
-	}
-): Promise<T> {
-	opts = { backoff: (last, factor): number => last + factor, factor: 5000, maxDelay: 30000, delay: 0, description: "unnamed promise", console: ratlog(console.log), ...opts };
-	return new Promise((resolve) => {
-		promise().then(
-			(success: T) => {
-				opts.console(`Succeeded ${opts.description}`, "promise retry", Vocab.Info);
-				resolve(success);
-			},
-			(reason) => {
-				const backoff = Math.min(opts.backoff(opts.delay, opts.factor), opts.maxDelay);
-				opts.console(`Failed ${opts.description} (${reason}) (Retrying in ${backoff}ms.)`, "promise retry", Vocab.Error);
-				setTimeout(() => {
-					resolve(promiseRetry(promise, { ...opts, delay: backoff }));
-				}, backoff);
-			}
-		);
-	});
 }
 
 export function injectErrorLogger(): void {

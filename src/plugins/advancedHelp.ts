@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { randomElementFromArray, valuesOf } from "../helpers";
+import { randomElementFromArray, valuesOf } from "../helpers/helpers";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";

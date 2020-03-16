@@ -1,5 +1,6 @@
 import { Activity, GuildMember, Presence, Role } from "discord.js";
-import { memberStringify, promiseRetry, roleStringify } from "../helpers";
+import { memberStringify, roleStringify } from "../helpers/helpers";
+import { promiseRetry } from "../helpers/promiseRetry";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";

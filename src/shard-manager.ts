@@ -1,7 +1,7 @@
 import { ShardingManager } from "discord.js";
 import ratlog, { RatlogData } from "ratlog";
 import "source-map-support/register";
-import { injectErrorLogger, parseConfig } from "./helpers";
+import { injectErrorLogger, parseConfig } from "./helpers/helpers";
 
 const log = ratlog(process.stdout);
 injectErrorLogger();
