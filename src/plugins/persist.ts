@@ -1,7 +1,6 @@
-import { Firestore } from "@google-cloud/firestore";
+import { Firestore, Timestamp } from "@google-cloud/firestore";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
-import { Vocab } from "../typedef/Vocab";
 
 interface Config {
 	keyPath: string;
@@ -14,11 +13,16 @@ export default class Persist extends Plugin<Config> {
 
 	db: Firestore;
 
-	inject(context: DiscordBot): void {
-		console.log("Prepping Firestore instance");
+	constructor(_config?: Config) {
+		super(_config);
 		this.db = new Firestore({ keyFilename: this.config.keyPath });
+	}
 
-		context.console("Firestore should be connected", Vocab.Info);
+	inject(context: DiscordBot): void {
+		this.db
+			.collection("stats")
+			.doc("bot")
+			.set({ bootTime: Timestamp.fromDate(new Date()) }, { merge: true });
 	}
 
 	extract(): void {
