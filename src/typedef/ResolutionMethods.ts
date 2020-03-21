@@ -1,4 +1,4 @@
-export enum IntentsResolutionMethods {
+export enum ResolutionMethods {
 	UseDefault = "useDefault",
 	UseCustom = "useCustom",
 	MergePreferDefault = "mergePreferDefault",

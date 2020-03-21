@@ -6,8 +6,9 @@ import { dirname } from "path";
 import { promisify } from "util";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { ConfigElement } from "../typedef/ConfigElement";
-import { IntentsMap } from "../typedef/IntentsMap";
-import { IntentsResolutionMethods } from "../typedef/IntentsResolutionMethods";
+import { Dictionary } from "../typedef/Dictionary";
+import { Intent } from "../typedef/Intent";
+import { ResolutionMethods } from "../typedef/ResolutionMethods";
 
 export function randomElementFromArray<T>(array: Array<T>): T {
 	return array[Math.floor(Math.random() * array.length)];
@@ -54,22 +55,20 @@ export function valuesOf<T>(obj: { [key: string]: T }): T[] {
 	return Object.keys(obj).map((prop: string) => obj[prop]);
 }
 
-export const intentResolver: Map<IntentsResolutionMethods, (defaults: IntentsMap, custom: IntentsMap) => IntentsMap> = new Map([
-	[IntentsResolutionMethods.UseDefault, (defaults: IntentsMap): IntentsMap => defaults],
-	[IntentsResolutionMethods.UseCustom, (defaults: IntentsMap, custom: IntentsMap): IntentsMap => custom],
-	[
-		IntentsResolutionMethods.MergePreferCustom,
-		(defaults: IntentsMap, custom: IntentsMap): IntentsMap => {
+function resolveConflict<T>(method: ResolutionMethods, defaults: Dictionary<T>, custom: Dictionary<T>): Dictionary<T> {
+	const m = {
+		[ResolutionMethods.UseDefault]: (defaults: Dictionary<T>): Dictionary<T> => defaults,
+		[ResolutionMethods.UseCustom]: (defaults: Dictionary<T>, custom: Dictionary<T>): Dictionary<T> => custom,
+		[ResolutionMethods.MergePreferCustom]: (defaults: Dictionary<T>, custom: Dictionary<T>): Dictionary<T> => {
 			return { ...defaults, ...custom };
 		},
-	],
-	[
-		IntentsResolutionMethods.MergePreferDefault,
-		(defaults: IntentsMap, custom: IntentsMap): IntentsMap => {
+		[ResolutionMethods.MergePreferDefault]: (defaults: Dictionary<T>, custom: Dictionary<T>): Dictionary<T> => {
 			return { ...custom, ...defaults };
 		},
-	],
-]);
+	};
+
+	return m[method](defaults, custom);
+}
 
 const readFileP = promisify(readFile);
 
@@ -88,7 +87,8 @@ export function parseConfig(): Promise<ConfigElement> {
 
 		const resolvedConfig = { ...defaultConfig, ...customConfig }; // Merge preferring custom data
 
-		resolvedConfig.intents = intentResolver.get(resolvedConfig.intentsResolutionMethod)(defaultConfig.intents, customConfig.intents);
+		resolvedConfig.intents = resolveConflict<Intent>(resolvedConfig.intentsResolutionMethod, defaultConfig.intents, customConfig.intents);
+		resolvedConfig.plugins = resolveConflict<any>(resolvedConfig.pluginsResolutionMethod, defaultConfig.plugins, customConfig.plugins);
 
 		return resolvedConfig;
 	});

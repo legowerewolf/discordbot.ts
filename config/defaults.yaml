@@ -138,6 +138,7 @@ intents:
       responses:
         - I'm sorry, what was that?
         - I didn't understand. Could you rephrase that?
+pluginsResolutionMethod: useDefault
 plugins: # Plugins add additional functionality.
   presenceRoles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
     rolePrefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
