@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const NodemonPlugin = require("nodemon-webpack-plugin");
@@ -10,6 +11,13 @@ const identifierHash = (identifier, short = true) =>
 		.execSync(`git log -1 --pretty=tformat:%${short ? "h" : "H"} ${identifier}`)
 		.toString()
 		.trim();
+
+var nodeModules = {};
+fs.readdirSync("node_modules")
+	.filter((x) => [".bin"].indexOf(x) === -1)
+	.forEach(function(module) {
+		nodeModules[module] = "commonjs " + module;
+	});
 
 module.exports = {
 	entry: {
@@ -41,6 +49,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
+	externals: nodeModules,
 	output: {
 		filename: "[name].js",
 		path: path.resolve(__dirname, "build"),
