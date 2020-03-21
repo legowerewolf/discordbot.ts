@@ -4,10 +4,10 @@
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
+	"type": "module",
 	"scripts": {
-		"build": "webpack --config webpack.prod.js",
-		"start": "node build/manager.js",
-		"dev": "webpack --config webpack.dev.js --watch",
+		"build": "tsc",
+		"start": "node build/shard-manager.js",
 		"test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha",
 		"coverage": "nyc npm test",
 		"lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
@@ -24,7 +24,6 @@
 	"dependencies": {
 		"@google-cloud/firestore": "^3.7.1",
 		"common-tags": "^1.8.0",
-		"copy-webpack-plugin": "^5.1.1",
 		"discord.js": "^12.0.2",
 		"ffmpeg-static": "^4.0.1",
 		"js-yaml": "^3.13.1",
@@ -40,23 +39,17 @@
 		"@types/natural": "^0.6.3",
 		"@types/node": "^13.9.2",
 		"@types/node-fetch": "^2.5.5",
+		"@types/ws": "^7.2.3",
 		"@typescript-eslint/eslint-plugin": "^2.24.0",
 		"@typescript-eslint/parser": "^2.24.0",
 		"chai": "^4.2.0",
-		"clean-webpack-plugin": "^3.0.0",
 		"cross-env": "^7.0.2",
-		"dependency-tree": "^7.2.1",
 		"eslint": "^6.8.0",
 		"eslint-config-prettier": "^6.10.0",
 		"mocha": "^7.1.1",
-		"nodemon-webpack-plugin": "^4.3.1",
 		"nyc": "^15.0.0",
-		"terser-webpack-plugin": "^2.3.5",
-		"ts-loader": "^6.2.1",
 		"ts-node": "^8.7.0",
 		"typescript": "^3.8.3",
-		"webpack": "^4.42.0",
-		"webpack-cli": "^3.3.11",
-		"webpack-merge": "^4.2.2"
+		"webpack": "^4.42.0"
 	}
 }
