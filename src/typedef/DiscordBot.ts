@@ -84,7 +84,7 @@ export class DiscordBot {
 					this.plugins.push(instance);
 				},
 				(reason) => {
-					this.console(`Unable to load plugin`, { pluginName: name, reason: reason }, Vocab.Error);
+					this.console(`Unable to load plugin`, { pluginName: name, reason: JSON.stringify(reason) }, Vocab.Error);
 				}
 			);
 		}, this);
