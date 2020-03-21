@@ -77,6 +77,7 @@ export class DiscordBot {
 		this.handlers = {};
 		this.plugins = new Array<Plugin<{}>>();
 		Object.keys(this.config.plugins).map(async (name: string) => {
+			this.console(`Loading plugin...`, { plugin: name });
 			import(`../plugins/${name}`).then(
 				(module: ModuleWithClassDefault<Plugin<{}>>) => {
 					const instance: Plugin<{}> = new module.default(this.config.plugins[name]);
