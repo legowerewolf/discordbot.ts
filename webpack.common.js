@@ -37,14 +37,16 @@ module.exports = {
 	},
 	target: "node",
 	externals: ["@google-cloud/firestore"]
-		.map((elem) =>
-			dependencyTree.toList({
-				filename: `./node_modules/${elem}/${require(`./node_modules/${elem}/package.json`).main}`,
-				directory: ".",
-			})
-		)
+		.map((elem) => [
+			elem,
+			...dependencyTree
+				.toList({
+					filename: `./node_modules/${elem}/${require(`./node_modules/${elem}/package.json`).main}`,
+					directory: ".",
+				})
+				.map((elem) => elem.match(/node_modules[\/\\]*([@\w-\.]*)/)[1]), //get the dep name
+		])
 		.reduce((accum, cur) => [...accum, ...cur], []) // flatten
-		.map((elem) => elem.match(/node_modules[\/\\]*([@\w-\.]*)/)[1]) //get the dep name
 		.filter((item, index, arr) => arr.indexOf(item) == index) // dedupe
 		.reduce((accum, cur) => {
 			return { ...accum, [cur]: `commonjs ${cur}` };

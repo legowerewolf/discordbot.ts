@@ -9,10 +9,7 @@ COPY ./config ./config
 ENTRYPOINT [ "node", "app/manager.js" ]
 
 
-
 FROM node:13.10.1
 WORKDIR /project/build/dist/
-
 COPY --from=builder /project/build/dist .
-
 ENTRYPOINT [ "node", "app/manager.js" ]

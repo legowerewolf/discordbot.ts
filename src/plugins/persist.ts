@@ -1,5 +1,4 @@
 import { Firestore, Timestamp } from "@google-cloud/firestore";
-import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
 interface Config {
@@ -18,7 +17,7 @@ export default class Persist extends Plugin<Config> {
 		this.db = new Firestore({ keyFilename: this.config.keyPath });
 	}
 
-	inject(context: DiscordBot): void {
+	inject(): void {
 		this.db
 			.collection("stats")
 			.doc("bot")
