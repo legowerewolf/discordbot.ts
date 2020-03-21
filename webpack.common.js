@@ -12,13 +12,6 @@ const identifierHash = (identifier, short = true) =>
 		.toString()
 		.trim();
 
-var nodeModules = {};
-fs.readdirSync("node_modules")
-	.filter((x) => [".bin"].indexOf(x) === -1)
-	.forEach(function(module) {
-		nodeModules[module] = "commonjs " + module;
-	});
-
 module.exports = {
 	entry: {
 		shard: "./src/shard.ts",
@@ -49,7 +42,9 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	externals: nodeModules,
+	externals: ["google-gax"].reduce((accum, cur) => {
+		return { ...accum, [cur]: `commonjs ${cur}` };
+	}, {}),
 	output: {
 		filename: "[name].js",
 		path: path.resolve(__dirname, "build"),
