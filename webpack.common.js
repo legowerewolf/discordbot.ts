@@ -36,7 +36,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	externals: ["@google-cloud/firestore"]
+	externals: ["@google-cloud/firestore", "duplexify"]
 		.map((elem) => [
 			elem,
 			...dependencyTree

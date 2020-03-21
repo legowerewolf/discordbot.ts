@@ -4,12 +4,12 @@ COPY . .
 RUN npm ci
 RUN npm run build
 
-WORKDIR /project/build/dist/
+WORKDIR /project/dist/
 COPY ./config ./config
 ENTRYPOINT [ "node", "app/manager.js" ]
 
 
-FROM node:13.10.1
-WORKDIR /project/build/dist/
-COPY --from=builder /project/build/dist .
+FROM node:13.10.1-slim
+WORKDIR /project/
+COPY --from=builder /project/dist .
 ENTRYPOINT [ "node", "app/manager.js" ]

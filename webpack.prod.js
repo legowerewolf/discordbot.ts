@@ -25,6 +25,6 @@ module.exports = merge(common, {
 	],
 	output: {
 		filename: "[name].js",
-		path: path.resolve(__dirname, "build/dist/app"),
+		path: path.resolve(__dirname, "dist/app"),
 	},
 });
