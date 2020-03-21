@@ -7,7 +7,7 @@ const log = ratlog(process.stdout);
 injectErrorLogger();
 
 parseConfig().then((config) => {
-	const manager = new ShardingManager(`./build/shard.js`, {
+	const manager = new ShardingManager(`./app/shard.js`, {
 		totalShards: "auto",
 		token: config.APIKeys.discord,
 	});

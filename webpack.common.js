@@ -1,9 +1,8 @@
-const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
-const NodemonPlugin = require("nodemon-webpack-plugin");
 const packagejson = require("./package.json");
 const childprocess = require("child_process");
+const dependencyTree = require("dependency-tree");
 
 const identifierHash = (identifier, short = true) =>
 	childprocess
@@ -31,22 +30,24 @@ module.exports = {
 			META_VERSION: JSON.stringify(`${packagejson.version}${identifierHash("HEAD") === identifierHash(`v${packagejson.version}`) ? "" : "+"}`),
 			META_HASH: JSON.stringify(identifierHash("HEAD", true)),
 		}),
-		new NodemonPlugin({
-			script: "./build/manager.js",
-			watch: path.resolve("./build"),
-		}),
 	],
 	resolve: {
 		mainFields: ["main", "module"],
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	externals: ["google-gax", "@google-cloud/firestore"].reduce((accum, cur) => {
-		return { ...accum, [cur]: `commonjs ${cur}` };
-	}, {}),
-	output: {
-		filename: "[name].js",
-		path: path.resolve(__dirname, "build"),
-	},
+	externals: ["@google-cloud/firestore"]
+		.map((elem) =>
+			dependencyTree.toList({
+				filename: `./node_modules/${elem}/${require(`./node_modules/${elem}/package.json`).main}`,
+				directory: ".",
+			})
+		)
+		.reduce((accum, cur) => [...accum, ...cur], []) // flatten
+		.map((elem) => elem.match(/node_modules[\/\\]*([@\w-\.]*)/)[1]) //get the dep name
+		.filter((item, index, arr) => arr.indexOf(item) == index) // dedupe
+		.reduce((accum, cur) => {
+			return { ...accum, [cur]: `commonjs ${cur}` };
+		}, {}),
 	devtool: "source-map",
 };
