@@ -1,13 +1,13 @@
 import { ShardingManager } from "discord.js";
 import ratlog, { RatlogData } from "ratlog";
 import "source-map-support/register";
-import { injectErrorLogger, parseConfig } from "./helpers/helpers";
+import { injectErrorLogger, META_HASH, META_VERSION, parseConfig } from "./helpers/helpers";
 
 const log = ratlog(process.stdout);
 injectErrorLogger();
 
 parseConfig().then((config) => {
-	const manager = new ShardingManager(`./app/shard.js`, {
+	const manager = new ShardingManager(`${__dirname}/shard.js`, {
 		totalShards: "auto",
 		token: config.APIKeys.discord,
 	});

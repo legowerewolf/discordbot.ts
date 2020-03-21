@@ -3,13 +3,13 @@ WORKDIR /project/
 COPY . .
 RUN npm ci
 RUN npm run build
-
-WORKDIR /project/dist/
-COPY ./config ./config
-ENTRYPOINT [ "node", "app/manager.js" ]
+ENTRYPOINT [ "npm", "start" ]
 
 
 FROM node:13.10.1-slim
 WORKDIR /project/
-COPY --from=builder /project/dist .
-ENTRYPOINT [ "node", "app/manager.js" ]
+COPY --from=builder /project/build/ ./build
+COPY --from=builder /project/config/ ./config
+COPY --from=builder /project/node_modules/ ./node_modules
+COPY --from=builder /project/package.json/ ./package.json
+ENTRYPOINT [ "npm", "start" ]

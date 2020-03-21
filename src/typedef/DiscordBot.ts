@@ -1,6 +1,7 @@
 import { Client, Guild, GuildMember, Message } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
+import { META_HASH, META_VERSION } from "../helpers/helpers";
 import { Brain } from "./Brain";
 import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";

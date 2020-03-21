@@ -2,7 +2,7 @@
 	"include": ["src/**/*"],
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"module": "esnext",
+		"module": "commonjs",
 		"target": "es6",
 		"noImplicitAny": true,
 		"allowJs": false,

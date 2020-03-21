@@ -10,6 +10,9 @@ import { Dictionary } from "../typedef/Dictionary";
 import { Intent } from "../typedef/Intent";
 import { ResolutionMethods } from "../typedef/ResolutionMethods";
 
+export const META_VERSION = "unset";
+export const META_HASH = "unset";
+
 export function randomElementFromArray<T>(array: Array<T>): T {
 	return array[Math.floor(Math.random() * array.length)];
 }

@@ -3,7 +3,6 @@ node_modules
 
 # Build Artifacts
 build
-app
 
 # Test Artifacts
 .nyc_output
