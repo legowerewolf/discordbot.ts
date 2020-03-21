@@ -50,13 +50,13 @@ export class DiscordBot {
 			},
 			{
 				event: "ready",
-				handler: (): void => {
+				handler: async (): Promise<void> => {
 					this.console(`Shard ready. Connected to ${this.client.guilds.cache.size} guild${this.client.guilds.cache.size > 1 ? "s" : ""}.`, Vocab.Info);
 
 					// The values for "META_VERSION" and "META_HASH" are filled in at build time.
 					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 					// @ts-ignore
-					this.client.user.setActivity(`v${META_VERSION} / ${META_HASH}`);
+					this.client.user.setActivity(`v${await META_VERSION} / ${await META_HASH}`);
 				},
 			},
 			{

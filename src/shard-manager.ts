@@ -6,7 +6,7 @@ import { injectErrorLogger, META_HASH, META_VERSION, parseConfig } from "./helpe
 const log = ratlog(process.stdout);
 injectErrorLogger();
 
-parseConfig().then((config) => {
+parseConfig().then(async (config) => {
 	const manager = new ShardingManager(`${__dirname}/shard.js`, {
 		totalShards: "auto",
 		token: config.APIKeys.discord,
@@ -15,7 +15,7 @@ parseConfig().then((config) => {
 	// The values for "META_VERSION" and "META_HASH" are filled in at build time.
 	// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 	// @ts-ignore
-	log(`Starting shard manager...`, { version: META_VERSION, commit: META_HASH }, "manager", "info");
+	log(`Starting shard manager...`, { version: await META_VERSION, commit: await META_HASH }, "manager", "info");
 
 	manager.spawn();
 

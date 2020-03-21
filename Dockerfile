@@ -11,5 +11,6 @@ WORKDIR /project/
 COPY --from=builder /project/build/ ./build
 COPY --from=builder /project/config/ ./config
 COPY --from=builder /project/node_modules/ ./node_modules
+COPY --from=builder /project/.git/refs ./.git/refs
 COPY --from=builder /project/package.json/ ./package.json
 ENTRYPOINT [ "npm", "start" ]

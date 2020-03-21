@@ -10,8 +10,18 @@ import { Dictionary } from "../typedef/Dictionary";
 import { Intent } from "../typedef/Intent";
 import { ResolutionMethods } from "../typedef/ResolutionMethods";
 
-export const META_VERSION = "unset";
-export const META_HASH = "unset";
+const readFileP = promisify(readFile);
+
+export const META_VERSION = readFileP("./package.json")
+	.then((data) => safeLoad(data.toString()))
+	.then((data) => data.version);
+
+const getHash = (ref: string, short = true): Promise<string> =>
+	readFileP(`./.git/refs/${ref}`)
+		.then((chunk) => chunk.toString())
+		.then((hash) => (short ? hash.substr(0, 8) : hash));
+
+export const META_HASH = getHash("heads/master", true);
 
 export function randomElementFromArray<T>(array: Array<T>): T {
 	return array[Math.floor(Math.random() * array.length)];
@@ -72,8 +82,6 @@ function resolveConflict<T>(method: ResolutionMethods, defaults: Dictionary<T>, 
 
 	return m[method](defaults, custom);
 }
-
-const readFileP = promisify(readFile);
 
 export function parseConfig(): Promise<ConfigElement> {
 	return Promise.all([
