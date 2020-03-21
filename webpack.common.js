@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const NodemonPlugin = require("nodemon-webpack-plugin");
@@ -42,7 +41,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".json", ".js"],
 	},
 	target: "node",
-	externals: ["google-gax"].reduce((accum, cur) => {
+	externals: ["google-gax", "@google-cloud/firestore"].reduce((accum, cur) => {
 		return { ...accum, [cur]: `commonjs ${cur}` };
 	}, {}),
 	output: {
