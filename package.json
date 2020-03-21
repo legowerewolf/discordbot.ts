@@ -1,6 +1,6 @@
 {
 	"name": "discordbot",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "A platform for running natural-language-powered Discord bots.",
 	"private": true,
 	"repository": "github:legowerewolf/discordbot.js",
