@@ -17,19 +17,19 @@ Luna is this repository's official Discord bot. She's configured with all the de
 
 ## Setup
 
-If you want to build from source:
+If you want to build and run from source:
 
 1. `git clone` the repo.
 1. `npm i` to install all dependencies, and `npm run build` to build.
 1. Configure (see below)
-1. `npm start` to start up your bot(s)!
+1. `npm start` to run your bot!
 
 Alternately, compose a Dockerfile depending on the [official images](https://hub.docker.com/r/legowerewolf/discordbot.ts). It's not recommended to use `:latest`.
 
 ```dockerfile
 FROM legowerewolf/discordbot.ts:latest
 COPY ./config.yaml ./config/
-ENTRYPOINT [ "node", "build/manager.js" ]
+ENTRYPOINT [ "npm", "start" ]
 ```
 
 ### Configuration
