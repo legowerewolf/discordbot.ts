@@ -8,10 +8,8 @@ build
 .nyc_output
 
 # Secrets
-config/config.yaml
-
-deploy/AppEngine.json
+config
 
 # Other
-.vscode
 backup
+fatals

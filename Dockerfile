@@ -1,11 +1,16 @@
-FROM node:13.5.0 AS builder
-COPY . /app/
-WORKDIR /app/
-RUN npm ci              && \
-    npm run build
+FROM node:13.10.1 AS builder
+WORKDIR /project/
+COPY . .
+RUN npm ci
+RUN npm run build
+ENTRYPOINT [ "npm", "start" ]
 
-FROM node:13.5.0-slim
-WORKDIR /app/
-COPY --from=builder /app/build/ /app/build/
-COPY ./config ./config
-ENTRYPOINT [ "node", "build/manager.js" ]
+
+FROM node:13.10.1-slim
+WORKDIR /project/
+COPY --from=builder /project/build/ ./build
+COPY --from=builder /project/config/ ./config
+COPY --from=builder /project/node_modules/ ./node_modules
+COPY --from=builder /project/.git/refs ./.git/refs
+COPY --from=builder /project/package.json/ ./package.json
+ENTRYPOINT [ "npm", "start" ]

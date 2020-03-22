@@ -1,6 +1,7 @@
 # Discordbot.js
 
-![David - Dependency Checking](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts)
+[![David - Dependency Checking](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies)](https://david-dm.org/legowerewolf/discordbot.ts)
 [![Github Actions - Testing](https://github.com/legowerewolf/discordbot.ts/workflows/Testing/badge.svg?branch=master)](https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting)
 [![Docker Cloud - Container Build Status](https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts)](https://hub.docker.com/r/legowerewolf/discordbot.ts)
 
@@ -8,13 +9,28 @@ A simple way to add natural-language-powered Discord bots to your server.
 
 ## Implementation
 
-[Luna](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot) is this repository's official Discord bot.
+[![Install official bot](https://img.shields.io/badge/Luna-install-7289DA)](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot)
+
+> As of 3/20/2020, the host Luna runs on is experiencing a malfunction and Luna is not currently available.
+
+Luna is this repository's official Discord bot. She's configured with all the default options as specified in this repository, and is nearly always online.
 
 ## Setup
 
-1. `npm i` to install all dependencies.
+If you want to build and run from source:
+
+1. `git clone` the repo.
+1. `npm i` to install all dependencies, and `npm run build` to build.
 1. Configure (see below)
-1. `npm start` to start up your bot(s)!
+1. `npm start` to run your bot!
+
+Alternately, compose a Dockerfile depending on the [official images](https://hub.docker.com/r/legowerewolf/discordbot.ts). It's not recommended to use `:latest`.
+
+```dockerfile
+FROM legowerewolf/discordbot.ts:latest
+COPY ./config.yaml ./config/
+ENTRYPOINT [ "npm", "start" ]
+```
 
 ### Configuration
 

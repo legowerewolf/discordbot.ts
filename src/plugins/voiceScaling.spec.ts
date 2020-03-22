@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import VoiceScaling from "./voice-scaling";
+import VoiceScaling from "./voiceScaling";
 
 describe("voice-scaling", () => {
 	describe("new key generation", () => {

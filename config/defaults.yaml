@@ -2,9 +2,8 @@
 APIKeys:
   discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
 defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
-users:
-#   '[user's numerical id]': # enable dev mode, right click on a user, and select "Copy ID".
-#       permissionLevel: 5 # A user's permission level must meet or exceed that of a command's permission level to execute that command.
+admins:
+#  - "user snowflake id" # enable dev mode, right click on a user, and select "Copy ID".
 intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Available options are "useDefault" (uses only default intents), "useCustom" (uses only custom intents), "mergePreferDefault" (uses both default and custom, but chooses default in the event of a name collision), and "mergePreferCustom" (same as "mergePreferDefault", but chooses custom over defaults).
 intents:
   greeting: # intent names must be unique in the config file
@@ -13,7 +12,7 @@ intents:
       - hi
       - greetings
       - welcome
-    handler: basic_response # Handler that picks a random response from the provided list.
+    handler: basicResponse # Handler that picks a random response from the provided list.
     data:
       responses: # Provide responses to be randomly replied with for the provided models.
         - Hello!
@@ -26,7 +25,7 @@ intents:
       - goodnight
       - good night
       - buenos noches
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - Goodnight!
@@ -42,16 +41,18 @@ intents:
     models:
       - I love you
       - ily
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - Aww, I love you too!
         - \*blushes\* # You can use any of Discord's standard text formatting.
   shardShutdown:
-    handler: bot_shutdown
+    handler: botShutdown
     name: Shard Shutdown
     description: Shuts down the shard handling the current server. If the shard is managed, it will restart automatically.
-    permissionLevel: 5
+    accessPermissions:
+      - ADMININSTRATOR
+      - MANAGE_GUILD
     models:
       - shut down
       - shutdown
@@ -61,10 +62,23 @@ intents:
       responses:
         - Ok. Goodbye!
         - I'll be back.
+  crashTest:
+    handler: crash
+    name: Shard Crash
+    description: Throws an unhandled error, causing the shard to crash. (Debug)
+    accessPermissions:
+      - BOT_ADMIN
+    models:
+      - crash
+    data:
+      responses:
+        - Adios.
   temporaryVoiceChannel:
-    handler: temporary_voice_channel
+    handler: temporaryVoiceChannel
     name: Temporary Voice Channel
     description: Creates a voice channel with a given name and deletes it when empty.
+    accessPermissions:
+      - CONNECT
     models:
       - make a temporary voice channel
       - create a channel
@@ -76,6 +90,8 @@ intents:
       - make a new channel
       - make a new channel please
       - new channel please
+      - new room
+      - new room please
     data:
       questionData: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
         question: # This is the question the user is asked. Multiple possibilities are encouraged.
@@ -105,10 +121,11 @@ intents:
       handlerSpecific: # The responses field must always be an array of strings. The handlerSpecific field allows for infinite variety, as needed by this specific handler.
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
-    handler: purge_gameroles
+    handler: purgeGameroles
     name: Game Role Cleanup
     description: Deletes all roles created by this bot.
-    permissionLevel: 5
+    accessPermissions:
+      - MANAGE_ROLES
     models:
       - purge game roles
       - clean game roles
@@ -116,19 +133,20 @@ intents:
       - cleanup roles
       - role cleanup
   _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
-    handler: basic_response
+    handler: basicResponse
     data:
       responses:
         - I'm sorry, what was that?
         - I didn't understand. Could you rephrase that?
+pluginsResolutionMethod: useDefault
 plugins: # Plugins add additional functionality.
-  presence-roles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-    role_prefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
-  voice-scaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
-  standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
-  temporary-voice-channels: # Spawn temporary voice channels on request.
-    name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
-  advanced-help: # Provide useful command help auto-generated on command based on intents' description fields
+  presenceRoles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
+    rolePrefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
+  voiceScaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
+  standardHandlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
+  temporaryVoiceChannels: # Spawn temporary voice channels on request.
+    nameSuffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
+  advancedHelp: # Provide useful command help auto-generated on command based on intents' description fields
   channel-archiver:
     age: 30d
     cycle: 1h
