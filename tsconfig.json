@@ -11,6 +11,6 @@
 	},
 	"typedocOptions": {
 		"out": "./docs",
-		"mode": "module"
+		"mode": "file"
 	}
 }
