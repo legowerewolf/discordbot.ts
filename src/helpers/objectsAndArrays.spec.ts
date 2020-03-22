@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { valuesOf } from "./helpers";
+import { valuesOf } from "./objectsAndArrays";
 
 describe("helpers", () => {
 	describe("valuesOf", () => {
