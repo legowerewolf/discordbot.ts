@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install Node v13
         uses: actions/setup-node@v1
@@ -32,7 +32,4 @@ jobs:
           git commit -m "Update docs" -a
 
       - name: Push docs
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+        run: git push origin master
