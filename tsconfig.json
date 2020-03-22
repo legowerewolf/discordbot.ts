@@ -10,6 +10,7 @@
 		"outDir": "./build"
 	},
 	"typedocOptions": {
-		"out": "./docs"
+		"out": "./docs",
+		"mode": "module"
 	}
 }
