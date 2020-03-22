@@ -8,5 +8,8 @@
 		"allowJs": false,
 		"sourceMap": true,
 		"outDir": "./build"
+	},
+	"typedocOptions": {
+		"out": "./docs"
 	}
 }
