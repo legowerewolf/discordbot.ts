@@ -12,9 +12,6 @@ parseConfig().then(async (config) => {
 		token: config.APIKeys.discord,
 	});
 
-	// The values for "META_VERSION" and "META_HASH" are filled in at build time.
-	// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-	// @ts-ignore
 	log(`Starting shard manager...`, { version: await META_VERSION, commit: await META_HASH }, "manager", "info");
 
 	manager.spawn();
