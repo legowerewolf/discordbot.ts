@@ -1,6 +1,6 @@
 # Discordbot.js
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts) ![License](https://img.shields.io/github/license/legowerewolf/discordbot.ts)
 [![David - Dependency Checking](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies)](https://david-dm.org/legowerewolf/discordbot.ts)
 [![Github Actions - Testing](https://github.com/legowerewolf/discordbot.ts/workflows/Testing/badge.svg?branch=master)](https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting)
 [![Docker Cloud - Container Build Status](https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts)](https://hub.docker.com/r/legowerewolf/discordbot.ts)
@@ -63,7 +63,3 @@ Things that need to get done:
 
 -   Unit tests, holy crap. Worry about the little stuff, there's not much to be done for stuff depending on API data or the state of the whole bot. That said, if you can tell me how to mock the Discord API to run tests, please make an issue
     so we can discuss it.
-
-## License
-
-This project is licensed under the GPLv3 licence.
