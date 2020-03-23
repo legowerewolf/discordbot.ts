@@ -3,11 +3,11 @@ import ratlog from "ratlog";
 import "source-map-support/register";
 import { META_HASH, META_VERSION } from "../helpers/helpers";
 import { Brain } from "./Brain";
+import { ClassModule } from "./ClassModule";
 import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
 import { Intent } from "./Intent";
 import { IntentHandler } from "./IntentHandler";
-import { ModuleWithClassDefault } from "./ModuleWithClassDefault";
 import { Plugin } from "./Plugin";
 import { Vocab } from "./Vocab";
 
@@ -77,8 +77,8 @@ export class DiscordBot {
 		Object.keys(this.config.plugins).map(async (name: string) => {
 			this.console(`Loading plugin...`, { plugin: name }, Vocab.Info);
 			import(`../plugins/${name}`).then(
-				(module: ModuleWithClassDefault<Plugin<{}>>) => {
-					const instance: Plugin<{}> = new module.default(this.config.plugins[name]);
+				(module: ClassModule<Plugin<unknown>>) => {
+					const instance: Plugin<unknown> = new module.default(this.config.plugins[name]);
 					instance.inject(this);
 					this.plugins.push(instance);
 				},
@@ -120,7 +120,7 @@ export class DiscordBot {
 			} else {
 				this.console(`You must use explicitly-named handlers for intents.`, { intent: intentName }, Vocab.Error);
 			}
-			if (intentName == "_unknown") {
+			if (intentName == Brain.UncertainLabel) {
 				this.console(`Unknown message`, { message: eventData.text }, Vocab.Warn);
 			}
 		} else {

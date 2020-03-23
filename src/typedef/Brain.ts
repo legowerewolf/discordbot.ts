@@ -4,6 +4,8 @@ import { LogisticRegressionClassifier } from "natural";
 import { NaturalGuess } from "./NaturalGuess";
 
 export class Brain {
+	static readonly UncertainLabel = "_unknown";
+
 	classifier: LogisticRegressionClassifier;
 	minConfidence: number;
 
@@ -28,6 +30,6 @@ export class Brain {
 			return accum && accum.value > newVal.value ? accum : newVal;
 		});
 
-		return guess.value > this.minConfidence ? guess : { label: "_unknown", value: 0 };
+		return guess.value > this.minConfidence ? guess : { label: Brain.UncertainLabel, value: 0 };
 	}
 }
