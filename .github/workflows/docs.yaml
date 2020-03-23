@@ -34,3 +34,4 @@ jobs:
 
       - name: Push docs
         run: git push origin master
+        if: github.ref == master
