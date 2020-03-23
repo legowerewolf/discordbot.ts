@@ -19,7 +19,7 @@ export class Brain {
 	}
 
 	/**
-	 *
+	 * Provide the [[Brain]] samples of text to recognise
 	 * @param samples - sample data to prepare the [[Brain]] to recognize
 	 * @param label - a label for the given samples
 	 */
@@ -30,14 +30,14 @@ export class Brain {
 	}
 
 	/**
-	 * Train the classifier to recognize the samples provided
+	 * Train the classifier to recognize the samples provided through [[teach]]
 	 */
 	train(): void {
 		this.classifier.train();
 	}
 
 	/**
-	 *
+	 * Label a provided sample
 	 * @param sample - a sample you want the brain to classify
 	 */
 	interpret(sample: string): NaturalGuess {
