@@ -87,7 +87,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="brain.html#classifier" class="tsd-kind-icon">classifier</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="brain.html#classifier" class="tsd-kind-icon">classifier</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="brain.html#minconfidence" class="tsd-kind-icon">min<wbr>Confidence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="brain.html#uncertainlabel" class="tsd-kind-icon">Uncertain<wbr>Label</a></li>
 							</ul>
@@ -109,19 +109,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Brain<span class="tsd-signature-symbol">(</span>confidence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="brain.html" class="tsd-signature-type">Brain</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Brain<span class="tsd-signature-symbol">(</span>minConfidence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="brain.html" class="tsd-signature-type">Brain</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L10">src/typedef/Brain.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L14">src/typedef/Brain.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>confidence: <span class="tsd-signature-type">number</span></h5>
+									<h5>minConfidence: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="brain.html" class="tsd-signature-type">Brain</a></h4>
@@ -131,13 +131,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="classifier" class="tsd-anchor"></a>
-					<h3>classifier</h3>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> classifier</h3>
 					<div class="tsd-signature tsd-kind-icon">classifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LogisticRegressionClassifier</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L9">src/typedef/Brain.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L13">src/typedef/Brain.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -147,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L10">src/typedef/Brain.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L14">src/typedef/Brain.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">Uncertain<wbr>Label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"_unknown"</span><span class="tsd-signature-symbol"> = &quot;_unknown&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L7">src/typedef/Brain.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L11">src/typedef/Brain.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,13 +174,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L27">src/typedef/Brain.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L43">src/typedef/Brain.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Label a provided sample</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>sample: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a sample you want the brain to classify</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/naturalguess.html" class="tsd-signature-type">NaturalGuess</a></h4>
@@ -197,16 +205,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L17">src/typedef/Brain.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L26">src/typedef/Brain.ts:26</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Provide the <a href="brain.html">Brain</a> samples of text to recognise</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>samples: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>sample data to prepare the <a href="brain.html">Brain</a> to recognize</p>
+									</div>
 								</li>
 								<li>
 									<h5>label: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a label for the given samples</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -223,9 +242,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/3880bb6/src/typedef/Brain.ts#L23">src/typedef/Brain.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/b4e34cc/src/typedef/Brain.ts#L35">src/typedef/Brain.ts:35</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Train the classifier to recognize the samples provided through <a href="brain.html#teach">teach</a></p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -256,7 +280,7 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="brain.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="brain.html#classifier" class="tsd-kind-icon">classifier</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -411,6 +435,9 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>
