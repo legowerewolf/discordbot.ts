@@ -129,6 +129,6 @@ export class DiscordBot {
 	}
 
 	console = ratlog.logger((log) => {
-		this.client.shard.send(log);
+		this.client.shard.send({ type: "log", data: log });
 	});
 }

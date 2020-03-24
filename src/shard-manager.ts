@@ -21,8 +21,12 @@ parseConfig().then(async (config) => {
 	manager.on("shardCreate", (shard) => {
 		log(`Launched shard...`, { shardID: shard.id }, "manager", "info");
 
-		shard.on("message", (message: RatlogData) => {
-			log.tag(`shard_${shard.id}`)(message.message, { ...message.fields }, ...message.tags);
+		const handlers = {
+			log: (data: RatlogData): void => log.tag(`shard_${shard.id}`)(data.message, { ...data.fields }, ...data.tags),
+		};
+
+		shard.on("message", (message: { type: keyof typeof handlers; data: never }) => {
+			if (message.type) handlers[message.type](message.data);
 		});
 	});
 });

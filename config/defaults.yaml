@@ -147,3 +147,4 @@ plugins: # Plugins add additional functionality.
   temporaryVoiceChannels: # Spawn temporary voice channels on request.
     nameSuffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
   advancedHelp: # Provide useful command help auto-generated on command based on intents' description fields
+  status: # Provide a HTTP endpoint for checking status
