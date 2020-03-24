@@ -148,3 +148,4 @@ plugins: # Plugins add additional functionality.
     nameSuffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
   advancedHelp: # Provide useful command help auto-generated on command based on intents' description fields
   status: # Provide a HTTP endpoint for checking status
+    port: 8080 # The port it exposes on
