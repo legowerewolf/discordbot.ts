@@ -1,4 +1,4 @@
-import { Client, Guild, GuildMember, Message } from "discord.js";
+import { Client, Guild, Message, PermissionString, User } from "discord.js";
 import ratlog from "ratlog";
 import "source-map-support/register";
 import { META_HASH, META_VERSION } from "../helpers/helpers";
@@ -33,7 +33,7 @@ export class DiscordBot {
 			{
 				event: "message",
 				handler: (msg: Message): void => {
-					if (!msg.author.bot && msg.mentions.users.has(this.client.user.id)) {
+					if (!msg.author.bot && (msg.mentions.users.has(this.client.user.id) || msg.channel.type == "dm")) {
 						this.handleInput({
 							text: msg.cleanContent,
 							responseCallback: (response: string) => msg.reply(response),
@@ -41,7 +41,7 @@ export class DiscordBot {
 							member: msg.member,
 							guild: msg.guild,
 							client: this.client,
-							source: "text",
+							source: msg.channel.type,
 							// Text message only data
 							messageObject: msg,
 						});
@@ -99,11 +99,12 @@ export class DiscordBot {
 		process.exit();
 	}
 
-	checkPermission(member: GuildMember, intent: Intent): boolean {
-		const userPermissions = member?.permissions?.toArray() ?? [];
-		return (
-			(intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) ?? true) || this.config.admins?.findIndex((admin) => admin === member.id) != -1
-		);
+	checkPermission(user: User, guild: Guild, intent: Intent): boolean {
+		const userPermissions: PermissionString[] = [];
+		if (guild) {
+			userPermissions.concat(...guild.member(user).permissions.toArray());
+		}
+		return (intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) ?? true) || this.config.admins?.findIndex((admin) => admin === user.id) != -1;
 	}
 
 	handleInput(eventData: CommunicationEvent): void {
@@ -113,7 +114,7 @@ export class DiscordBot {
 		eventData.config = intent.data;
 		eventData.bot = this;
 
-		if (this.checkPermission(eventData.member, intent)) {
+		if (this.checkPermission(eventData.author, eventData.guild, intent)) {
 			if (intent.handler) {
 				// If an intent handler is explicitly provided
 				this.handlers[intent.handler](eventData);

@@ -1,5 +1,5 @@
 import { Activity, GuildMember, Presence, Role } from "discord.js";
-import { memberStringify, roleStringify } from "../helpers/helpers";
+import { checkContext, memberStringify, roleStringify } from "../helpers/helpers";
 import { promiseRetry } from "../helpers/promiseRetry";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
@@ -27,7 +27,7 @@ export default class PresenceRoles extends Plugin<Config> {
 
 		context.handlers = {
 			...context.handlers,
-			purgeGameroles: (e): void => this.removeRolesFromServer(e),
+			purgeGameroles: checkContext("server", this.removeRolesFromServer.bind(this)),
 		};
 	}
 

@@ -8,27 +8,28 @@ export default class HelpPlugin extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		context.handlers = {
 			...context.handlers,
-			help: (e): void => this.writeHelp(e),
+			help: this.writeHelp.bind(this),
 		};
 	}
 
 	writeHelp(event: CommunicationEvent): void {
 		event.responseCallback(
 			stripIndents`
-				Here's what I can do for you on request:
+				Here's what I can do for you on request, in this context:
 
 				${valuesOf(event.bot.config.intents)
-					.filter((intent) => intent.models && intent.description && intent.name && event.bot.checkPermission(event.member, intent))
+					.filter((intent) => intent.models && intent.description && intent.name && event.bot.checkPermission(event.author, event.guild, intent))
 					.map(
 						(intent) => stripIndents`
 							**${intent.name}**
-							Invocation example: \`@${event.guild.me.nickname ?? event.client.user.username} ${randomElementFromArray(intent.models)}\`
+							Invocation example: \`@${event.guild?.me.nickname ?? event.client.user.username} ${randomElementFromArray(intent.models)}\`
 							${intent.description}
 						`
 					)
 					.join("\n\n")}
 
 				*The above examples are picked at random from the many I respond to.*
+				*Current context: ${event.guild?.name ?? "Direct Message"}*
 				`
 		);
 	}
