@@ -11,6 +11,7 @@ A simple way to add natural-language-powered Discord bots to your server.
 ## Implementation
 
 [![Install official bot](https://img.shields.io/badge/Luna-install-7289DA)](https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&permissions=68624&scope=bot)
+![Status](https://img.shields.io/website?label=Luna&url=https%3A%2F%2F7f4e78789c2826ebbf847eb267d7353b.balena-devices.com%2F)
 
 Luna is this repository's official Discord bot. She's configured with all the default options as specified in this repository, and is nearly always online.
 
