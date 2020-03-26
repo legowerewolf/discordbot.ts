@@ -11,6 +11,7 @@ interface Config {
 
 export default class TemporaryVoiceChannel extends Plugin<Config> {
 	nameRegex: RegExp;
+	context: DiscordBot;
 
 	static defaultConfig: Config = {
 		nameSuffix: "🤖",
@@ -20,8 +21,6 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 		super(_config);
 		this.nameRegex = new RegExp(`[\\w ]* ${this.config.nameSuffix}$`, "g");
 	}
-
-	context: DiscordBot;
 
 	inject(context: DiscordBot): void {
 		this.context = context;

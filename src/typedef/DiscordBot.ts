@@ -8,6 +8,7 @@ import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
 import { Intent } from "./Intent";
 import { IntentHandler } from "./IntentHandler";
+import { PersistenceProvider } from "./PersistenceProvider";
 import { Plugin } from "./Plugin";
 import { Vocab } from "./Vocab";
 
@@ -15,9 +16,9 @@ export class DiscordBot {
 	config: ConfigElement;
 	brain: Brain;
 	client: Client;
-	plugins: Array<Plugin<{}>>;
+	plugins: Array<Plugin<unknown>>;
 	handlers: { [key: string]: IntentHandler };
-	prefix: (msg: string) => string;
+	persister: PersistenceProvider;
 
 	constructor(config: ConfigElement) {
 		this.config = config;

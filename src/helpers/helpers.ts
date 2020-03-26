@@ -24,7 +24,7 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 	return new Promise((resolve) => {
 		const response = randomElementFromArray(eventData.config.questionData.defaultResponses);
 
-		if (eventData.source == "text") {
+		if (["text", "dm"].indexOf(eventData.source) != -1) {
 			// Only allow the question/response flow on text chats
 			eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
 
