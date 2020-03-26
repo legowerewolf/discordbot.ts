@@ -1,5 +1,5 @@
 import { VoiceChannel, VoiceState } from "discord.js";
-import { responseToQuestion } from "../helpers/helpers";
+import { checkContext, responseToQuestion } from "../helpers/helpers";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
@@ -28,7 +28,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 
 		context.handlers = {
 			...context.handlers,
-			temporaryVoiceChannel: (e): void => this.spawnTemporaryChannel(e),
+			temporaryVoiceChannel: checkContext("server", this.spawnTemporaryChannel.bind(this)),
 		};
 
 		context.client.on("voiceStateUpdate", (o) => this.deleteEmptyChannel(o));

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+# Tag and push image for each additional tag
+for tag in latest
+do
+    docker tag $IMAGE_NAME ${DOCKER_REPO}:${tag}
+    docker push ${DOCKER_REPO}:${tag}
+done
+
+# script courtesy https://windsock.io/automated-docker-image-builds-with-multiple-tags/
