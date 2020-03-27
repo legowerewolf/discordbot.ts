@@ -2,10 +2,8 @@ import { GuildMember, Role } from "discord.js";
 import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
 import { promisify } from "util";
-import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { Dictionary } from "../typedef/Dictionary";
 import { ResolutionMethods } from "../typedef/ResolutionMethods";
-import { randomElementFromArray } from "./objectsAndArrays";
 
 export const readFileP = promisify(readFile);
 
@@ -19,30 +17,6 @@ const getHash = (ref: string, short = true): Promise<string> =>
 		.then((hash) => (short ? hash.substr(0, 8) : hash));
 
 export const META_HASH = getHash("heads/master", true);
-
-export function responseToQuestion(eventData: CommunicationEvent): Promise<string> {
-	return new Promise((resolve) => {
-		const defaultResponse = randomElementFromArray(eventData.config.questionData.defaultResponses);
-
-		if (["text", "dm"].indexOf(eventData.source) != -1) {
-			// Only allow the question/response flow on text chats
-			eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
-
-			eventData.bot.overrideMessageListenerOnce(eventData.author, eventData.config.questionData.timeout).then(
-				(response) => {
-					eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse));
-					resolve(response.cleanContent);
-				},
-				() => {
-					eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
-					resolve(defaultResponse);
-				}
-			);
-		} else {
-			resolve(defaultResponse);
-		}
-	});
-}
 
 export function resolveConflict<T>(method: ResolutionMethods, defaults: Dictionary<T>, custom: Dictionary<T>): Dictionary<T> {
 	const m = {
@@ -65,18 +39,4 @@ export function roleStringify(role: Role): string {
 
 export function memberStringify(member: GuildMember): string {
 	return `{name: ${member.displayName}, id: ${member.id}, guild: ${member.guild.id}}`;
-}
-
-export function checkContext(context: "server" | "dm", handler: (e: CommunicationEvent) => void) {
-	return (event: CommunicationEvent): void => {
-		if (context == "server" && !event.guild) {
-			event.responseCallback(`I can't do that in this context. You must be in a server.`);
-			return;
-		}
-		if (context == "dm" && event.source != "dm") {
-			event.responseCallback(`I can't do that in this context. You must DM me.`);
-			return;
-		}
-		handler(event);
-	};
 }

@@ -1,7 +1,7 @@
 export interface QuestionData {
-	question?: Array<string>;
-	answeredResponse?: Array<string>;
-	timeoutResponse?: Array<string>;
+	askMessage?: Array<string>;
+	answeredMessage?: Array<string>;
+	timeoutMessage?: Array<string>;
 	timeout?: number; // ms
-	defaultResponses?: Array<string>;
+	defaults?: Array<string>;
 }

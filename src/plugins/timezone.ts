@@ -1,5 +1,5 @@
 import { tz } from "moment-timezone";
-import { responseToQuestion } from "../helpers/helpers";
+import { responseToQuestion } from "../helpers/responseToQuestion";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
