@@ -24,6 +24,9 @@ export default class TimezonePlugin extends Plugin<{}> {
 		responseToQuestion(event).then((resp) => {
 			if (resp && tz.zone(resp)) {
 				this.context.persister.writeUser(event.author.id, { timezone: resp });
+				event.responseCallback("Zone saved!");
+			} else if (resp && !tz.zone(resp)) {
+				event.responseCallback("Sorry, that's not a valid TZDATA name. Zone has not been updated.");
 			}
 		});
 	}

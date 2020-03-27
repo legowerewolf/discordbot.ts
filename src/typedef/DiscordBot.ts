@@ -19,6 +19,9 @@ export class DiscordBot {
 	plugins: Array<Plugin<unknown>>;
 	handlers: { [key: string]: IntentHandler };
 	persister: PersistenceProvider;
+	listenerOverrides: {
+		[key: string]: User;
+	} = {};
 
 	constructor(config: ConfigElement) {
 		this.config = config;
@@ -34,7 +37,7 @@ export class DiscordBot {
 			{
 				event: "message",
 				handler: (msg: Message): void => {
-					if (!msg.author.bot && (msg.mentions.users.has(this.client.user.id) || msg.channel.type == "dm")) {
+					if (!msg.author.bot && (msg.mentions.users.has(this.client.user.id) || msg.channel.type == "dm") && this.listenerOverrides[msg.author.id] == undefined) {
 						this.handleInput({
 							text: msg.cleanContent,
 							responseCallback: (response: string) => msg.reply(response),
@@ -128,6 +131,33 @@ export class DiscordBot {
 		} else {
 			eventData.responseCallback("You don't have permission to ask that.");
 		}
+	}
+
+	overrideMessageListenerOnce(user: User, duration = 60000): Promise<Message> {
+		return new Promise((resolve, reject) => {
+			// eslint-disable-next-line prefer-const
+			let timeout: NodeJS.Timeout;
+
+			const eventFunc = (message: Message): void => {
+				if (message.author.id == user.id) {
+					clearTimeout(timeout);
+					this.client.off("message", eventFunc);
+					delete this.listenerOverrides[user.id];
+
+					resolve(message);
+				}
+			};
+
+			timeout = setTimeout(() => {
+				this.client.off("message", eventFunc);
+				delete this.listenerOverrides[user.id];
+
+				reject();
+			}, duration);
+
+			this.listenerOverrides[user.id] = user;
+			this.client.on("message", eventFunc);
+		});
 	}
 
 	console = ratlog.logger((log) => {

@@ -1,4 +1,4 @@
-import { GuildMember, Message, Role } from "discord.js";
+import { GuildMember, Role } from "discord.js";
 import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
 import { promisify } from "util";
@@ -22,37 +22,24 @@ export const META_HASH = getHash("heads/master", true);
 
 export function responseToQuestion(eventData: CommunicationEvent): Promise<string> {
 	return new Promise((resolve) => {
-		const response = randomElementFromArray(eventData.config.questionData.defaultResponses);
+		const defaultResponse = randomElementFromArray(eventData.config.questionData.defaultResponses);
 
 		if (["text", "dm"].indexOf(eventData.source) != -1) {
 			// Only allow the question/response flow on text chats
 			eventData.responseCallback(randomElementFromArray(eventData.config.questionData.question));
 
-			// eslint-disable-next-line prefer-const
-			let timeout: NodeJS.Timeout;
-
-			const eventFunc = function(message: Message): void {
-				if (message.author.id == eventData.author.id) {
-					// If this is the person we're listening for
-					clearTimeout(timeout); // Clear the timeout
-					eventData.bot.client.off("message", eventFunc); // Clear this event listener
-
-					eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse)); // Send the message that we're done here
-					resolve(message.cleanContent); // Resolve the promise
+			eventData.bot.overrideMessageListenerOnce(eventData.author, eventData.config.questionData.timeout).then(
+				(response) => {
+					eventData.responseCallback(randomElementFromArray(eventData.config.questionData.answeredResponse));
+					resolve(response.cleanContent);
+				},
+				() => {
+					eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
+					resolve(defaultResponse);
 				}
-			};
-
-			timeout = setTimeout(() => {
-				// Set up a timeout for when to stop listening
-				eventData.bot.client.off("message", eventFunc); // Clear the event listener
-
-				eventData.responseCallback(randomElementFromArray(eventData.config.questionData.timeoutResponse));
-				resolve(response);
-			}, eventData.config.questionData.timeout);
-
-			eventData.bot.client.on("message", eventFunc);
+			);
 		} else {
-			resolve(response);
+			resolve(defaultResponse);
 		}
 	});
 }

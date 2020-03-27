@@ -122,7 +122,7 @@ intents:
         bitrate: 16 # The default bitrate for newly created temporary voice channels.
   purgeGameroles:
     handler: purgeGameroles
-    name: Game Role Cleanup
+    name: Game role cleanup
     description: Deletes all roles created by this bot.
     accessPermissions:
       - MANAGE_ROLES
