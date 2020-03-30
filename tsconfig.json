@@ -7,7 +7,8 @@
 		"noImplicitAny": true,
 		"allowJs": false,
 		"sourceMap": true,
-		"outDir": "./build"
+		"outDir": "./build",
+		"esModuleInterop": true
 	},
 	"typedocOptions": {
 		"out": "./docs",

@@ -79,13 +79,15 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class"><a href="classes/brain.html" class="tsd-kind-icon">Brain</a></li>
 								<li class="tsd-kind-class"><a href="classes/discordbot.html" class="tsd-kind-icon">Discord<wbr>Bot</a></li>
+								<li class="tsd-kind-class"><a href="classes/duration.html" class="tsd-kind-icon">Duration</a></li>
+								<li class="tsd-kind-class"><a href="classes/firebasepersistplugin.html" class="tsd-kind-icon">Firebase<wbr>Persist<wbr>Plugin</a></li>
 								<li class="tsd-kind-class"><a href="classes/helpplugin.html" class="tsd-kind-icon">Help<wbr>Plugin</a></li>
-								<li class="tsd-kind-class"><a href="classes/persist.html" class="tsd-kind-icon">Persist</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/plugin.html" class="tsd-kind-icon">Plugin</a></li>
 								<li class="tsd-kind-class"><a href="classes/presenceroles.html" class="tsd-kind-icon">Presence<wbr>Roles</a></li>
 								<li class="tsd-kind-class"><a href="classes/standardhandlers.html" class="tsd-kind-icon">Standard<wbr>Handlers</a></li>
 								<li class="tsd-kind-class"><a href="classes/statusplugin.html" class="tsd-kind-icon">Status<wbr>Plugin</a></li>
 								<li class="tsd-kind-class"><a href="classes/temporaryvoicechannel.html" class="tsd-kind-icon">Temporary<wbr>Voice<wbr>Channel</a></li>
+								<li class="tsd-kind-class"><a href="classes/timezoneplugin.html" class="tsd-kind-icon">Timezone<wbr>Plugin</a></li>
 								<li class="tsd-kind-class"><a href="classes/voicescaling.html" class="tsd-kind-icon">Voice<wbr>Scaling</a></li>
 							</ul>
 						</section>
@@ -101,6 +103,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/intent.html" class="tsd-kind-icon">Intent</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/intentdata.html" class="tsd-kind-icon">Intent<wbr>Data</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/naturalguess.html" class="tsd-kind-icon">Natural<wbr>Guess</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/persistenceprovider.html" class="tsd-kind-icon">Persistence<wbr>Provider</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/questiondata.html" class="tsd-kind-icon">Question<wbr>Data</a></li>
 							</ul>
 						</section>
@@ -156,7 +159,7 @@
 					<div class="tsd-signature tsd-kind-icon">Intent<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>eventData<span class="tsd-signature-symbol">: </span><a href="interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/typedef/IntentHandler.ts#L3">src/typedef/IntentHandler.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/typedef/IntentHandler.ts#L3">src/typedef/IntentHandler.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -190,7 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">META_<wbr>HASH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = getHash(&quot;heads/master&quot;, true)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L21">src/helpers/helpers.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L19">src/helpers/helpers.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -200,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">META_<wbr>VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = readFileP(&quot;./package.json&quot;).then((data) &#x3D;&gt; safeLoad(data.toString())).then((data) &#x3D;&gt; data.version)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L12">src/helpers/helpers.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L10">src/helpers/helpers.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -210,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">indexable<wbr>Channel<wbr>Regex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /([\w ]+) (\d+)/</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/plugins/voiceScaling.ts#L5">src/plugins/voiceScaling.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/plugins/voiceScaling.ts#L5">src/plugins/voiceScaling.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -220,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>tag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>tags<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Stringable</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Ratlogger</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ratlog(process.stdout)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/shard-manager.ts#L8">src/shard-manager.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/shard-manager.ts#L8">src/shard-manager.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -306,7 +309,7 @@
 					<div class="tsd-signature tsd-kind-icon">read<wbr>FileP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">__promisify__</span><span class="tsd-signature-symbol"> = promisify(readFile)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L10">src/helpers/helpers.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L8">src/helpers/helpers.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -323,7 +326,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L83">src/helpers/helpers.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/checkContext.ts#L2">src/helpers/checkContext.ts:2</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -367,7 +370,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/plugins/presenceRoles.ts#L9">src/plugins/presenceRoles.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/plugins/presenceRoles.ts#L10">src/plugins/presenceRoles.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -390,7 +393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L16">src/helpers/helpers.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L14">src/helpers/helpers.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -416,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/injectErrorLogger.ts#L5">src/helpers/injectErrorLogger.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/injectErrorLogger.ts#L5">src/helpers/injectErrorLogger.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -433,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L79">src/helpers/helpers.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L40">src/helpers/helpers.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -456,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/parseConfig.ts#L6">src/helpers/parseConfig.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/parseConfig.ts#L6">src/helpers/parseConfig.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/configelement.html" class="tsd-signature-type">ConfigElement</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -473,7 +476,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/promiseRetry.ts#L8">src/helpers/promiseRetry.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/promiseRetry.ts#L8">src/helpers/promiseRetry.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -558,7 +561,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.ts#L3">src/helpers/queryWithObject.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.ts#L3">src/helpers/queryWithObject.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -584,7 +587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/objectsAndArrays.ts#L1">src/helpers/objectsAndArrays.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/objectsAndArrays.ts#L1">src/helpers/objectsAndArrays.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -613,7 +616,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L60">src/helpers/helpers.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L21">src/helpers/helpers.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -648,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L23">src/helpers/helpers.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/responseToQuestion.ts#L3">src/helpers/responseToQuestion.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -671,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/helpers.ts#L75">src/helpers/helpers.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/helpers.ts#L36">src/helpers/helpers.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -694,7 +697,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/objectsAndArrays.ts#L4">src/helpers/objectsAndArrays.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/objectsAndArrays.ts#L4">src/helpers/objectsAndArrays.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -727,7 +730,7 @@
 					<div class="tsd-signature tsd-kind-icon">Backoffs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/promiseRetry.ts#L4">src/helpers/promiseRetry.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/promiseRetry.ts#L4">src/helpers/promiseRetry.ts:4</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -740,7 +743,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/promiseRetry.ts#L5">src/helpers/promiseRetry.ts:5</a></li>
+										<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/promiseRetry.ts#L5">src/helpers/promiseRetry.ts:5</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -763,7 +766,7 @@
 					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L5">src/helpers/queryWithObject.spec.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L5">src/helpers/queryWithObject.spec.ts:5</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -772,7 +775,7 @@
 						<div class="tsd-signature tsd-kind-icon">arr<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L11">src/helpers/queryWithObject.spec.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L11">src/helpers/queryWithObject.spec.ts:11</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -782,7 +785,7 @@
 						<div class="tsd-signature tsd-kind-icon">numval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 4.238</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L7">src/helpers/queryWithObject.spec.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L7">src/helpers/queryWithObject.spec.ts:7</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -792,7 +795,7 @@
 						<div class="tsd-signature tsd-kind-icon">stringval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;hello&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L6">src/helpers/queryWithObject.spec.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L6">src/helpers/queryWithObject.spec.ts:6</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -802,7 +805,7 @@
 						<div class="tsd-signature tsd-kind-icon">oval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L8">src/helpers/queryWithObject.spec.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L8">src/helpers/queryWithObject.spec.ts:8</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -811,7 +814,7 @@
 							<div class="tsd-signature tsd-kind-icon">nestedstring<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;again&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/f1d03b4/src/helpers/queryWithObject.spec.ts#L9">src/helpers/queryWithObject.spec.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/01f93bf/src/helpers/queryWithObject.spec.ts#L9">src/helpers/queryWithObject.spec.ts:9</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -842,10 +845,13 @@
 						<a href="classes/discordbot.html" class="tsd-kind-icon">Discord<wbr>Bot</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/helpplugin.html" class="tsd-kind-icon">Help<wbr>Plugin</a>
+						<a href="classes/duration.html" class="tsd-kind-icon">Duration</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/persist.html" class="tsd-kind-icon">Persist</a>
+						<a href="classes/firebasepersistplugin.html" class="tsd-kind-icon">Firebase<wbr>Persist<wbr>Plugin</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/helpplugin.html" class="tsd-kind-icon">Help<wbr>Plugin</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/plugin.html" class="tsd-kind-icon">Plugin</a>
@@ -861,6 +867,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/temporaryvoicechannel.html" class="tsd-kind-icon">Temporary<wbr>Voice<wbr>Channel</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/timezoneplugin.html" class="tsd-kind-icon">Timezone<wbr>Plugin</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/voicescaling.html" class="tsd-kind-icon">Voice<wbr>Scaling</a>
@@ -891,6 +900,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/naturalguess.html" class="tsd-kind-icon">Natural<wbr>Guess</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/persistenceprovider.html" class="tsd-kind-icon">Persistence<wbr>Provider</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/questiondata.html" class="tsd-kind-icon">Question<wbr>Data</a>
@@ -968,13 +980,14 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
