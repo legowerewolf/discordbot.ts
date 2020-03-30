@@ -1,9 +1,9 @@
 ---
 APIKeys:
   discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
-defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
 admins:
 #  - "user snowflake id" # enable dev mode, right click on a user, and select "Copy ID".
+
 intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Available options are "useDefault" (uses only default intents), "useCustom" (uses only custom intents), "mergePreferDefault" (uses both default and custom, but chooses default in the event of a name collision), and "mergePreferCustom" (same as "mergePreferDefault", but chooses custom over defaults).
 intents:
   greeting: # intent names must be unique in the config file
@@ -20,6 +20,7 @@ intents:
         - Greetings.
         - Aloha.
         - Salutations.
+
   goodnight:
     models:
       - goodnight
@@ -31,12 +32,14 @@ intents:
         - Goodnight!
         - Have a good night!
         - See you tomorrow, I guess?
+
   capabilityQuery:
     models:
       - what can you do?
       - help
       - what can I say?
     handler: help
+
   declarationOfLove:
     models:
       - I love you
@@ -46,6 +49,7 @@ intents:
       responses:
         - Aww, I love you too!
         - \*blushes\* # You can use any of Discord's standard text formatting.
+
   shardShutdown:
     handler: botShutdown
     name: Shard Shutdown
@@ -62,6 +66,7 @@ intents:
       responses:
         - Ok. Goodbye!
         - I'll be back.
+
   crashTest:
     handler: crash
     name: Shard Crash
@@ -73,6 +78,7 @@ intents:
     data:
       responses:
         - Adios.
+
   temporaryVoiceChannel:
     handler: temporaryVoiceChannel
     name: Temporary Voice Channel
@@ -118,8 +124,7 @@ intents:
       responses:
         - "Welcome to your new channel: "
         - "Here you go! Your new channel, fresh from the factory: "
-      handlerSpecific: # The responses field must always be an array of strings. The handlerSpecific field allows for infinite variety, as needed by this specific handler.
-        bitrate: 16 # The default bitrate for newly created temporary voice channels.
+
   purgeGameroles:
     handler: purgeGameroles
     name: Game role cleanup
@@ -132,20 +137,23 @@ intents:
       - clean roles
       - cleanup roles
       - role cleanup
+
   _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
     handler: basicResponse
     data:
       responses:
         - I'm sorry, what was that?
         - I didn't understand. Could you rephrase that?
+
 pluginsResolutionMethod: useDefault
-plugins: # Plugins add additional functionality.
-  presenceRoles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-    rolePrefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
-  voiceScaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
-  standardHandlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
-  temporaryVoiceChannels: # Spawn temporary voice channels on request.
-    nameSuffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
-  advancedHelp: # Provide useful command help auto-generated on command based on intents' description fields
-  status: # Provide a HTTP endpoint for checking status
-    port: 8080 # The port it exposes on
+plugins:
+  presenceRoles:
+    rolePrefix: "in:"
+  voiceScaling:
+  standardHandlers:
+  temporaryVoiceChannels:
+    nameSuffix: 🤖
+    bitrate: 16
+  advancedHelp:
+  status:
+    port: 8080

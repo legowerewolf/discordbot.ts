@@ -4,6 +4,10 @@ import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
+/**
+ * Adds a help command dynamically generated from content in the config file,
+ * with a nice name, description, and invocation example for each annotated command.
+ */
 export default class HelpPlugin extends Plugin<{}> {
 	inject(context: DiscordBot): void {
 		context.handlers = {

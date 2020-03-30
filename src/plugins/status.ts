@@ -6,6 +6,9 @@ interface Config {
 	port: number;
 }
 
+/**
+ * Starts a web server serving basic JSON data about the bot.
+ */
 export default class StatusPlugin extends Plugin<Config> {
 	private context: DiscordBot;
 	private server: Server;

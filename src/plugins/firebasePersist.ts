@@ -6,10 +6,14 @@ import { PersistenceProvider } from "../typedef/PersistenceProvider";
 import { Plugin } from "../typedef/Plugin";
 
 interface Config {
-	keyPath: string;
+	keyPath: string; // Where the Firestore service account JSON keyfile is, relative to the start directory.
 }
 
-export default class FirebasePersist extends Plugin<Config> implements PersistenceProvider {
+/**
+ * Adds Firebase's Firestore cloud database as a persistence provider for the bot.
+ * Does nothing except provide a read/write interface for the database.
+ */
+export default class FirebasePersistPlugin extends Plugin<Config> implements PersistenceProvider {
 	static defaultConfig: Config = {
 		keyPath: "",
 	};
@@ -19,6 +23,7 @@ export default class FirebasePersist extends Plugin<Config> implements Persisten
 
 	constructor(_config?: Config) {
 		super(_config);
+		if (this.config.keyPath === "") throw new Error("Firestore keypath missing. Please configure or disable Firestore persistence.");
 		this.db = new Firestore({ keyFilename: this.config.keyPath });
 	}
 

@@ -10,11 +10,12 @@ import { Vocab } from "../typedef/Vocab";
 export const getGame = (activities: Activity[]): Activity => activities?.filter((activity) => activity.type === "PLAYING")[0];
 
 interface Config {
-	rolePrefix: string;
+	rolePrefix: string; // The prefix applied to a game's name for the role name.
 }
-
+/**
+ * Creates, applies, removes, and deletes roles for what video game a user is currently playing.
+ */
 export default class PresenceRoles extends Plugin<Config> {
-	// Built-in defaults - the minimum needed for the plugin to work.
 	static defaultConfig: Config = {
 		rolePrefix: "in:",
 	};
