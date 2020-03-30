@@ -85,7 +85,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#admins" class="tsd-kind-icon">admins</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#intents" class="tsd-kind-icon">intents</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#intentsresolutionmethod" class="tsd-kind-icon">intents<wbr>Resolution<wbr>Method</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#loglevel" class="tsd-kind-icon">log<wbr>Level</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#plugins" class="tsd-kind-icon">plugins</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="configelement.html#pluginsresolutionmethod" class="tsd-kind-icon">plugins<wbr>Resolution<wbr>Method</a></li>
 							</ul>
@@ -98,18 +97,15 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="apikeys" class="tsd-anchor"></a>
 					<h3>APIKeys</h3>
-					<div class="tsd-signature tsd-kind-icon">APIKeys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>chatbase<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>discord<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">APIKeys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>discord<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L6">src/typedef/ConfigElement.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L7">src/typedef/ConfigElement.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> chatbase<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
 							<li class="tsd-parameter">
 								<h5>discord<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
@@ -119,10 +115,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="admins" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> admins</h3>
-					<div class="tsd-signature tsd-kind-icon">admins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">admins<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"id"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L10">src/typedef/ConfigElement.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L10">src/typedef/ConfigElement.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -132,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">intents<span class="tsd-signature-symbol">:</span> <a href="dictionary.html" class="tsd-signature-type">Dictionary</a><span class="tsd-signature-symbol">&lt;</span><a href="intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L12">src/typedef/ConfigElement.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L13">src/typedef/ConfigElement.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -142,17 +138,7 @@
 					<div class="tsd-signature tsd-kind-icon">intents<wbr>Resolution<wbr>Method<span class="tsd-signature-symbol">:</span> <a href="../enums/resolutionmethods.html" class="tsd-signature-type">ResolutionMethods</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L11">src/typedef/ConfigElement.ts:11</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="loglevel" class="tsd-anchor"></a>
-					<h3>log<wbr>Level</h3>
-					<div class="tsd-signature tsd-kind-icon">log<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L5">src/typedef/ConfigElement.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L12">src/typedef/ConfigElement.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -162,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">plugins<span class="tsd-signature-symbol">:</span> <a href="dictionary.html" class="tsd-signature-type">Dictionary</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L16">src/typedef/ConfigElement.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L17">src/typedef/ConfigElement.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">plugins<wbr>Resolution<wbr>Method<span class="tsd-signature-symbol">:</span> <a href="../enums/resolutionmethods.html" class="tsd-signature-type">ResolutionMethods</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/322db14/src/typedef/ConfigElement.ts#L14">src/typedef/ConfigElement.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/d8c7242/src/typedef/ConfigElement.ts#L15">src/typedef/ConfigElement.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,9 +190,6 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="configelement.html#intentsresolutionmethod" class="tsd-kind-icon">intents<wbr>Resolution<wbr>Method</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="configelement.html#loglevel" class="tsd-kind-icon">log<wbr>Level</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="configelement.html#plugins" class="tsd-kind-icon">plugins</a>
