@@ -33,7 +33,7 @@ export class DiscordBot {
 		this.brain.train();
 
 		this.client = new Client();
-		[
+		([
 			{
 				event: "message",
 				handler: (msg: Message): void => {
@@ -72,7 +72,7 @@ export class DiscordBot {
 				event: "warn",
 				handler: (info: string): void => this.console(info, Vocab.Warn),
 			},
-		].forEach((element) => {
+		] as Array<{ event: Parameters<Client["on"]>[0]; handler: Parameters<Client["on"]>[1] }>).forEach((element) => {
 			this.client.on(element.event, element.handler);
 		});
 
