@@ -30,8 +30,9 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 
 	constructor(_config?: Config) {
 		super(_config);
+		if (_config.manualSwitchTimeout) this.config.manualSwitchTimeout = new Duration(_config.manualSwitchTimeout);
+
 		this.nameRegex = new RegExp(`[\\w ]* ${this.config.nameSuffix}$`, "g");
-		this.config.manualSwitchTimeout = new Duration(_config.manualSwitchTimeout);
 	}
 
 	inject(context: DiscordBot): void {

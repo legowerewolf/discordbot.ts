@@ -161,6 +161,7 @@ plugins:
   temporaryVoiceChannels:
     nameSuffix: 🤖
     bitrate: 16
+    manualSwitchTimeout: 1m
   advancedHelp:
   status:
     port: 8080
