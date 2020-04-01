@@ -41,11 +41,12 @@ export default class HelpPlugin extends Plugin<{}> {
 	listPermissions(event: CommunicationEvent): void {
 		event.responseCallback(
 			stripIndents(`
-				*Current context: ${event.guild.name}*
-				*Guild permissions: [${event.guild
+				Here's your permissions in the context of this server (${event.guild.name})
+				[${event.guild
 					.member(event.author)
 					.permissions.toArray()
-					.join(", ")}]*
+					.sort()
+					.join(", ")}]
 			`)
 		);
 	}
