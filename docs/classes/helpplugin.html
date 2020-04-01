@@ -109,6 +109,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="helpplugin.html#extract" class="tsd-kind-icon">extract</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="helpplugin.html#inject" class="tsd-kind-icon">inject</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="helpplugin.html#listpermissions" class="tsd-kind-icon">list<wbr>Permissions</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="helpplugin.html#writehelp" class="tsd-kind-icon">write<wbr>Help</a></li>
 							</ul>
 						</section>
@@ -128,7 +129,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/typedef/Plugin.ts#L7">src/typedef/Plugin.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/typedef/Plugin.ts#L7">src/typedef/Plugin.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,7 +154,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/typedef/Plugin.ts#L3">src/typedef/Plugin.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/typedef/Plugin.ts#L3">src/typedef/Plugin.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -169,7 +170,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#defaultconfig">defaultConfig</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/typedef/Plugin.ts#L7">src/typedef/Plugin.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/typedef/Plugin.ts#L7">src/typedef/Plugin.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +188,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="plugin.html">Plugin</a>.<a href="plugin.html#extract">extract</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/plugins/advancedHelp.ts#L41">src/plugins/advancedHelp.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/plugins/advancedHelp.ts#L54">src/plugins/advancedHelp.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -211,13 +212,36 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="plugin.html">Plugin</a>.<a href="plugin.html#inject">inject</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/plugins/advancedHelp.ts#L12">src/plugins/advancedHelp.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/plugins/advancedHelp.ts#L12">src/plugins/advancedHelp.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>context: <a href="discordbot.html" class="tsd-signature-type">DiscordBot</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listpermissions" class="tsd-anchor"></a>
+					<h3>list<wbr>Permissions</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Permissions<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/plugins/advancedHelp.ts#L41">src/plugins/advancedHelp.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -234,7 +258,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9983441/src/plugins/advancedHelp.ts#L19">src/plugins/advancedHelp.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/9269617/src/plugins/advancedHelp.ts#L20">src/plugins/advancedHelp.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -278,6 +302,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="helpplugin.html#inject" class="tsd-kind-icon">inject</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="helpplugin.html#listpermissions" class="tsd-kind-icon">list<wbr>Permissions</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="helpplugin.html#writehelp" class="tsd-kind-icon">write<wbr>Help</a>
