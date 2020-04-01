@@ -34,6 +34,14 @@ export default class HelpPlugin extends Plugin<{}> {
 
 				*The above examples are picked at random from the many I respond to.*
 				*Current context: ${event.guild?.name ?? "Direct Message"}*
+				*${
+					event.guild
+						? `Guild permissions: [${event.guild
+								.member(event.author)
+								.permissions.toArray()
+								.join(", ")}]`
+						: ""
+				}*
 				`
 		);
 	}
