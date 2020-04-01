@@ -31,6 +31,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 	constructor(_config?: Config) {
 		super(_config);
 		this.nameRegex = new RegExp(`[\\w ]* ${this.config.nameSuffix}$`, "g");
+		this.config.manualSwitchTimeout = new Duration(_config.manualSwitchTimeout);
 	}
 
 	inject(context: DiscordBot): void {
@@ -52,7 +53,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 
 	spawnTemporaryChannel(eventData: CommunicationEvent): void {
 		responseToQuestion(eventData)
-			.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.nameSuffix}`, { type: "voice", bitrate: (eventData.config.handlerSpecific.bitrate ?? this.config.bitrate) * 1000 })) // Make the voice channel
+			.then((chosenName: string) => eventData.guild.channels.create(`${chosenName} ${this.config.nameSuffix}`, { type: "voice", bitrate: (eventData.config.handlerSpecific?.bitrate ?? this.config.bitrate) * 1000 })) // Make the voice channel
 			.then((channel: VoiceChannel) =>
 				channel.guild
 					.member(eventData.author)

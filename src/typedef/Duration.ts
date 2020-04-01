@@ -3,10 +3,11 @@ import ms from "ms";
 export default class Duration {
 	private time: number;
 
-	constructor(time: string | number) {
+	constructor(time: string | number | Duration) {
 		const casts = {
 			number: (t: number): number => t,
 			string: (t: string): number => ms(t),
+			object: (t: Duration): number => t.ms,
 		};
 
 		// @ts-ignore: Checked at the constructor level.
