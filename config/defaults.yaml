@@ -40,6 +40,11 @@ intents:
       - what can I say?
     handler: help
 
+  permissionsCheck:
+    models:
+      - check permissions
+    handler: listPermissions
+
   declarationOfLove:
     models:
       - I love you

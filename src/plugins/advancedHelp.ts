@@ -13,6 +13,7 @@ export default class HelpPlugin extends Plugin<{}> {
 		context.handlers = {
 			...context.handlers,
 			help: this.writeHelp.bind(this),
+			listPermissions: this.listPermissions.bind(this),
 		};
 	}
 
@@ -33,16 +34,19 @@ export default class HelpPlugin extends Plugin<{}> {
 					.join("\n\n")}
 
 				*The above examples are picked at random from the many I respond to.*
-				*Current context: ${event.guild?.name ?? "Direct Message"}*
-				*${
-					event.guild
-						? `Guild permissions: [${event.guild
-								.member(event.author)
-								.permissions.toArray()
-								.join(", ")}]`
-						: ""
-				}*
 				`
+		);
+	}
+
+	listPermissions(event: CommunicationEvent): void {
+		event.responseCallback(
+			stripIndents(`
+				*Current context: ${event.guild.name}*
+				*Guild permissions: [${event.guild
+					.member(event.author)
+					.permissions.toArray()
+					.join(", ")}]*
+			`)
 		);
 	}
 
