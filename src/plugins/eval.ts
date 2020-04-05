@@ -2,6 +2,7 @@ import { responseToQuestion } from "../helpers/responseToQuestion";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
 import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
+import { Vocab } from "../typedef/Vocab";
 
 export default class EvalPlugin extends Plugin<never> {
 	context: DiscordBot;
@@ -21,7 +22,8 @@ export default class EvalPlugin extends Plugin<never> {
 			try {
 				res = JSON.stringify(eval(resp));
 			} catch (e) {
-				res = JSON.stringify(e);
+				this.context.console(e, Vocab.Warn);
+				res = JSON.stringify({ exception: e });
 			}
 			eventData.responseCallback(res);
 		});

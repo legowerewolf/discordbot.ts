@@ -110,9 +110,9 @@ export class DiscordBot {
 	}
 
 	checkPermission(user: User, guild: Guild, intent: Intent): boolean {
-		const userPermissions: PermissionString[] = [];
+		let userPermissions: PermissionString[] = [];
 		if (guild) {
-			userPermissions.concat(...guild.member(user).permissions.toArray());
+			userPermissions = userPermissions.concat(...guild.member(user).permissions.toArray());
 		}
 		return (intent.accessPermissions?.some((requiredPermission) => userPermissions.findIndex((hasPermission) => hasPermission === requiredPermission) != -1) ?? true) || this.config.admins?.findIndex((admin) => admin === user.id) != -1;
 	}
