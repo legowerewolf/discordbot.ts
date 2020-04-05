@@ -6,6 +6,7 @@ import { Brain } from "./Brain";
 import { ClassModule } from "./ClassModule";
 import { CommunicationEvent } from "./CommunicationEvent";
 import { ConfigElement } from "./ConfigElement";
+import Duration from "./Duration";
 import { Intent } from "./Intent";
 import { IntentHandler } from "./IntentHandler";
 import { PersistenceProvider } from "./PersistenceProvider";
@@ -57,7 +58,12 @@ export class DiscordBot {
 				handler: async (): Promise<void> => {
 					this.console(`Shard ready. Connected to ${this.client.guilds.cache.size} guild${this.client.guilds.cache.size > 1 ? "s" : ""}.`, Vocab.Info);
 
-					this.client.user.setActivity(`v${await META_VERSION} / ${await META_HASH}`);
+					// Set status refresher
+					const l = async (): Promise<void> => {
+						this.client.user.setActivity(`v${await META_VERSION} / ${await META_HASH}`);
+					};
+					l();
+					setTimeout(l, new Duration("1d").ms);
 				},
 			},
 			{
