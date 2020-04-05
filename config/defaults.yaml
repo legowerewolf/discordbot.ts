@@ -145,6 +145,21 @@ intents:
       - cleanup roles
       - role cleanup
 
+  eval:
+    models:
+      - evaluate function
+      - eval
+    handler: eval
+    accessPermissions:
+      - BOT_ADMIN
+    data:
+      question:
+        askMessage:
+          - Code?
+        timeoutMessage:
+          - Timed out.
+        timeout: 60000
+
   _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
     handler: basicResponse
     data:
@@ -165,3 +180,4 @@ plugins:
   advancedHelp:
   status:
     port: 8080
+  eval:

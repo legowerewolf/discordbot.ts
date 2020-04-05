@@ -8,11 +8,11 @@ export function responseToQuestion(eventData: CommunicationEvent): Promise<strin
 			eventData.responseCallback(randomElementFromArray(eventData.config.question.askMessage));
 			eventData.bot.overrideMessageListenerOnce(eventData.author, eventData.config.question.timeout).then(
 				(response) => {
-					eventData.responseCallback(randomElementFromArray(eventData.config.question.answeredMessage));
+					if (eventData.config.question.answeredMessage) eventData.responseCallback(randomElementFromArray(eventData.config.question.answeredMessage));
 					resolve(response.cleanContent);
 				},
 				() => {
-					eventData.responseCallback(randomElementFromArray(eventData.config.question.timeoutMessage));
+					if (eventData.config.question.timeoutMessage) eventData.responseCallback(randomElementFromArray(eventData.config.question.timeoutMessage));
 					resolve(defaultResponse);
 				}
 			);
