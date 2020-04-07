@@ -109,6 +109,12 @@ export class DiscordBot {
 		process.exit();
 	}
 
+	/**
+	 * Check the permission of a given user to invoke an intent in the context of a server/DM
+	 * @param user User to check
+	 * @param guild guild to fetch user permissions for, if any
+	 * @param intent
+	 */
 	checkPermission(user: User, guild: Guild, intent: Intent): boolean {
 		let userPermissions: PermissionString[] = [];
 		if (guild) {
