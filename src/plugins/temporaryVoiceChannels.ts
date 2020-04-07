@@ -8,9 +8,14 @@ import { Plugin } from "../typedef/Plugin";
 import { Vocab } from "../typedef/Vocab";
 
 interface Config {
-	nameSuffix: string; // Symbol/text appended to the end of the names of channels spawned by this plugin
-	bitrate: number; // Default bitrate (kbps)
-	manualSwitchTimeout: Duration; // Time a user has to join a new temporary channel before it's deleted
+	/** Symbol/text appended to the end of the names of channels spawned by this plugin */
+	nameSuffix: string;
+
+	/** Default bitrate (kbps) */
+	bitrate: number;
+
+	/** Time a user has to join a new temporary channel before it's deleted */
+	manualSwitchTimeout: Duration;
 }
 
 /**
@@ -19,8 +24,12 @@ interface Config {
  * Temporary channels only exist as long as a person is using them.
  */
 export default class TemporaryVoiceChannel extends Plugin<Config> {
-	nameRegex: RegExp;
-	context: DiscordBot;
+	/**
+	 * Regular expression used to identify channels spawned by this plugin
+	 *
+	 * Computed/generated once, in the constructor
+	 */
+	private nameRegex: RegExp;
 
 	static defaultConfig: Config = {
 		nameSuffix: "🤖",
@@ -28,20 +37,15 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 		manualSwitchTimeout: new Duration("1m"),
 	};
 
-	constructor(_config?: Config) {
-		super(_config);
+	constructor(context: DiscordBot, _config?: Config) {
+		super(context, _config);
 		if (_config.manualSwitchTimeout) this.config.manualSwitchTimeout = new Duration(_config.manualSwitchTimeout);
 
 		this.nameRegex = new RegExp(`[\\w ]* ${this.config.nameSuffix}$`, "g");
 	}
 
 	inject(context: DiscordBot): void {
-		this.context = context;
-
-		context.handlers = {
-			...context.handlers,
-			temporaryVoiceChannel: checkContext("server", this.spawnTemporaryChannel.bind(this)),
-		};
+		this.declareHandler("temporaryVoiceChannel", checkContext("server", this.spawnTemporaryChannel.bind(this)));
 
 		context.client.on("voiceStateUpdate", (o) => this.deleteEmptyChannel(o));
 	}
@@ -60,7 +64,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 					.member(eventData.author)
 					.voice.setChannel(channel) // Try to move the user
 					.catch((err) => {
-						this.context.console(`${err} (Attempted to move user to temporary voice channel)`, Vocab.Warn);
+						eventData.bot.console(`${err} (Attempted to move user to temporary voice channel)`, Vocab.Warn);
 
 						// Delete the channel if it's empty after a certain duration
 						setTimeout(async () => {
@@ -72,7 +76,7 @@ export default class TemporaryVoiceChannel extends Plugin<Config> {
 	}
 
 	extract(context: DiscordBot): void {
-		delete context.handlers.temporary_voice_channel;
+		this.clearHandlers();
 		context.client.off("voiceStateUpdate", this.deleteEmptyChannel);
 	}
 }

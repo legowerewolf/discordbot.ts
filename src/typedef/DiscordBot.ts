@@ -88,7 +88,7 @@ export class DiscordBot {
 			this.console(`Loading plugin...`, { plugin: name }, Vocab.Info);
 			import(`../plugins/${name}`).then(
 				(module: ClassModule<Plugin<unknown>>) => {
-					const instance: Plugin<unknown> = new module.default(this.config.plugins[name]);
+					const instance: Plugin<unknown> = new module.default(this, this.config.plugins[name]);
 					instance.inject(this);
 					this.plugins.push(instance);
 				},

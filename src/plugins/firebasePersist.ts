@@ -19,21 +19,18 @@ export default class FirebasePersistPlugin extends Plugin<Config> implements Per
 	};
 
 	private db: Firestore;
-	private context: DiscordBot;
 
-	constructor(_config?: Config) {
-		super(_config);
+	constructor(context: DiscordBot, _config?: Config) {
+		super(context, _config);
 		if (this.config.keyPath === "") throw new Error("Firestore keypath missing. Please configure or disable Firestore persistence.");
 		this.db = new Firestore({ keyFilename: this.config.keyPath });
 	}
 
-	inject(context: DiscordBot): void {
+	inject(): void {
 		this.db
 			.collection("stats")
 			.doc("bot")
 			.set({ bootTime: Timestamp.fromDate(new Date()) }, { merge: true });
-
-		this.context = context;
 
 		this.context.persister = this;
 	}

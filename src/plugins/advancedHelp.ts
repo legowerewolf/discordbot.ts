@@ -1,7 +1,6 @@
 import { stripIndents } from "common-tags";
 import { randomElementFromArray, valuesOf } from "../helpers/objectsAndArrays";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
-import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
 /**
@@ -9,12 +8,9 @@ import { Plugin } from "../typedef/Plugin";
  * with a nice name, description, and invocation example for each annotated command.
  */
 export default class HelpPlugin extends Plugin<{}> {
-	inject(context: DiscordBot): void {
-		context.handlers = {
-			...context.handlers,
-			help: this.writeHelp.bind(this),
-			listPermissions: this.listPermissions.bind(this),
-		};
+	inject(): void {
+		this.declareHandler("help", this.writeHelp.bind(this));
+		this.declareHandler("listPermissions", this.listPermissions.bind(this));
 	}
 
 	writeHelp(event: CommunicationEvent): void {
@@ -42,16 +38,12 @@ export default class HelpPlugin extends Plugin<{}> {
 		event.responseCallback(
 			stripIndents(`
 				Here's your permissions in the context of this server (${event.guild.name})
-				[${event.guild
-					.member(event.author)
-					.permissions.toArray()
-					.sort()
-					.join(", ")}]
+				[${event.guild.member(event.author).permissions.toArray().sort().join(", ")}]
 			`)
 		);
 	}
 
-	extract(context: DiscordBot): void {
-		delete context.handlers.help;
+	extract(): void {
+		this.clearHandlers();
 	}
 }

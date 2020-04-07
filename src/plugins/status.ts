@@ -1,5 +1,4 @@
 import { createServer, Server } from "http";
-import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
 interface Config {
@@ -10,17 +9,14 @@ interface Config {
  * Starts a web server serving basic JSON data about the bot.
  */
 export default class StatusPlugin extends Plugin<Config> {
-	private context: DiscordBot;
 	private server: Server;
 
 	static defaultConfig = {
 		port: 8080,
 	};
 
-	inject(context: DiscordBot): void {
-		if (context.client.shard?.ids.indexOf(0) == -1) return;
-
-		this.context = context;
+	inject(): void {
+		if (this.context.client.shard?.ids.indexOf(0) == -1) return;
 
 		this.server = createServer(async (req, res) => {
 			res.statusCode = 200;
@@ -35,8 +31,6 @@ export default class StatusPlugin extends Plugin<Config> {
 	}
 
 	extract(): void {
-		console.log("nothing");
-
 		this.server.close();
 	}
 }

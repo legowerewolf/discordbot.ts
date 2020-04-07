@@ -20,17 +20,10 @@ export default class PresenceRoles extends Plugin<Config> {
 		rolePrefix: "in:",
 	};
 
-	context: DiscordBot;
-
 	inject(context: DiscordBot): void {
-		this.context = context;
-
 		context.client.on("presenceUpdate", (o, n) => this.fixPresences(o, n));
 
-		context.handlers = {
-			...context.handlers,
-			purgeGameroles: checkContext("server", this.removeRolesFromServer.bind(this)),
-		};
+		this.declareHandler("purgeGameroles", checkContext("server", this.removeRolesFromServer.bind(this)));
 	}
 
 	fixPresences(oldPresence: Presence, newPresence: Presence): void {
@@ -118,10 +111,8 @@ export default class PresenceRoles extends Plugin<Config> {
 	extract(): void {
 		this.context.client.off("presenceUpdate", this.fixPresences);
 
-		delete this.context.handlers.purge_gameroles;
+		this.clearHandlers();
 
 		this.context.client.guilds.cache.forEach((guild) => guild.roles.cache.filter((role) => role.name.startsWith(this.config.rolePrefix)).forEach((role) => role.delete()));
-
-		this.context = undefined;
 	}
 }

@@ -5,15 +5,8 @@ import { Plugin } from "../typedef/Plugin";
 import { Vocab } from "../typedef/Vocab";
 
 export default class EvalPlugin extends Plugin<never> {
-	context: DiscordBot;
-
-	inject(context: DiscordBot) {
-		context.handlers = {
-			...context.handlers,
-			eval: this.evaluate.bind(context),
-		};
-
-		this.context = context;
+	inject(context: DiscordBot): void {
+		this.declareHandler("eval", this.evaluate.bind(context));
 	}
 
 	evaluate(eventData: CommunicationEvent): void {
@@ -22,14 +15,14 @@ export default class EvalPlugin extends Plugin<never> {
 			try {
 				res = JSON.stringify(eval(resp));
 			} catch (e) {
-				this.context.console(e, Vocab.Warn);
+				eventData.bot.console(e, Vocab.Warn);
 				res = JSON.stringify({ exception: e });
 			}
 			eventData.responseCallback(res);
 		});
 	}
 
-	extract() {
-		return;
+	extract(): void {
+		this.clearHandlers();
 	}
 }

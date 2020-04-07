@@ -1,13 +1,12 @@
 import { Collection, GuildChannel, Snowflake, VoiceChannel, VoiceState } from "discord.js";
-import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
 const indexableChannelRegex = /([\w ]+) (\d+)/;
 
 export default class VoiceScaling extends Plugin<{}> {
-	inject(context: DiscordBot): void {
+	inject(): void {
 		// Register a handler for guildmembers joining/leaving/switching voice channels.
-		context.client.on("voiceStateUpdate", (o, n) => this.updateChannels(o, n));
+		this.context.client.on("voiceStateUpdate", (o, n) => this.updateChannels(o, n));
 	}
 
 	updateChannels(oldVoiceState: VoiceState, newVoiceState: VoiceState): void {
@@ -53,7 +52,7 @@ export default class VoiceScaling extends Plugin<{}> {
 		return `${channel.name.match(indexableChannelRegex)[1]} ${VoiceScaling.newIndex(this.getDuplicateChannelIDs(channel))}`;
 	}
 
-	extract(context: DiscordBot): void {
-		context.client.off("voiceStateUpdate", this.updateChannels);
+	extract(): void {
+		this.context.client.off("voiceStateUpdate", this.updateChannels);
 	}
 }

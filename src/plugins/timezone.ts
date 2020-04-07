@@ -1,23 +1,15 @@
 import { tz } from "moment-timezone";
 import { responseToQuestion } from "../helpers/responseToQuestion";
 import { CommunicationEvent } from "../typedef/CommunicationEvent";
-import { DiscordBot } from "../typedef/DiscordBot";
 import { Plugin } from "../typedef/Plugin";
 
 export default class TimezonePlugin extends Plugin<{}> {
-	context: DiscordBot;
-
-	inject(context: DiscordBot): void {
-		this.context = context;
-
-		context.handlers = {
-			...context.handlers,
-			storeTimezone: this.storeTimezone.bind(this),
-		};
+	inject(): void {
+		this.declareHandler("storeTimezone", this.storeTimezone.bind(this));
 	}
 
 	extract(): void {
-		return;
+		this.clearHandlers();
 	}
 
 	storeTimezone(event: CommunicationEvent): void {
