@@ -96,16 +96,18 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="presenceroles.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="presenceroles.html#config" class="tsd-kind-icon">config</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="presenceroles.html#context" class="tsd-kind-icon">context</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="presenceroles.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="presenceroles.html#context" class="tsd-kind-icon">context</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="presenceroles.html#clearhandlers" class="tsd-kind-icon">clear<wbr>Handlers</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="presenceroles.html#declarehandler" class="tsd-kind-icon">declare<wbr>Handler</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="presenceroles.html#extract" class="tsd-kind-icon">extract</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="presenceroles.html#fixpresences" class="tsd-kind-icon">fix<wbr>Presences</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="presenceroles.html#inject" class="tsd-kind-icon">inject</a></li>
@@ -127,18 +129,21 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Presence<wbr>Roles<span class="tsd-signature-symbol">(</span>_config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="presenceroles.html" class="tsd-signature-type">PresenceRoles</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Presence<wbr>Roles<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="discordbot.html" class="tsd-signature-type">DiscordBot</a>, _config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="presenceroles.html" class="tsd-signature-type">PresenceRoles</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/typedef/Plugin.ts#L7">src/typedef/Plugin.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/typedef/Plugin.ts#L9">src/typedef/Plugin.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5>context: <a href="discordbot.html" class="tsd-signature-type">DiscordBot</a></h5>
+								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> _config: <a href="../interfaces/config.html" class="tsd-signature-type">Config</a></h5>
 								</li>
@@ -148,32 +153,96 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="config" class="tsd-anchor"></a>
-					<h3>config</h3>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> config</h3>
 					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.html" class="tsd-signature-type">Config</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/typedef/Plugin.ts#L3">src/typedef/Plugin.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/typedef/Plugin.ts#L4">src/typedef/Plugin.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="context" class="tsd-anchor"></a>
-					<h3>context</h3>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> context</h3>
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <a href="discordbot.html" class="tsd-signature-type">DiscordBot</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#context">context</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L23">src/plugins/presenceRoles.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/typedef/Plugin.ts#L5">src/typedef/Plugin.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="clearhandlers" class="tsd-anchor"></a>
+					<h3>clear<wbr>Handlers</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">clear<wbr>Handlers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#clearhandlers">clearHandlers</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/typedef/Plugin.ts#L39">src/typedef/Plugin.ts:39</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="declarehandler" class="tsd-anchor"></a>
+					<h3>declare<wbr>Handler</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">declare<wbr>Handler<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="plugin.html">Plugin</a>.<a href="plugin.html#declarehandler">declareHandler</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/typedef/Plugin.ts#L32">src/typedef/Plugin.ts:32</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>handler: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>event: <a href="../interfaces/communicationevent.html" class="tsd-signature-type">CommunicationEvent</a></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="extract" class="tsd-anchor"></a>
 					<h3>extract</h3>
@@ -185,7 +254,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="plugin.html">Plugin</a>.<a href="plugin.html#extract">extract</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L118">src/plugins/presenceRoles.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L111">src/plugins/presenceRoles.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -202,7 +271,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L36">src/plugins/presenceRoles.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L29">src/plugins/presenceRoles.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -229,7 +298,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="plugin.html">Plugin</a>.<a href="plugin.html#inject">inject</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L25">src/plugins/presenceRoles.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L23">src/plugins/presenceRoles.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -252,7 +321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L101">src/plugins/presenceRoles.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L94">src/plugins/presenceRoles.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -275,7 +344,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="plugin.html">Plugin</a>.<a href="plugin.html#defaultconfig">defaultConfig</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L19">src/plugins/presenceRoles.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L19">src/plugins/presenceRoles.ts:19</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -284,7 +353,7 @@
 						<div class="tsd-signature tsd-kind-icon">role<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;in:&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/c75c3e4/src/plugins/presenceRoles.ts#L20">src/plugins/presenceRoles.ts:20</a></li>
+								<li>Defined in <a href="https://github.com/legowerewolf/discordbot.ts/blob/5e876e3/src/plugins/presenceRoles.ts#L20">src/plugins/presenceRoles.ts:20</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -309,11 +378,17 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 								<a href="presenceroles.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="presenceroles.html#config" class="tsd-kind-icon">config</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="presenceroles.html#context" class="tsd-kind-icon">context</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="presenceroles.html#clearhandlers" class="tsd-kind-icon">clear<wbr>Handlers</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="presenceroles.html#declarehandler" class="tsd-kind-icon">declare<wbr>Handler</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="presenceroles.html#extract" class="tsd-kind-icon">extract</a>
@@ -355,11 +430,14 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
