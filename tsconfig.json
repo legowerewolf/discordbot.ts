@@ -2,10 +2,16 @@
 	"include": ["src/**/*"],
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"module": "esnext",
+		"module": "commonjs",
 		"target": "es6",
 		"noImplicitAny": true,
 		"allowJs": false,
-		"sourceMap": true
+		"sourceMap": true,
+		"outDir": "./build",
+		"esModuleInterop": true
+	},
+	"typedocOptions": {
+		"out": "./docs",
+		"mode": "file"
 	}
 }

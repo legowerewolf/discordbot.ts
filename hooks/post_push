@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Tag and push image for each additional tag
+for tag in latest
+do
+    docker tag $IMAGE_NAME ${DOCKER_REPO}:${tag}
+    docker push ${DOCKER_REPO}:${tag}
+done

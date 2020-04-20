@@ -1,133 +1,183 @@
 ---
 APIKeys:
-    discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
-logLevel: 0 # The minimum log level that will be printed. 0 is info, 1 is warnings, 2 is errors.
-defaultPermissionLevel: 0 # The bot has its own simple permission system, used to guard access to powerful commands. This sets every user's default.
-users:
-#   '[user's numerical id]': # enable dev mode, right click on a user, and select "Copy ID".
-#       permissionLevel: 5 # A user's permission level must meet or exceed that of a command's permission level to execute that command.
+  discord: # This is the only value required to be in your configuration. Paste the key from the Discord API console here.
+admins:
+#  - "user snowflake id" # enable dev mode, right click on a user, and select "Copy ID".
+
 intentsResolutionMethod: useDefault # Determines how intent configuration resolution will be handled. Available options are "useDefault" (uses only default intents), "useCustom" (uses only custom intents), "mergePreferDefault" (uses both default and custom, but chooses default in the event of a name collision), and "mergePreferCustom" (same as "mergePreferDefault", but chooses custom over defaults).
 intents:
-    greeting: # intent names must be unique in the config file
-        models: # Models get fed to the natural language system to train it to interpret messages.
-            - hello
-            - hi
-            - greetings
-            - welcome
-        handler: basic_response # Handler that picks a random response from the provided list.
-        data:
-            responses: # Provide responses to be randomly replied with for the provided models.
-                - Hello!
-                - Hi!
-                - Greetings.
-                - Aloha.
-                - Salutations.
-    goodnight:
-        models:
-            - goodnight
-            - good night
-            - buenos noches
-        handler: basic_response
-        data:
-            responses:
-                - Goodnight!
-                - Have a good night!
-                - See you tomorrow, I guess?
-    capabilityQuery:
-        models:
-            - what can you do?
-            - help
-            - what can I say?
-        handler: basic_response
-        data:
-            responses:
-                - You can say "make a temporary channel" (or something similar), and I'll create a voice channel that only exists as long as someone's in it. I also manage the replication of numbered voice channels and roles assigned based
-                  on the game you're currently playing.
-    declarationOfLove:
-        models:
-            - I love you
-            - ily
-        handler: basic_response
-        data:
-            responses:
-                - Aww, I love you too!
-                - \*blushes\* # You can use any of Discord's standard text formatting.
-    botShutdown:
-        handler: bot_shutdown
-        permissionLevel: 5
-        models:
-            - shut down
-            - shutdown
-            - go offline
-            - exit
-            - stop
-        data:
-            responses:
-                - Ok. Goodbye!
-                - I'll be back.
-            handlerSpecific: # The responses field must always be an array of strings. The intentSpecific field allows for infinite variety, as needed by this specific handler.
-                shutdownDelay: 3000
-    temporaryVoiceChannel: # If no handler is specified, the bot tries to load a handler named the same as the intent.
-        handler: temporary_voice_channel
-        models:
-            - make a temporary voice channel
-            - create a channel
-            - make a vc
-            - make a temporary channel
-            - make a channel
-            - create a temporary channel
-            - create a temporary voice channel
-            - new channel
-            - make a new channel
-            - make a new channel please
-            - new channel please
-        data:
-            questionData: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
-                question: # This is the question the user is asked. Multiple possibilities are encouraged.
-                    - Alright, what do you want to name it?
-                    - What do you want to call it?
-                answeredResponse: # When the bot has the user's response, it replies with one of these.
-                    - Alright, that's what I'll call it.
-                    - And so it was named.
-                    - Perfectly named. As all things should be.
-                timeoutResponse: # If the user takes too long, it replies with one of these.
-                    - Never mind. I'll pick a name.
-                    - Alright. Guess I'll pick one.
-                timeout: 10000 # How long to wait for a response.
-                defaultResponses: # Acceptable default responses to the question, picked at random if the user takes too long.
-                    - Death Metal
-                    - Rainbows
-                    - Unicorns
-                    - Not Murder
-                    - The End Times
-                    - The Council of Elrond
-                    - Generic channel name
-                    - Stuck in Vim
-                    - Fleet Command
-            responses:
-                - "Welcome to your new channel: "
-                - "Here you go! Your new channel, fresh from the factory: "
-            handlerSpecific:
-                bitrate: 16 # The default bitrate for newly created temporary voice channels.
-    purgeGameroles:
-        handler: purge_gameroles
-        permissionLevel: 5
-        models:
-            - purge game roles
-            - clean game roles
-            - clean roles
-            - cleanup roles
-            - role cleanup
-    _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
-        handler: basic_response
-        data:
-            responses:
-                - I'm sorry, what was that?
-                - I didn't understand. Could you rephrase that?
-plugins: # Plugins add additional functionality.
-    presence-roles: # Creates and assigns roles to people while they are in-game, and deletes them afterwards. Created roles look like @in:[Name of game].
-        role_prefix: "in:" # This prefixes the names of games in roles created by this plugin. (e.g., @in:Warframe)
-    voice-scaling: # For voice channels whose names end in a space-seperated number, E.G. "Hangouts 1", the bot will automatically create and destroy as many duplicate channels as needed for the number of people online. New channels will be auto-assigned to the lowest available number.
-    standard-handlers: # Include the standard handlers (basic_response, ip_finder, and bot_shutdown)
-    temporary-voice-channels: # Spawn temporary voice channels on request.
-        name_suffix: 🤖 # This appears at the end of the names of channels spawned by this plugin.
+  greeting: # intent names must be unique in the config file
+    models: # Models get fed to the natural language system to train it to interpret messages.
+      - hello
+      - hi
+      - greetings
+      - welcome
+    handler: basicResponse # Handler that picks a random response from the provided list.
+    data:
+      responses: # Provide responses to be randomly replied with for the provided models.
+        - Hello!
+        - Hi!
+        - Greetings.
+        - Aloha.
+        - Salutations.
+
+  goodnight:
+    models:
+      - goodnight
+      - good night
+      - buenos noches
+    handler: basicResponse
+    data:
+      responses:
+        - Goodnight!
+        - Have a good night!
+        - See you tomorrow, I guess?
+
+  capabilityQuery:
+    models:
+      - what can you do?
+      - help
+      - what can I say?
+    handler: help
+
+  permissionsCheck:
+    models:
+      - check permissions
+      - list permissions
+      - permissions check
+    handler: listPermissions
+
+  declarationOfLove:
+    models:
+      - I love you
+      - ily
+    handler: basicResponse
+    data:
+      responses:
+        - Aww, I love you too!
+        - \*blushes\* # You can use any of Discord's standard text formatting.
+
+  shardShutdown:
+    handler: botShutdown
+    name: Shard Shutdown
+    description: Shuts down the shard handling the current server. If the shard is managed, it will restart automatically.
+    accessPermissions:
+      - ADMININSTRATOR
+      - MANAGE_GUILD
+    models:
+      - shut down
+      - shutdown
+      - stop
+      - halt
+    data:
+      responses:
+        - Ok. Goodbye!
+        - I'll be back.
+
+  crashTest:
+    handler: crash
+    name: Shard Crash
+    description: Throws an unhandled error, causing the shard to crash. (Debug)
+    accessPermissions:
+      - BOT_ADMIN
+    models:
+      - crash
+    data:
+      responses:
+        - Adios.
+
+  temporaryVoiceChannel:
+    handler: temporaryVoiceChannel
+    name: Temporary Voice Channel
+    description: Creates a voice channel with a given name and deletes it when empty.
+    accessPermissions:
+      - CONNECT
+    models:
+      - make a temporary voice channel
+      - create a channel
+      - make a temporary channel
+      - make a channel
+      - create a temporary channel
+      - create a temporary voice channel
+      - new channel
+      - make a new channel
+      - make a new channel please
+      - new channel please
+      - new room
+      - new room please
+    data:
+      question: # This handler asks the user a question to finish handling their request. (It's a limitation of natural.js that I can't get parameters from input.)
+        askMessage: # This is the question the user is asked. Multiple possibilities are encouraged.
+          - Alright, what do you want to name it?
+          - What do you want to call it?
+        answeredMessage: # When the bot has the user's response, it replies with one of these.
+          - Alright, that's what I'll call it.
+          - And so it was named.
+          - Perfectly named. As all things should be.
+        timeoutMessage: # If the user takes too long, it replies with one of these.
+          - Never mind. I'll pick a name.
+          - Alright. Guess I'll pick one.
+        timeout: 10000 # How long to wait for a response.
+        defaults: # Acceptable default responses to the question, picked at random if the user takes too long.
+          - Death Metal
+          - Rainbows
+          - Unicorns
+          - Not Murder
+          - The End Times
+          - The Council of Elrond
+          - Generic channel name
+          - Stuck in Vim
+          - Fleet Command
+      responses:
+        - "Welcome to your new channel: "
+        - "Here you go! Your new channel, fresh from the factory: "
+
+  purgeGameroles:
+    handler: purgeGameroles
+    name: Game role cleanup
+    description: Deletes all roles created by this bot.
+    accessPermissions:
+      - MANAGE_ROLES
+    models:
+      - purge game roles
+      - clean game roles
+      - clean roles
+      - cleanup roles
+      - role cleanup
+
+  eval:
+    models:
+      - evaluate function
+      - eval
+    handler: eval
+    accessPermissions:
+      - BOT_ADMIN
+    data:
+      question:
+        askMessage:
+          - Code?
+        timeoutMessage:
+          - Timed out.
+        timeout: 60000
+
+  _unknown: # This intent is invoked when the bot has no goddamn clue what's going on.
+    handler: basicResponse
+    data:
+      responses:
+        - I'm sorry, what was that?
+        - I didn't understand. Could you rephrase that?
+
+pluginsResolutionMethod: useDefault
+plugins:
+  presenceRoles:
+    rolePrefix: "in:"
+  voiceScaling:
+  standardHandlers:
+  temporaryVoiceChannels:
+    nameSuffix: 🤖
+    bitrate: 16
+    manualSwitchTimeout: 1m
+  advancedHelp:
+  status:
+    port: 8080
+  eval:
