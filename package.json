@@ -31,7 +31,7 @@
 		"ms": "^2.1.2",
 		"natural": "^0.6.3",
 		"ratlog": "^1.0.2",
-		"source-map-support": "^0.5.16"
+		"source-map-support": "^0.5.17"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.11",
