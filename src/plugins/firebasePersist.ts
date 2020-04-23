@@ -1,4 +1,5 @@
-import { Firestore, Timestamp } from "@google-cloud/firestore";
+import { FieldValue, Firestore, Timestamp } from "@google-cloud/firestore";
+import { objectValueReplace } from "../helpers/objectValueReplace";
 import { promiseRetry } from "../helpers/promiseRetry";
 import { queryWithObject } from "../helpers/queryWithObject";
 import { DiscordBot } from "../typedef/DiscordBot";
@@ -50,6 +51,8 @@ export default class FirebasePersistPlugin extends Plugin<Config> implements Per
 	}
 
 	async writeUser(userID: string, data: object): Promise<Date> {
+		data = objectValueReplace(data, null, FieldValue.delete());
+
 		return promiseRetry(
 			() => {
 				return this.db
