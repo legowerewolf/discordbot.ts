@@ -29,7 +29,7 @@
 		"js-yaml": "^3.13.1",
 		"moment-timezone": "^0.5.28",
 		"ms": "^2.1.2",
-		"natural": "^0.6.3",
+		"natural": "^1.0.1",
 		"ratlog": "^1.0.2",
 		"source-map-support": "^0.5.18"
 	},
