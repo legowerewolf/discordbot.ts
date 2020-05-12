@@ -54,6 +54,6 @@
 		"nyc": "^15.0.1",
 		"ts-node": "^8.10.1",
 		"typedoc": "^0.17.6",
-		"typescript": "^3.8.3"
+		"typescript": "^3.9.2"
 	}
 }
