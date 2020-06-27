@@ -16,7 +16,7 @@ jobs:
         run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build
-        run: docker build -t $IMAGE_NAME:latest
+        run: docker build . -t $IMAGE_NAME:latest
 
       - name: Publish (Latest)
         run: docker push $IMAGE_NAME:latest
