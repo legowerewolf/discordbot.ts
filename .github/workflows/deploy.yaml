@@ -10,13 +10,18 @@ jobs:
 
       - name: Set variables
         run: |
-          echo "::set-env name=IMAGE_NAME::docker.pkg.github.com/$GITHUB_REPOSITORY"
+          echo "::set-env name=IMAGE_NAME::docker.pkg.github.com/$GITHUB_REPOSITORY/bot"
 
       - name: Authenticate Docker
         run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build
-        run: docker build . -t $IMAGE_NAME:latest
+        run: docker build . -t built_image
 
-      - name: Publish (Latest)
+      - name: "Docker: Tag Latest"
+        run: docker image tag built_image $IMAGE_NAME:latest
+        if: github.ref == 'refs/heads/master'
+
+      - name: "Docker: Publish Latest"
         run: docker push $IMAGE_NAME:latest
+        if: github.ref == 'refs/heads/master'
