@@ -10,14 +10,13 @@ jobs:
 
       - name: Set variables
         run: |
-          echo "::set-env name=IMAGE_NAME::docker.pkg.github.com/$GITHUB_REPOSITORY/discordbot-ts:$([ -z "$(git tag -l --points-at HEAD)" ] &&
-          echo "$(git branch --show-current)" || echo "$(git tag -l --points-at HEAD)")"
+          echo "::set-env name=IMAGE_NAME::docker.pkg.github.com/$GITHUB_REPOSITORY"
 
       - name: Authenticate Docker
         run: docker login docker.pkg.github.com -u action -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build
-        run: docker build -t $IMAGE_NAME
+        run: docker build -t $IMAGE_NAME:latest
 
-      - name: Publish
-        run: docker push $IMAGE_NAME
+      - name: Publish (Latest)
+        run: docker push $IMAGE_NAME:latest
