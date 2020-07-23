@@ -34,7 +34,7 @@
 		"source-map-support": "^0.5.19"
 	},
 	"devDependencies": {
-		"@types/chai": "^4.2.11",
+		"@types/chai": "^4.2.12",
 		"@types/common-tags": "^1.8.0",
 		"@types/js-yaml": "^3.12.4",
 		"@types/mocha": "^7.0.2",
