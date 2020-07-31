@@ -1,3 +1,4 @@
+import { CoreProperties } from "@schemastore/package";
 import { GuildMember, Role } from "discord.js";
 import { readFile } from "fs";
 import { safeLoad } from "js-yaml";
@@ -9,7 +10,7 @@ export const readFileP = promisify(readFile);
 
 export const META_VERSION = readFileP("./package.json")
 	.then((data) => safeLoad(data.toString()))
-	.then((data) => data.version);
+	.then((data: CoreProperties) => data.version);
 
 const getHash = (ref: string, short = true): Promise<string> =>
 	readFileP(`./.git/refs/${ref}`)
