@@ -11,8 +11,8 @@ export function parseConfig(): Promise<ConfigElement> {
 			else throw new Error("Required custom configuration not found. Create a config file or provide via environment variable.");
 		}),
 	]).then((data) => {
-		const defaultConfig: ConfigElement = safeLoad(data[0].toString());
-		const customConfig: ConfigElement = safeLoad(data[1].toString());
+		const defaultConfig: ConfigElement = safeLoad(data[0].toString()) as ConfigElement;
+		const customConfig: ConfigElement = safeLoad(data[1].toString()) as ConfigElement;
 		if (customConfig === undefined) throw new Error("Malformed configuration data.");
 		const resolvedConfig = { ...defaultConfig, ...customConfig }; // Merge preferring custom data
 		resolvedConfig.intents = resolveConflict<Intent>(resolvedConfig.intentsResolutionMethod, defaultConfig.intents, customConfig.intents);
