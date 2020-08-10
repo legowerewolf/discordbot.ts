@@ -6,7 +6,7 @@ interface Config {
 }
 
 /**
- * Starts a web server serving basic JSON data about the bot.
+ * Starts and hosts a web server serving basic JSON data about the bot.
  */
 export default class StatusPlugin extends Plugin<Config> {
 	private server: Server;
@@ -16,6 +16,7 @@ export default class StatusPlugin extends Plugin<Config> {
 	};
 
 	inject(): void {
+		// Only run the server on shard 0, to prevent weird networking shit.
 		if (this.context.client.shard?.ids.indexOf(0) == -1) return;
 
 		this.server = createServer(async (req, res) => {
