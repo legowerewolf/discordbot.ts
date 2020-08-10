@@ -33,5 +33,12 @@ describe("helpers", () => {
 				// eslint-disable-next-line no-sparse-arrays
 			).to.deep.equal({ arr: ["one", , "three"] });
 		});
+		it("full arrays", () => {
+			expect(
+				queryWithObject(source, {
+					arr: null,
+				})
+			).to.deep.equal({ arr: ["one", "two", "three"] });
+		});
 	});
 });
