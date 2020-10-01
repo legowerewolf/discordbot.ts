@@ -1,4 +1,4 @@
-FROM node:14.10.1 AS builder
+FROM node:14.11.0 AS builder
 WORKDIR /project/
 COPY . .
 RUN npm ci
@@ -7,7 +7,7 @@ RUN npm prune --production
 ENTRYPOINT [ "npm", "start" ]
 
 
-FROM node:14.10.1-slim
+FROM node:14.11.0
 WORKDIR /project/
 COPY --from=builder /project/build/ ./build
 COPY --from=builder /project/config/ ./config
