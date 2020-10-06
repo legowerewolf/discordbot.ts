@@ -35,7 +35,7 @@
 	},
 	"devDependencies": {
 		"@schemastore/package": "0.0.6",
-		"@types/chai": "^4.2.12",
+		"@types/chai": "^4.2.13",
 		"@types/common-tags": "^1.8.0",
 		"@types/js-yaml": "^3.12.5",
 		"@types/mocha": "^8.0.3",
