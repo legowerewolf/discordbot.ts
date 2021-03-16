@@ -12,6 +12,6 @@
 	},
 	"typedocOptions": {
 		"out": "./docs",
-		"mode": "file"
+		"entryPoints": "./src"
 	}
 }
