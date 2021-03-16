@@ -7,7 +7,7 @@ RUN npm prune --production
 ENTRYPOINT [ "npm", "start" ]
 
 
-FROM node:15.11.0
+FROM node:15.11.0-slim
 WORKDIR /project/
 COPY --from=builder /project/build/ ./build
 COPY --from=builder /project/config/ ./config
