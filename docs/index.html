@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for discordbot">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -51,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>discordbot</h1>
 		</div>
 	</div>
@@ -90,9 +84,10 @@
 					<li><code>npm start</code> to run your bot!</li>
 				</ol>
 				<p>Alternately, compose a Dockerfile depending on the <a href="https://hub.docker.com/r/legowerewolf/discordbot.ts">official images</a>. It&#39;s not recommended to use <code>:latest</code>.</p>
-				<pre><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> legowerewolf/discordbot.ts:latest
-<span class="hljs-keyword">COPY</span><span class="bash"> ./config.yaml ./config/</span>
-<span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [ <span class="hljs-string">&quot;npm&quot;</span>, <span class="hljs-string">&quot;start&quot;</span> ]</span></code></pre>
+				<pre><code class="language-dockerfile"><span style="color: #0000FF">FROM</span><span style="color: #000000"> legowerewolf/discordbot.ts:latest</span>
+<span style="color: #0000FF">COPY</span><span style="color: #000000"> ./config.yaml ./config/</span>
+<span style="color: #0000FF">ENTRYPOINT</span><span style="color: #000000"> [ </span><span style="color: #A31515">&quot;npm&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;start&quot;</span><span style="color: #000000"> ]</span>
+</code></pre>
 				<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
 					<h3>Configuration</h3>
 				</a>
@@ -102,9 +97,10 @@
 				<a href="#minimum-viable-configuration" id="minimum-viable-configuration" style="color: inherit; text-decoration: none;">
 					<h4>Minimum viable configuration</h4>
 				</a>
-				<pre><code class="language-YAML"><span class="hljs-meta">---</span>
-<span class="hljs-attr">APIKeys:</span>
-    <span class="hljs-attr">discord:</span> [<span class="hljs-string">API</span> <span class="hljs-string">key</span> <span class="hljs-string">here</span>]</code></pre>
+				<pre><code class="language-YAML"><span style="color: #000000">---</span>
+<span style="color: #800000">APIKeys</span><span style="color: #000000">:</span>
+<span style="color: #000000">    </span><span style="color: #800000">discord</span><span style="color: #000000">: [</span><span style="color: #0000FF">API key here</span><span style="color: #000000">]</span>
+</code></pre>
 				<a href="#permissions" id="permissions" style="color: inherit; text-decoration: none;">
 					<h3>Permissions</h3>
 				</a>
@@ -128,154 +124,127 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_checkcontext.html">helpers/check<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_helpers.html">helpers/helpers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_injecterrorlogger.html">helpers/inject<wbr>Error<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_objectsandarrays.html">helpers/objects<wbr>And<wbr>Arrays</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_objectsandarrays_spec.html">helpers/objects<wbr>And<wbr>Arrays.spec</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_parseconfig.html">helpers/parse<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_promiseretry.html">helpers/promise<wbr>Retry</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_querywithobject.html">helpers/query<wbr>With<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_querywithobject_spec.html">helpers/query<wbr>With<wbr>Object.spec</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_responsetoquestion.html">helpers/response<wbr>ToQuestion</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_advancedhelp.html">plugins/advanced<wbr>Help</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_eval.html">plugins/eval</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_firebasepersist.html">plugins/firebase<wbr>Persist</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_presenceroles.html">plugins/presence<wbr>Roles</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_standardhandlers.html">plugins/standard<wbr>Handlers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_status.html">plugins/status</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_temporaryvoicechannels.html">plugins/temporary<wbr>Voice<wbr>Channels</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_timezone.html">plugins/timezone</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_voicescaling.html">plugins/voice<wbr>Scaling</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/plugins_voicescaling_spec.html">plugins/voice<wbr>Scaling.spec</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shard.html">shard</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shard_manager.html">shard-<wbr>manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_brain.html">typedef/<wbr>Brain</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_class.html">typedef/<wbr>Class</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_classmodule.html">typedef/<wbr>Class<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_communicationevent.html">typedef/<wbr>Communication<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_configelement.html">typedef/<wbr>Config<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_dictionary.html">typedef/<wbr>Dictionary</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_discordbot.html">typedef/<wbr>Discord<wbr>Bot</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_duration.html">typedef/<wbr>Duration</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_intent.html">typedef/<wbr>Intent</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_intentdata.html">typedef/<wbr>Intent<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_intenthandler.html">typedef/<wbr>Intent<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_persistenceprovider.html">typedef/<wbr>Persistence<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_plugin.html">typedef/<wbr>Plugin</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_questiondata.html">typedef/<wbr>Question<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_resolutionmethods.html">typedef/<wbr>Resolution<wbr>Methods</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/typedef_vocab.html">typedef/<wbr>Vocab</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/resolutionmethods.html" class="tsd-kind-icon">Resolution<wbr>Methods</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="enums/vocab.html" class="tsd-kind-icon">Vocab</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/brain.html" class="tsd-kind-icon">Brain</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/discordbot.html" class="tsd-kind-icon">Discord<wbr>Bot</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/duration.html" class="tsd-kind-icon">Duration</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/evalplugin.html" class="tsd-kind-icon">Eval<wbr>Plugin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/firebasepersistplugin.html" class="tsd-kind-icon">Firebase<wbr>Persist<wbr>Plugin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/helpplugin.html" class="tsd-kind-icon">Help<wbr>Plugin</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/plugin.html" class="tsd-kind-icon">Plugin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/presenceroles.html" class="tsd-kind-icon">Presence<wbr>Roles</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/standardhandlers.html" class="tsd-kind-icon">Standard<wbr>Handlers</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/statusplugin.html" class="tsd-kind-icon">Status<wbr>Plugin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/temporaryvoicechannel.html" class="tsd-kind-icon">Temporary<wbr>Voice<wbr>Channel</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/timezoneplugin.html" class="tsd-kind-icon">Timezone<wbr>Plugin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/voicescaling.html" class="tsd-kind-icon">Voice<wbr>Scaling</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/class.html" class="tsd-kind-icon">Class</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/classmodule.html" class="tsd-kind-icon">Class<wbr>Module</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/communicationevent.html" class="tsd-kind-icon">Communication<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/config.html" class="tsd-kind-icon">Config</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/configelement.html" class="tsd-kind-icon">Config<wbr>Element</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/dictionary.html" class="tsd-kind-icon">Dictionary</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/intent.html" class="tsd-kind-icon">Intent</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/intentdata.html" class="tsd-kind-icon">Intent<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/naturalguess.html" class="tsd-kind-icon">Natural<wbr>Guess</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/persistenceprovider.html" class="tsd-kind-icon">Persistence<wbr>Provider</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/questiondata.html" class="tsd-kind-icon">Question<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#intenthandler" class="tsd-kind-icon">Intent<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#meta_hash" class="tsd-kind-icon">META_<wbr>HASH</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#meta_version" class="tsd-kind-icon">META_<wbr>VERSION</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#indexablechannelregex" class="tsd-kind-icon">indexable<wbr>Channel<wbr>Regex</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#log" class="tsd-kind-icon">log</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#readfilep" class="tsd-kind-icon">read<wbr>FileP</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#checkcontext" class="tsd-kind-icon">check<wbr>Context</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getgame" class="tsd-kind-icon">get<wbr>Game</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#gethash" class="tsd-kind-icon">get<wbr>Hash</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#injecterrorlogger" class="tsd-kind-icon">inject<wbr>Error<wbr>Logger</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#memberstringify" class="tsd-kind-icon">member<wbr>Stringify</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#parseconfig" class="tsd-kind-icon">parse<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#promiseretry" class="tsd-kind-icon">promise<wbr>Retry</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#querywithobject" class="tsd-kind-icon">query<wbr>With<wbr>Object</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#randomelementfromarray" class="tsd-kind-icon">random<wbr>Element<wbr>From<wbr>Array</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#resolveconflict" class="tsd-kind-icon">resolve<wbr>Conflict</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#responsetoquestion" class="tsd-kind-icon">response<wbr>ToQuestion</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#rolestringify" class="tsd-kind-icon">role<wbr>Stringify</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#valuesof" class="tsd-kind-icon">values<wbr>Of</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#backoffs" class="tsd-kind-icon">Backoffs</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#source" class="tsd-kind-icon">source</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -286,28 +255,21 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
