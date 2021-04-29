@@ -58,6 +58,10 @@ export class DiscordBot {
 				handler: async (): Promise<void> => {
 					this.console(`Shard ready. Connected to ${this.client.guilds.cache.size} guild${this.client.guilds.cache.size > 1 ? "s" : ""}.`, Vocab.Info);
 
+					for (const guild of this.client.guilds.cache.values()) {
+						this.console(`connected guild: ${guild.name} (${guild.id})`);
+					}
+
 					// Set status refresher
 					const l = async (): Promise<void> => {
 						this.client.user.setActivity(`v${await META_VERSION} / ${await META_HASH}`);
