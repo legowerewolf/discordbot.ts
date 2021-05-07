@@ -1,4 +1,4 @@
-FROM node:16.0.0 AS builder
+FROM node:16.1.0 AS builder
 WORKDIR /project/
 COPY . .
 RUN npm ci
