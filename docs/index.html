@@ -64,9 +64,46 @@
 				<p><img src="https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts" alt="GitHub package.json version"> <img src="https://img.shields.io/github/license/legowerewolf/discordbot.ts" alt="License">
 					<a href="https://legowerewolf.github.io/discordbot.ts/"><img src="https://img.shields.io/badge/docs-Typedoc-purple" alt="Docs"></a>
 					<a href="https://david-dm.org/legowerewolf/discordbot.ts"><img src="https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies" alt="David - Dependency Checking"></a>
-					<a href="https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting"><img src="https://img.shields.io/github/workflow/status/legowerewolf/discordbot.ts/Testing?label=testing" alt="GitHub Workflow Status"></a>
-				<a href="https://hub.docker.com/r/legowerewolf/discordbot.ts"><img src="https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts" alt="Docker Cloud - Container Build Status"></a></p>
+				<a href="https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting"><img src="https://img.shields.io/github/workflow/status/legowerewolf/discordbot.ts/Testing?label=testing" alt="GitHub Workflow Status"></a></p>
 				<p>A simple way to add natural-language-powered Discord bots to your server.</p>
+				<a href="#present-status-and-future-plans" id="present-status-and-future-plans" style="color: inherit; text-decoration: none;">
+					<h2>Present status and future plans</h2>
+				</a>
+				<p>Work&#39;s currently halted. Kinda ran out of ideas.</p>
+				<p>When <code>discord.js</code> v13 drops, I&#39;m planning a near-full rewrite. Anticipated externally-visible changes include:</p>
+				<ul>
+					<li>Dropping natural-language input in favor of Slash Commands<ul>
+							<li>  this includes non-useful &quot;commands&quot; like saying hello and such</li>
+						</ul>
+					</li>
+					<li>Updating the automatic game-role feature<ul>
+							<li>addition of per-server settings (and commands for controlling them)<ul>
+									<li>  enable/disable</li>
+									<li>  custom prefixes</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Updating the automatic temporary-voice-channel feature<ul>
+							<li>addition of per-server settings (and commands for controlling them)<ul>
+									<li>  enable/disable &quot;instance&quot; management (for channels with the name-pattern &quot;some name [number]&quot;)</li>
+									<li>  enable/disable manual temporary channels (channels spawned from a command)</li>
+								</ul>
+							</li>
+							<li>  Switch to Slash Commands for manual creation</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Internally, I want to:</p>
+				<ul>
+					<li>  Update the interface for settings-storage plugins</li>
+					<li>Clean up docker image builds<ul>
+							<li>  Use GitHub Actions to build them</li>
+							<li>  Use GitHub Packages to host them</li>
+						</ul>
+					</li>
+					<li>  Switch to Yarn for dependency management</li>
+				</ul>
 				<a href="#implementation" id="implementation" style="color: inherit; text-decoration: none;">
 					<h2>Implementation</h2>
 				</a>
