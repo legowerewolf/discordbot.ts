@@ -4,9 +4,34 @@
 [![Docs](https://img.shields.io/badge/docs-Typedoc-purple)](https://legowerewolf.github.io/discordbot.ts/)
 [![David - Dependency Checking](https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies)](https://david-dm.org/legowerewolf/discordbot.ts)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/legowerewolf/discordbot.ts/Testing?label=testing)](https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting)
-[![Docker Cloud - Container Build Status](https://img.shields.io/docker/cloud/build/legowerewolf/discordbot.ts)](https://hub.docker.com/r/legowerewolf/discordbot.ts)
 
 A simple way to add natural-language-powered Discord bots to your server.
+
+## Present status and future plans
+
+Work's currently halted. Kinda ran out of ideas.
+
+When `discord.js` v13 drops, I'm planning a near-full rewrite. Anticipated externally-visible changes include:
+
+-   Dropping natural-language input in favor of Slash Commands
+    -   this includes non-useful "commands" like saying hello and such
+-   Updating the automatic game-role feature
+    -   addition of per-server settings (and commands for controlling them)
+        -   enable/disable
+        -   custom prefixes
+-   Updating the automatic temporary-voice-channel feature
+    -   addition of per-server settings (and commands for controlling them)
+        -   enable/disable "instance" management (for channels with the name-pattern "some name \[number\]")
+        -   enable/disable manual temporary channels (channels spawned from a command)
+    -   Switch to Slash Commands for manual creation
+
+Internally, I want to:
+
+-   Update the interface for settings-storage plugins
+-   Clean up docker image builds
+    -   Use GitHub Actions to build them
+    -   Use GitHub Packages to host them
+-   Switch to Yarn for dependency management
 
 ## Implementation
 
