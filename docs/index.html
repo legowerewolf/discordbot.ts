@@ -61,7 +61,8 @@
 				<a href="#discordbotjs" id="discordbotjs" style="color: inherit; text-decoration: none;">
 					<h1>Discordbot.js</h1>
 				</a>
-				<p><img src="https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts" alt="GitHub package.json version"> <img src="https://img.shields.io/github/license/legowerewolf/discordbot.ts" alt="License">
+				<p><img src="https://img.shields.io/github/package-json/v/legowerewolf/discordbot.ts" alt="GitHub package.json version">
+					<img src="https://img.shields.io/github/license/legowerewolf/discordbot.ts" alt="License">
 					<a href="https://legowerewolf.github.io/discordbot.ts/"><img src="https://img.shields.io/badge/docs-Typedoc-purple" alt="Docs"></a>
 					<a href="https://david-dm.org/legowerewolf/discordbot.ts"><img src="https://img.shields.io/david/legowerewolf/discordbot.ts?label=npm%20dependencies" alt="David - Dependency Checking"></a>
 				<a href="https://github.com/legowerewolf/discordbot.ts/actions?query=workflow%3ATesting"><img src="https://img.shields.io/github/workflow/status/legowerewolf/discordbot.ts/Testing?label=testing" alt="GitHub Workflow Status"></a></p>
@@ -70,7 +71,8 @@
 					<h2>Present status and future plans</h2>
 				</a>
 				<p>Work&#39;s currently halted. Kinda ran out of ideas.</p>
-				<p>When <code>discord.js</code> v13 drops, I&#39;m planning a near-full rewrite. Anticipated externally-visible changes include:</p>
+				<p>When <code>discord.js</code> v13 drops, I&#39;m planning a near-full rewrite. Anticipated
+				externally-visible changes include:</p>
 				<ul>
 					<li>Dropping natural-language input in favor of Slash Commands<ul>
 							<li>  this includes non-useful &quot;commands&quot; like saying hello and such</li>
@@ -86,8 +88,10 @@
 					</li>
 					<li>Updating the automatic temporary-voice-channel feature<ul>
 							<li>addition of per-server settings (and commands for controlling them)<ul>
-									<li>  enable/disable &quot;instance&quot; management (for channels with the name-pattern &quot;some name [number]&quot;)</li>
-									<li>  enable/disable manual temporary channels (channels spawned from a command)</li>
+									<li>enable/disable &quot;instance&quot; management (for channels with the
+									name-pattern &quot;some name [number]&quot;)</li>
+									<li>enable/disable manual temporary channels (channels spawned from a
+									command)</li>
 								</ul>
 							</li>
 							<li>  Switch to Slash Commands for manual creation</li>
@@ -103,13 +107,35 @@
 						</ul>
 					</li>
 					<li>  Switch to Yarn for dependency management</li>
+					<li>Mitigate occasional desync between desired and actual state for game-role
+						and temporary-voice-channel features<ul>
+							<li>Occasionally, stuff doesn&#39;t apply in the right order because of
+								inconsistency of API call timing and ordering, resulting in the server
+							not ending up in the right state.</li>
+							<li>This is most obvious as a list of empty game roles stacking up because
+							they&#39;re not being cleaned up right.</li>
+							<li>I see a couple of ways forward with this:<ol>
+									<li>Implement queueing on a per-server basis for API actions. Queues
+										shouldn&#39;t stack up that much - at most I expect to see a few seconds
+										of delay if there&#39;s a lot of things to do. This will guarantee that
+										actions execute in an expected order, and I <em>think</em> it&#39;s what I need,
+									but I need to reason about it more.</li>
+									<li>Implement a scheduled janitorial process which goes through and fixes
+										the state periodically. This would be easier to implement (and could
+									even be implemented first) but isn&#39;t quite as elegant a solution.</li>
+									<li>A combination of the above?</li>
+								</ol>
+							</li>
+						</ul>
+					</li>
 				</ul>
 				<a href="#implementation" id="implementation" style="color: inherit; text-decoration: none;">
 					<h2>Implementation</h2>
 				</a>
 				<p><a href="https://discordapp.com/api/oauth2/authorize?client_id=461740393353183253&amp;permissions=68624&amp;scope=bot"><img src="https://img.shields.io/badge/Luna-install-7289DA" alt="Install official bot"></a>
 				<img src="https://img.shields.io/website?label=Luna&url=https%3A%2F%2F7f4e78789c2826ebbf847eb267d7353b.balena-devices.com%2F" alt="Status"></p>
-				<p>Luna is this repository&#39;s official Discord bot. She&#39;s configured with all the default options as specified in this repository, and is nearly always online.</p>
+				<p>Luna is this repository&#39;s official Discord bot. She&#39;s configured with all the
+				default options as specified in this repository, and is nearly always online.</p>
 				<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
 					<h2>Setup</h2>
 				</a>
@@ -120,7 +146,9 @@
 					<li>Configure (see below)</li>
 					<li><code>npm start</code> to run your bot!</li>
 				</ol>
-				<p>Alternately, compose a Dockerfile depending on the <a href="https://hub.docker.com/r/legowerewolf/discordbot.ts">official images</a>. It&#39;s not recommended to use <code>:latest</code>.</p>
+				<p>Alternately, compose a Dockerfile depending on the
+					<a href="https://hub.docker.com/r/legowerewolf/discordbot.ts">official images</a>. It&#39;s not
+				recommended to use <code>:latest</code>.</p>
 				<pre><code class="language-dockerfile"><span style="color: #0000FF">FROM</span><span style="color: #000000"> legowerewolf/discordbot.ts:latest</span>
 <span style="color: #0000FF">COPY</span><span style="color: #000000"> ./config.yaml ./config/</span>
 <span style="color: #0000FF">ENTRYPOINT</span><span style="color: #000000"> [ </span><span style="color: #A31515">&quot;npm&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;start&quot;</span><span style="color: #000000"> ]</span>
@@ -130,7 +158,8 @@
 				</a>
 				<p>Bots support YAML v1.2/JSON for configuration.</p>
 				<p>Check out the commented defaults in <code>./config/defaults.yaml</code>.</p>
-				<p>User configurations go in <code>./config/config.yaml</code> or an environment var called <code>botConfig</code>.</p>
+				<p>User configurations go in <code>./config/config.yaml</code> or an environment var called
+				<code>botConfig</code>.</p>
 				<a href="#minimum-viable-configuration" id="minimum-viable-configuration" style="color: inherit; text-decoration: none;">
 					<h4>Minimum viable configuration</h4>
 				</a>
@@ -153,8 +182,10 @@
 				</a>
 				<p>Things that need to get done:</p>
 				<ul>
-					<li>Unit tests, holy crap. Worry about the little stuff, there&#39;s not much to be done for stuff depending on API data or the state of the whole bot. That said, if you can tell me how to mock the Discord API to run tests, please make an issue
-					so we can discuss it.</li>
+					<li>Unit tests, holy crap. Worry about the little stuff, there&#39;s not much to be
+						done for stuff depending on API data or the state of the whole bot. That
+						said, if you can tell me how to mock the Discord API to run tests, please
+					make an issue so we can discuss it.</li>
 				</ul>
 			</div>
 		</div>
